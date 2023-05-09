@@ -65,6 +65,6 @@ Examples
 
 * A simple workflow using semi-synthetic data is provided in ![](inst/ddtlcm_workflow_example.pdf)
 
-* *ddtlcm* estimates the tree over classes and class profiles simultaneously ![](inst/ddtlcm_output_example.pdf)
+* *ddtlcm* estimates the tree over classes and class profiles simultaneously ![](inst/ddtlcm_output_example.png)
 
 
