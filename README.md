@@ -2,8 +2,9 @@
 
 An R package for Tree-regularized Latent Class Models with a DDT process prior on class profiles
 
-**Maintainer**: Mengbing Li, mengbing@umich.edu
+**Maintainer**: Mengbing Li (mengbing@umich.edu)
 
+**Coauthors**: Briana Stephenson (bstephenson@hsph.harvard.edu); Zhenke Wu (zhenkewu@umich.edu)
 
 <!-- **References**: If you are using **lotR** for tree-integrative latent class analysis, 
 please cite the following preprint:
@@ -30,7 +31,7 @@ if (!require("BiocManager", quietly = TRUE))
 BiocManager::install("ggtree")
 
 install.packages("devtools",repos="https://cloud.r-project.org")
-devtools::install_github("limengbinggz/ddtlcm_package")
+devtools::install_github("limengbinggz/ddtlcm")
 ```
 
 
@@ -49,7 +50,7 @@ a hybrid Metropolis-Hastings-within-Gibbs algorithm and can provide posterior un
 * multivariate binary responses over pre-specified grouping of items
 
 
-* The functions' relations in the package `lotR` can be visualized by
+* The functions' relations in the package `ddtlcm` can be visualized by
 
 ```r
 library(DependenciesGraphs) # if not installed, try this-- devtools::install_github("datastorm-open/DependenciesGraphs")
