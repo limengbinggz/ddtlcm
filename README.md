@@ -29,7 +29,7 @@ if (!require("BiocManager", quietly = TRUE))
 BiocManager::install("ggtree")
 
 install.packages("devtools",repos="https://cloud.r-project.org")
-devtools::install_github("limengbinggz/ddtlcm")
+devtools::install_github("limengbinggz/ddtlcm_package")
 ```
 
 
