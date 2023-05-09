@@ -4,8 +4,16 @@ Title: Latent class analysis with Dirichlet diffusion tree process prior
 Version: 0.1.0
 Date: 2023-05-01
 Authors@R: c(
-     person("Mengbing", "Li", email="mengbing@umich.edu",role=c("cre","aut"),
-     comment = c(ORCID = "0000-0002-2264-8006"))
+     person("Mengbing", "Li", 
+            email="mengbing@umich.edu",
+            role=c("cre","aut"),
+            comment = c(ORCID = "0000-0002-2264-8006")),
+     person("Briana", "Stephenson", 
+            email="bstephenson@hsph.harvard.edu",
+            role=c("ctb")),
+     person("Zhenke", "Wu", 
+            email="zhenkewu@umich.edu",
+            role=c("ctb"))
      )
 Maintainer: Mengbing Li <mengbing@umich.edu>
 Description: This package implements fast algorithms to fit latent class models
