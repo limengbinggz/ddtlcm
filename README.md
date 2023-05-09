@@ -5,8 +5,9 @@ An R package for Tree-regularized Latent Class Models with a DDT process prior o
 **Maintainer**: Mengbing Li, mengbing@umich.edu
 
 
-**References**: If you are using **lotR** for tree-integrative latent class analysis, 
+<!-- **References**: If you are using **lotR** for tree-integrative latent class analysis, 
 please cite the following preprint:
+ -->
 
 <!-- |       | Citation     | Paper Link
 | -------------  | -------------  | -------------  |
