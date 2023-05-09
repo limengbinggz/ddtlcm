@@ -1,0 +1,47 @@
+Package: ddtlcm
+Type: Package
+Title: Latent class analysis with Dirichlet diffusion tree process prior 
+Version: 0.1.0
+Date: 2023-05-01
+Authors@R: c(
+     person("Mengbing", "Li", email="mengbing@umich.edu",role=c("cre","aut"),
+     comment = c(ORCID = "0000-0002-2264-8006"))
+     )
+Maintainer: Mengbing Li <mengbing@umich.edu>
+Description: This package implements fast algorithms to fit latent class models
+    for integrating given tree-information that specifies the relatedness among
+    the observations. 
+Depends:
+    R(>= 4.0.0)
+Imports:
+    ape (>= 5.6-2),
+    data.table (>= 1.14.4),
+    dplyr (>= 1.1.1),
+    extraDistr (>= 1.9.1),
+    ggbrace (>= 0.1.0),
+    ggplot2 (>= 3.4.0),
+    ggtree (>= 3.4.0),
+    label.switching (>= 1.8),
+    matrixStats (>= 0.62.0),
+    phylobase (>= 0.8.10),
+    poLCA (>= 1.6.0.1),
+    scatterplot3d (>= 0.3-43),
+    truncnorm (>= 1.0-8),
+    BayesLogit (>= 2.1),
+    MASS (>= 7.3-58.1),
+    Matrix (>= 1.5-1),
+    R.utils (>= 2.12.2)
+Suggests:
+    knitr,
+    parallel,
+    testthat,
+    rmarkdown
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+Remotes: cran/knitcitations
+RoxygenNote: 7.2.3
+URL: https://github.com/limengbinggz/ddtlcm
+BugReports: https://github.com/limengbinggz/ddtlcm/issues
+Roxygen: list(markdown = TRUE)
