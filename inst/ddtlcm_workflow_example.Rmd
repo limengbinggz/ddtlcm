@@ -40,7 +40,7 @@ For posterior summaries, the tree structure is obtained via the \textit{maximum 
 
 ## Overview of the report
 
-We look at a semi-synthetic data example of the Hispanic Community Health Study/Study of Latinos (HCHS/SOL). The full HCHS/SOL used in the manuscript is publicly available only by request, and thus we provide a simulated dataset micmicking our analysis cohort. We describe how to generate the data, fit the proposed model, and visualize the results. For the sake of time, this example runs the MCMC chain with fewer iterations than the manuscript. The total compilation time of this documents in xxx minutes on a 2018 Apple MacBook Pro. 
+We look at a semi-synthetic data example of the Hispanic Community Health Study/Study of Latinos (HCHS/SOL). The full HCHS/SOL used in the manuscript is publicly available only by request, and thus we provide a simulated dataset micmicking our analysis cohort. We describe how to generate the data, fit the proposed model, and visualize the results. For the sake of time, this example runs the MCMC chain with fewer iterations than the manuscript. The total compilation time of this documents in 46 seconds on a 2018 Apple MacBook Pro. 
 
 We also describe how the simulation results of the manuscript can be reproduced using the codes. The results in this document will be produced using summary data rather than raw data, due to the extensive amount of run time of the numerical experiments in the manuscript. All models can be replicated exactly using the functions in the package on a high-performing computing cluster. 
 
@@ -131,22 +131,22 @@ On the left is the MAP tree estimated from the real HCHS/SOL data, with leaf nod
 
 ## Apply DDT-LCM
 
-We assume that the number of latent classes $K = 6$ is known. Throughout the paper, we use divergence function $a(t) = c / (1-t)$ to parameterize the DDT branching process, where $c > 0$ is a hyperparameter. To use the function `ddtlcm_fit`, we need to specify the number of classes (`K`), a matrix of multivariate binary observations (`data`), a list of item group memberships (`item_membership_list`), and the number of posterior samples to collect (`total_iters`). In Section 5.1 of the manuscript, we set `total_iters = 15000`. For the purpose of quickly illustrating the output, here we run the function with a smaller number `total_iters = 500`.
+We assume that the number of latent classes $K = 6$ is known. Throughout the paper, we use divergence function $a(t) = c / (1-t)$ to parameterize the DDT branching process, where $c > 0$ is a hyperparameter. To use the function `ddtlcm_fit`, we need to specify the number of classes (`K`), a matrix of multivariate binary observations (`data`), a list of item group memberships (`item_membership_list`), and the number of posterior samples to collect (`total_iters`). In Section 5.1 of the manuscript, we set `total_iters = 15000`. For the purpose of quickly illustrating the output, here we run the function with a smaller number `total_iters = 100`.
 
 ```{r}
 # number of classes
 set.seed(999)
 system.time({
   result <- ddtlcm_fit(K = K, data = response_matrix, 
-                     item_membership_list = item_membership_list, total_iters = 50)
+                     item_membership_list = item_membership_list, total_iters = 100)
 })
 
 print(result)
 ```
 
-We next summarize the posterior chain by discarding the first 300 iterations as burn-ins (`burnin = 30`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = T`. To save space in the document, we do not print the summary result here (`be_quiet = T`).
+We next summarize the posterior chain by discarding the first 50 iterations as burn-ins (`burnin = 30`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = T`. To save space in the document, we do not print the summary result here (`be_quiet = T`).
 ```{r}
-burnin <- 30
+burnin <- 50
 summarized_result <- summary(result, burnin, relabel = T, be_quiet = T)
 ```
 
