@@ -4,7 +4,7 @@ An R package for Tree-regularized Latent Class Models with a DDT process prior o
 
 **Maintainer**: Mengbing Li (mengbing@umich.edu)
 
-**Coauthors**: Briana Stephenson (bstephenson@hsph.harvard.edu); Zhenke Wu (zhenkewu@umich.edu)
+**Contributors**: Briana Stephenson (bstephenson@hsph.harvard.edu); Zhenke Wu (zhenkewu@umich.edu)
 
 <!-- **References**: If you are using **lotR** for tree-integrative latent class analysis, 
 please cite the following preprint:

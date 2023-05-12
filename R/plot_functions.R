@@ -21,7 +21,7 @@ plot.summary.ddt_lcm_all <- function(x, plot_option = c("all", "profile", "tree"
   item_membership_list <- x$setting$item_membership_list
   class_probability <- x$class_probs_summary[,"Mean"]
   plots <- plot_tree_with_barplot(tree_with_parameter, response_prob, item_membership_list, 
-                         class_probability, item_name_list, color_palette,
+                         item_name_list, class_probability, color_palette,
                          return_separate_plots = T)
   probs_lower <- x$response_probs_summary[, "2.5%"]
   probs_higher <- x$response_probs_summary[, "97.5%"]

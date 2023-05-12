@@ -124,7 +124,7 @@ response_prob <- sim_data$response_prob
 tree_with_parameter <- sim_data$tree_with_parameter
 plot_tree_with_heatmap(tree_with_parameter, response_prob, item_membership_list)
 ```
-On the left is the MAP tree estimated from the real HCHS/SOL data, with leaf nodes labeled "v1", ..., "v6" corresponding to latent classes 1 to 6. On the right is a heatmap of the simulated class profiles, where the 78 columns correspond to items with curly brackets underneath denoting the prespecified major item groups.
+On the left is the MAP tree estimated from the real HCHS/SOL data, with leaf nodes labeled "v1", ..., "v6" corresponding to latent classes 1 to 6. On the right is a heatmap of the simulated class profiles, where the 78 columns correspond to items with curly brackets underneath denoting the pre-specified major item groups.
 
 
 
@@ -144,14 +144,16 @@ system.time({
 print(result)
 ```
 
-We next summarize the posterior chain by discarding the first 300 iterations as burn-ins (`burnin = 300`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = T`. To save space in the document, we do not print the summary result here (`be_quiet = T`).
+We next summarize the posterior chain by discarding the first 300 iterations as burn-ins (`burnin = 30`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = T`. To save space in the document, we do not print the summary result here (`be_quiet = T`).
 ```{r}
 burnin <- 30
 summarized_result <- summary(result, burnin, relabel = T, be_quiet = T)
 ```
 
-We can visualize the summarized result, including the MAP tree and the class profiles:
-```{r fig.height = 8, fig.width = 7}
+
+
+We can visualize the summarized result, including the MAP tree and the class profiles. Due to limited space, the item labels are scrambled together. Please refer to Figure 4 in the manuscript for a clearer version.
+```{r fig.height = 6, fig.width = 7}
 plot(x = summarized_result, item_name_list = item_name_list, plot_option = "all")
 ```
 
