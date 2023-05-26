@@ -7,7 +7,7 @@
 simulate_lcm_given_tree(
   tree_phylo,
   N,
-  class_probability = rep(1, K),
+  class_probability = 1,
   item_membership_list,
   Sigma_by_group = NULL,
   root_node_location = 0,

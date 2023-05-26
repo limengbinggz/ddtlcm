@@ -2,7 +2,7 @@
 % Please edit documentation in R/loglikehoods.R
 \name{logllk_ddt}
 \alias{logllk_ddt}
-\title{compute the loglihood of the entire DDT}
+\title{Calculate loglikelihood of a DDT, including the tree structure and node parameters}
 \usage{
 logllk_ddt(
   c,
@@ -14,6 +14,26 @@ logllk_ddt(
   dist_mat_old = NULL
 )
 }
+\arguments{
+\item{response_matrix}{a N by J binary matrix, where the i,j-th element is the response
+of item j for individual i}
+
+\item{leaf_data}{a K by J matrix of logit(theta_{kj})}
+
+\item{prior_class_probability}{a length K vector, where the k-th element is the
+probability of assigning an individual to class k. It does not have to sum up to 1}
+
+\item{prior_dirichlet}{a vector of length K. The Dirichlet prior of class probabilities}
+
+\item{ClassItem}{a K by J matrix, where the k,j-th element counts the number of individuals
+that belong to class k have a positive response to item j}
+
+\item{Class_count}{a length K vector, where the k-th element counts the number of individuals
+belonging to class k}
+}
+\value{
+a numeric of loglikelihood
+}
 \description{
-compute the loglihood of the entire DDT
+Calculate loglikelihood of a DDT, including the tree structure and node parameters
 }

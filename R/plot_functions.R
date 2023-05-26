@@ -8,11 +8,11 @@
 #'  of item names for items in `item_membership_list[[g]]`. The name of the g-th element is 
 #'  the name of the major item group.
 #' @param color_palette a vector of color names. Default is a color-blinded friendly palette.
-#' @method plot summary.ddt_lcm_all
+#' @method plot summary.ddt_lcm
 #' @importFrom ggplot2 geom_errorbar
 #' @importFrom ggpubr ggarrange
 #' @export
-plot.summary.ddt_lcm_all <- function(x, plot_option = c("all", "profile", "tree"),
+plot.summary.ddt_lcm <- function(x, plot_option = c("all", "profile", "tree"),
                                  item_name_list = NULL, color_palette = c("#E69F00", "#56B4E9", "#009E73", "#000000", 
                                                                           "#0072B2", "#D55E00", "#CC79A7", "#F0E442", "#999999")){
   plot_option = match.arg(plot_option, c("all", "profile", "tree"))

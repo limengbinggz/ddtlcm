@@ -2,11 +2,7 @@
 % Please edit documentation in R/MH_tree.R
 \name{attach_subtree}
 \alias{attach_subtree}
-\title{randomly attach a subtree to a given DDT
-subtree: subtree to attach to tree_kept
-tree_kept: the tree to be attached to
-detach_div_time: divergence time of subtree when it was extracted from the original tree
-pa_detach_node_label: label of the parent node of the detached node}
+\title{Attach a subtree to a given DDT at a randomly selected location}
 \usage{
 attach_subtree(
   subtree,
@@ -19,10 +15,15 @@ attach_subtree(
   alpha = 0
 )
 }
+\arguments{
+\item{subtree}{subtree to attach to tree_kept}
+
+\item{tree_kept}{the tree to be attached to}
+
+\item{detach_div_time}{divergence time of subtree when it was extracted from the original tree}
+
+\item{pa_detach_node_label}{label of the parent node of the detached node}
+}
 \description{
-randomly attach a subtree to a given DDT
-subtree: subtree to attach to tree_kept
-tree_kept: the tree to be attached to
-detach_div_time: divergence time of subtree when it was extracted from the original tree
-pa_detach_node_label: label of the parent node of the detached node
+Attach a subtree to a given DDT at a randomly selected location
 }

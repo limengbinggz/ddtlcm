@@ -7,6 +7,12 @@ from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix}
 \usage{
 draw_mnorm(precision_mat, precision_a_vec)
 }
+\arguments{
+\item{precision_mat}{precision matrix Q of the multivariate normal distribution}
+
+\item{precision_a_vec}{a vector a such that the mean of the multivariate normal distribution is
+Q^{-1}a}
+}
 \description{
 sample multivariate normal using precision matrix
 from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix

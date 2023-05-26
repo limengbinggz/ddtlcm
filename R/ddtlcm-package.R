@@ -24,7 +24,6 @@
 #' @import data.table
 #' @import matrixStats
 #' @import phylobase
-#' @import ape 
 #' @importFrom Matrix kronecker Diagonal diag
 #' @importFrom extraDistr rdirichlet 
 #' @importFrom truncnorm rtruncnorm 

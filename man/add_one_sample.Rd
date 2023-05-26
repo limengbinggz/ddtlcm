@@ -4,14 +4,30 @@
 \alias{add_one_sample}
 \title{Functions to simulate trees and node parameters from a DDT
 process.
-if t2 > t1, then select which path to take, with probability proportional to the number of data
-points that already traversed the path}
+Add a branch to an existing tree according to the branching process of DDT}
 \usage{
 add_one_sample(tree_old, c, c_order, theta, alpha)
+}
+\arguments{
+\item{tree_old}{a "phylo" object. The tree (K leaves) to which a new branch will be added.}
+
+\item{c}{hyparameter of divergence function a(t)}
+
+\item{c_order}{equals 1 (default) or 2 to choose divergence function
+a(t) = c/(1-t) or c/(1-t)^2.}
+
+\item{alpha, theta}{hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
+specify positive values to alpha and theta. It is, however, recommended using alpha =
+theta = 0 in inference because multifurcating trees have not been tested rigorously.}
+}
+\value{
+a "phylo" object. A tree with K+1 leaves.
+if t2 > t1, then select which path to take, with probability proportional to the number of data
+points that already traversed the path
 }
 \description{
 Functions to simulate trees and node parameters from a DDT
 process.
-if t2 > t1, then select which path to take, with probability proportional to the number of data
-points that already traversed the path
+Add a branch to an existing tree according to the branching process of DDT
 }

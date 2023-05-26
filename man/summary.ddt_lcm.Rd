@@ -24,6 +24,6 @@ Summarize the output of a ddt_lcm model
 \seealso{
 Other ddt_lcm results: 
 \code{\link{print.ddt_lcm}()},
-\code{\link{print.summary.ddt_lcm_all}()}
+\code{\link{print.summary.ddt_lcm}()}
 }
 \concept{ddt_lcm results}

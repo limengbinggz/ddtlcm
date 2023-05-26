@@ -71,12 +71,13 @@ add_root <- function(tree_old, root_edge_length, root_label, leaf_label){
                       edge.length = root_edge_length,
                       Nnode = 1)
   class(leaf_branch) <- "phylo"
-  tree_new <- bind.tree(leaf_branch, tree_old, where=1)
+  tree_new <- ape::bind.tree(leaf_branch, tree_old, where=1)
   return(tree_new)
 }
 
 
-# compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
+#' compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
+#' @param x a rea-valued vector
 exp_normalize <- function(x){
   return(exp(x - logSumExp(x)))
 }
@@ -84,6 +85,10 @@ exp_normalize <- function(x){
 
 #' sample multivariate normal using precision matrix
 #' from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix
+#' @param precision_mat precision matrix Q of the multivariate normal distribution
+#' @param precision_a_vec a vector a such that the mean of the multivariate normal distribution is
+#'  Q^{-1}a
+#' @export
 draw_mnorm <- function(precision_mat, precision_a_vec){
   U <- chol(precision_mat)
   b <- rnorm(nrow(precision_mat))

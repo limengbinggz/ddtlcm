@@ -2,11 +2,11 @@
 #' Prediction of class memberships from posterior summaries
 #' @description Predict individual class memberships based on posterior summary (point estimates
 #'  of model parameters). The predicted class memberships are modal assignments. 
-#' @param model_summary a "summary.ddt_lcm_all" object
+#' @param model_summary a "summary.ddt_lcm" object
 #' @param data an NxJ matrix of multivariate binary responses, where
 #'   N is the number of individuals, and J is the number of granular items
 #' @export
-predict.summary.ddt_lcm_all <- function(model_summary, data){ 
+predict.summary.ddt_lcm <- function(model_summary, data){ 
   class_probability <- model_summary$class_probs_summary[,'Mean']
   K <- length(class_probability)
   N <- nrow(data)

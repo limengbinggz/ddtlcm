@@ -52,7 +52,7 @@ We also describe how the simulation results of the manuscript can be reproduced 
 The `ddtlcm` package can by installed by running the following command.
 
 ```{r eval=FALSE, include=FALSE}
-install.packages("/Users/mengbing/Dropbox (University of Michigan)/from_box/research/tree_multivariate_binary/ddtlcm_0.1.0.tar.gz", repos = NULL, type="source")
+install.packages("/Users/mengbing/Dropbox (University of Michigan)/from_box/research/R_packages/ddtlcm_0.1.0.tar.gz", repos = NULL, type="source")
 ```
 
 ```{r eval=FALSE}
@@ -102,8 +102,6 @@ For the purpose of illustration, we will simulate one semi-synthetic dataset, al
 ```{r}
 # number of individuals
 N <- 496
-# number of latent classes, or number of leaves on the tree
-K <- 6
 # set random seed to generate node parameters given the tree
 seed_parameter = 1
 # set random seed to generate multivariate binary observations from LCM
@@ -136,6 +134,8 @@ We assume that the number of latent classes $K = 6$ is known. Throughout the pap
 ```{r}
 # number of classes
 set.seed(999)
+# number of latent classes, or number of leaves on the tree
+K <- 6
 system.time({
   result <- ddtlcm_fit(K = K, data = response_matrix, 
                      item_membership_list = item_membership_list, total_iters = 100)

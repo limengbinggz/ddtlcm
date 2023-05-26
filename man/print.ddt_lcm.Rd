@@ -14,7 +14,7 @@ Print out a ddt_lcm model
 }
 \seealso{
 Other ddt_lcm results: 
-\code{\link{print.summary.ddt_lcm_all}()},
+\code{\link{print.summary.ddt_lcm}()},
 \code{\link{summary.ddt_lcm}()}
 }
 \concept{ddt_lcm results}

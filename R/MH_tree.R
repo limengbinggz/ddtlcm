@@ -12,7 +12,7 @@ random_detach_subtree <- function(tree_phylo4){
   # number of samples
   K <- nTips(tree_phylo4)
   # get the root node
-  root_name <- names(rootNode(tree_phylo4))
+  root_name <- names(phylobase::rootNode(tree_phylo4))
   # child node of root
   root_child <- names(phylobase::descendants(tree_phylo4, root_name, "children"))
   # randomly sample a node that is not the root or ch(root) to detach a subtree
@@ -22,12 +22,12 @@ random_detach_subtree <- function(tree_phylo4){
   # cat("detach_node =", detach_node)
   # the root of the detached subtree is pa(detach_node)!
   # find the parent of the detached node
-  pa_detach_node <- ancestor(tree_phylo4, detach_node)
+  pa_detach_node <- phylobase::ancestor(tree_phylo4, detach_node)
 
   # divergence time of the parent node
-  pa_div_time <- nodeHeight(tree_phylo4, pa_detach_node, "root")
+  pa_div_time <- phylobase::nodeHeight(tree_phylo4, pa_detach_node, "root")
   # divergence time of the detached node
-  detach_div_time <- nodeHeight(tree_phylo4, detach_node, "root")
+  detach_div_time <- phylobase::nodeHeight(tree_phylo4, detach_node, "root")
   # get the leaf of the detached subtree
   subtree_leaf <- names(phylobase::descendants(tree_phylo4, detach_node, "tips"))
   
@@ -49,7 +49,7 @@ random_detach_subtree <- function(tree_phylo4){
     class(tree_kept) <-"phylo"
   }else{
     tree_kept <- add_root(tree_old = as(phylobase::subset(tree_phylo4, tips.include = tree_kept_leaf), "phylo"),
-                          root_edge_length = nodeHeight(tree_phylo4, names(phylobase::MRCA(tree_phylo4, tree_kept_leaf)), from="root"),
+                          root_edge_length = phylobase::nodeHeight(tree_phylo4, names(phylobase::MRCA(tree_phylo4, tree_kept_leaf)), from="root"),
                           root_label = paste0("u", 1),
                           leaf_label = names(rootNode(tree_phylo4)) )
   }
@@ -62,9 +62,24 @@ random_detach_subtree <- function(tree_phylo4){
 
 #' choose a divergence time, location, and tree topology to reattach a subtree
 #' tree_kept: the tree to be attached to
+#' Attach a subtree to a given DDT at a randomly selected location
+#' @param tree_kept the tree to be attached to
+#' @param c hyparameter of divergence function a(t)
+#' @param c_order equals 1 (default) or 2 to choose divergence function
+#'  a(t) = c/(1-t) or c/(1-t)^2.
+#' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+#'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
+#'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
+#'    theta = 0 in inference because multifurcating trees have not been tested rigorously.
+#' @return a list of the following objects:
+#' \describe{
+#' \item{`div_time`}{a numeric value of newly sampled divergence time. Between 0 and 1.}
+#' \item{`root_node`}{a character. Label of the root node of `tree_kept`.}
+#' \item{`root_child`}{a character. Label of the child node of the root of `tree_kept`.}
+#' \item{`div_dist_to_root_child`}{a N-vector with integer entries from {1, ..., K}. The initial values for
+#'  individual class assignments.}
+#' }
 reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
-  # phylobase::phylobase.options(singleton="ok")
-  
   # number of leaves of the remaining tree
   tree_kept_ntip <- phylobase::nTips(tree_kept)
   new_tip <- list()
@@ -72,16 +87,16 @@ reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
     t <- div_time(t_u = 0, m_v = 1, c = c, c_order = c_order, theta = theta, alpha = alpha)
     return(list(div_time = t, root_node=tree_kept$node.label, root_child = tree_kept$tip.label, div_dist_to_root_child = 1-t))
   }else{
-    tree_kept_phylo4 <- phylo4(tree_kept, check.node.labels = "keep")
+    tree_kept_phylo4 <- phylobase::phylo4(tree_kept, check.node.labels = "keep")
     cur_n <- tree_kept_ntip
     # root node starts from time 0
     start_time <- 0
     # get root node
-    root_node <- names(rootNode(tree_kept_phylo4))
+    root_node <- names(phylobase::rootNode(tree_kept_phylo4))
     # get the index of the child of the root node
     root_child <- names(phylobase::descendants(tree_kept_phylo4, root_node, "child"))
     # get the branch length between the root and its child
-    root_child_branch_len <- edgeLength(tree_kept_phylo4)[getEdge(tree_kept_phylo4, root_child)]
+    root_child_branch_len <- phylobase::edgeLength(tree_kept_phylo4)[phylobase::getEdge(tree_kept_phylo4, root_child)]
     dist_to_root_child <- start_time + root_child_branch_len
     while(TRUE){
       # sample a new divergence time
@@ -93,7 +108,7 @@ reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
       }
       # otherwise, we follow one of the existing paths, with probability proportional to the number of data
       # points that already traversed the path
-      branch_point <- names(descendants(tree_kept_phylo4, root_child, type="child"))
+      branch_point <- names(phylobase::descendants(tree_kept_phylo4, root_child, type="child"))
       # get the number of branches from this branch point
       K <- length(branch_point)
       # get the number of samples which previously took each branch
@@ -126,7 +141,7 @@ reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
           cur_n <- m_v
           root_node <- root_child
           root_child <- selected_node
-          edge_len <- edgeLength(tree_kept_phylo4)[getEdge(tree_kept_phylo4, root_child)]
+          edge_len <- phylobase::edgeLength(tree_kept_phylo4)[phylobase::getEdge(tree_kept_phylo4, root_child)]
           dist_to_root_child <- start_time + edge_len
         }
       }
@@ -136,11 +151,12 @@ reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
 
 
 
-#' randomly attach a subtree to a given DDT
-#' subtree: subtree to attach to tree_kept
-#' tree_kept: the tree to be attached to
-#' detach_div_time: divergence time of subtree when it was extracted from the original tree
-#' pa_detach_node_label: label of the parent node of the detached node
+#' Attach a subtree to a given DDT at a randomly selected location
+#' @param subtree subtree to attach to tree_kept
+#' @param tree_kept the tree to be attached to
+#' @param detach_div_time divergence time of subtree when it was extracted from the original tree
+#' @param pa_detach_node_label label of the parent node of the detached node
+#' @importFrom ape bind.tree
 attach_subtree <- function(subtree, tree_kept, detach_div_time, pa_detach_node_label, c,
                            c_order = 1, theta=0.0, alpha=0.0){
   # phylobase::phylobase.options(singleton="ok")
@@ -150,14 +166,14 @@ attach_subtree <- function(subtree, tree_kept, detach_div_time, pa_detach_node_l
     # print("this1")
     # select a point on the tree to attach subtree to
     new_attach_point <- reattach_point(tree_kept, c, c_order, theta, alpha)
-    tree_kept_phylo4 <- phylo4(tree_kept, check.node.labels="keep")
+    tree_kept_phylo4 <- phylobase::phylo4(tree_kept, check.node.labels="keep")
     # tree_kept_phylo42 <- phylo4(tree_kept, check.node.labels="drop")
     # if the new attach time is after than the detach time in the original, then resample the attach time until it is before
     while(new_attach_point$div_time >= detach_div_time){
       new_attach_point <- reattach_point(tree_kept, c=c, c_order=c_order, theta=theta, alpha=alpha)
     }
     # attach the subtree to the given tree as a leaf branch
-    new_phylo4 <- phylo4( add_leaf_branch(tree_old = tree_kept, div_t = new_attach_point$div_time, new_leaf_label = subtree,
+    new_phylo4 <- phylobase::phylo4( add_leaf_branch(tree_old = tree_kept, div_t = new_attach_point$div_time, new_leaf_label = subtree,
                                           where = getNode(tree_kept_phylo4, new_attach_point$root_child),
                                           position = nodeHeight(tree_kept_phylo4, new_attach_point$root_child, "root") - new_attach_point$div_time) )
     # add label to the new attach point
@@ -180,7 +196,7 @@ attach_subtree <- function(subtree, tree_kept, detach_div_time, pa_detach_node_l
                             root_label = pa_detach_node_label,
                             leaf_label = names(rootNode(phylo4(subtree))))
     # add the subtree to the given tree
-    new_phylo4 <- phylo4(bind.tree(tree_kept, new_subtree, where = 1, position = 1 - div_t))
+    new_phylo4 <- phylo4(ape::bind.tree(tree_kept, new_subtree, where = 1, position = 1 - div_t))
     # add label to the new attach point
     nodeLabels(new_phylo4)[is.na(nodeLabels(new_phylo4))] <- pa_detach_node_label
     return(list(new_phylo4 = new_phylo4,
@@ -307,7 +323,7 @@ sample_c_one <- function(shape0, rate0, tree_structure){
   return(rgamma(1, shape = shape, rate = rate))
 }
 
-#'@description Sample divergence function parameter c for a(t) = c / (1-t)^2 through Gibbs sampler
+#' Sample divergence function parameter c for a(t) = c / (1-t)^2 through Gibbs sampler
 #'@param shape0 shape of the Inverse-Gamma prior
 #'@param rate0 rate of the Inverse-Gamma prior
 #'@param tree_structure a data.frame containing the divergence times and number of
@@ -324,7 +340,7 @@ sample_c_two <- function(shape0, rate0, tree_structure){
 
 
 
-#'@description Sample a new tree topology using Metropolis-Hastings through randomly
+#' Sample a new tree topology using Metropolis-Hastings through randomly
 #'    detaching and re-attaching subtrees
 #'@param tree_phylo4d_old a phylo4d object of tree from the previous iteration
 #'@param Sigma_by_group a vector of diffusion variances of G groups from the previous iteration

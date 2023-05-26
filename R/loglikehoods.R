@@ -1,6 +1,3 @@
-
-# Compute the loglikelihood of a given DDT --------------------------------
-
 #' compute the marginal log likelihood of the locations
 #' tree_phylo4d: tree in the phylo4d class
 #' Sigma_by_group: variance of the brownian motion
@@ -152,7 +149,20 @@ logllk_tree_topology <- function(l, r){
   return(lfactorial(l-1) + lfactorial(r-1) - lfactorial(r+l-1))
 }
 
-#' compute the loglihood of the entire DDT
+
+#' Calculate loglikelihood of a DDT, including the tree structure and node parameters
+#'@param response_matrix a N by J binary matrix, where the i,j-th element is the response
+#'    of item j for individual i
+#'@param leaf_data a K by J matrix of logit(theta_{kj})
+#'@param prior_class_probability a length K vector, where the k-th element is the
+#'    probability of assigning an individual to class k. It does not have to sum up to 1
+#'@param prior_dirichlet a vector of length K. The Dirichlet prior of class probabilities
+#'@param ClassItem a K by J matrix, where the k,j-th element counts the number of individuals
+#'    that belong to class k have a positive response to item j
+#'@param Class_count a length K vector, where the k-th element counts the number of individuals
+#'    belonging to class k
+#'@return a numeric of loglikelihood
+#'@export
 logllk_ddt <- function(c, c_order, Sigma_by_group, tree_phylo4d, item_membership_list,
                        tree_structure_old = NULL, dist_mat_old = NULL){
   # phylobase::phylobase.options(singleton="ok")

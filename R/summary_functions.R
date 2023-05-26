@@ -113,7 +113,7 @@ summary.ddt_lcm <- function(result, burnin = 3000, relabel = T, be_quiet = F){
               Sigma_summary = Sigma_summary, c_summary = c_summary,
               max_llk_full = max_llk_full, max_llk_lcm = max_llk_lcm, 
               setting = result$setting, data = result$data)
-  class(out) <- "summary.ddt_lcm_all"
+  class(out) <- "summary.ddt_lcm"
   
   if (!be_quiet){
     print(out)
@@ -145,11 +145,11 @@ print.ddt_lcm <- function(model, digits = 3L){
 
 
 #' Print out summary of a ddt_lcm model
-#' @param model_summary a "summary.ddt_lcm_all" object
-#' @method print summary.ddt_lcm_all
+#' @param model_summary a "summary.ddt_lcm" object
+#' @method print summary.ddt_lcm
 #' @family ddt_lcm results
 #' @export
-print.summary.ddt_lcm_all <- function(model_summary, digits = 3L){
+print.summary.ddt_lcm <- function(model_summary, digits = 3L){
   # total number of items
   J <- length(unlist(model_summary$setting$item_membership_list))
   # number of major item groups

@@ -2,6 +2,18 @@
 #' Functions to simulate trees and node parameters from a DDT 
 #' process.
 ###############################################################
+
+#' Add a branch to an existing tree according to the branching process of DDT
+#' @param tree_old a "phylo" object. The tree (K leaves) to which a new branch will be added.
+#' @param c hyparameter of divergence function a(t)
+#' @param c_order equals 1 (default) or 2 to choose divergence function
+#'  a(t) = c/(1-t) or c/(1-t)^2.
+#' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+#'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
+#'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
+#'    theta = 0 in inference because multifurcating trees have not been tested rigorously.
+#' @importFrom ape Ntip
+#' @return a "phylo" object. A tree with K+1 leaves.
 add_one_sample <- function(tree_old, c, c_order, theta, alpha){
   tree <- tree_old
   # get information from the existing tree
@@ -18,7 +30,7 @@ add_one_sample <- function(tree_old, c, c_order, theta, alpha){
   # root node starts from time 0
   start_time = 0
   # get the root node index
-  root_node <- rootNode(tr_phylo4)
+  root_node <- phylobase::rootNode(tr_phylo4)
   # get the index of the child of the root node
   root_child <- phylobase::descendants(tr_phylo4, root_node, "child")
   # cat("root_child = ", root_child)
@@ -279,13 +291,15 @@ simulate_lcm_response <- function(N, response_prob, class_probability){
 #' @family simulate DDT-LCM data
 #'@export
 simulate_lcm_given_tree <- function(tree_phylo, N, 
-            class_probability = rep(1, K), item_membership_list, Sigma_by_group = NULL, 
+            class_probability = 1, item_membership_list, Sigma_by_group = NULL, 
             root_node_location = 0, seed_parameter = 1, seed_response = 1) {
 
   if (!inherits(tree_phylo, "phylo")){
     stop("Argument `tree_phylo` should be a 'phylo' object.")
   }
   set.seed(seed_parameter)
+  K <- phylobase::nTips(tree_phylo)
+  # print(K)
   # simulate node parameters along the tree
   tree_phylo4d <- simulate_parameter_on_tree(tree_phylo, Sigma_by_group, item_membership_list, root_node_location)
   
@@ -299,6 +313,9 @@ simulate_lcm_given_tree <- function(tree_phylo, N,
   response_probs <- expit(leaf_data)
   set.seed(seed_response)
   # simulate multivariate responses
+  if (length(class_probability) == 1){
+    class_probability <- rep(class_probability, K)
+  }
   sim_responses <- simulate_lcm_response(N, response_probs, class_probability)
   # N x J binary response matrix
   response_matrix <- sim_responses$response_matrix
