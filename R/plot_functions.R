@@ -17,6 +17,7 @@ plot.summary.ddt_lcm <- function(x, plot_option = c("all", "profile", "tree"),
                                                                           "#0072B2", "#D55E00", "#CC79A7", "#F0E442", "#999999")){
   plot_option = match.arg(plot_option, c("all", "profile", "tree"))
   tree_with_parameter <- x$tree_map
+  K <- x$tree_Sigma
   response_prob <- matrix(x$response_probs_summary[,"Mean"], nrow = K)
   item_membership_list <- x$setting$item_membership_list
   class_probability <- x$class_probs_summary[,"Mean"]
