@@ -152,11 +152,11 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
   if (length(fixed_initials) != 6){
     if (method_lcm == "poLCA"){
       # run classical LCM on the responses
-      simple_lcm <- initialize_poLCA(K=K, response_matrix, ...)
+      simple_lcm <- initialize_poLCA(K=K, data, ...)
       # simple_lcm <- initialize_poLCA(K=K, response_matrix, maxiter=100,
       #                 tol=1e-5, na.rm=FALSE, nrep=10, verbose=FALSE, calc.se=TRUE)
     } else if (method_lcm == "random"){
-      simple_lcm <- initialize_randomLCM(K=K, response_matrix)
+      simple_lcm <- initialize_randomLCM(K=K, data)
     } else {
       stop("Initialization method for LCM should be chosen from 'poLCA' or 'random'.")
     }
