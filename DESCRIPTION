@@ -1,7 +1,7 @@
 Package: ddtlcm
 Type: Package
 Title: Latent class analysis with Dirichlet diffusion tree process prior 
-Version: 0.1.0
+Version: 0.1.1
 Date: 2023-05-01
 Authors@R: c(
      person("Mengbing", "Li", 
@@ -24,19 +24,19 @@ Depends:
 Imports:
     ape (>= 5.6-2),
     data.table (>= 1.14.4),
-    dplyr (>= 1.1.1),
     extraDistr (>= 1.9.1),
     ggbrace (>= 0.1.0),
     ggplot2 (>= 3.4.0),
+    ggpubr (>= 0.6.0),
+    ggtext (>= 0.1.2),
     ggtree (>= 3.4.0),
     label.switching (>= 1.8),
     matrixStats (>= 0.62.0),
+    methods (>= 4.2.3),
     phylobase (>= 0.8.10),
     poLCA (>= 1.6.0.1),
-    scatterplot3d (>= 0.3-43),
     truncnorm (>= 1.0-8),
     BayesLogit (>= 2.1),
-    MASS (>= 7.3-58.1),
     Matrix (>= 1.5-1),
     R.utils (>= 2.12.2)
 Suggests:

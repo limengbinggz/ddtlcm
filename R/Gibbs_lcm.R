@@ -3,7 +3,7 @@
 #' to sample LCM parameters.
 ###############################################################
 
-#'@description Sample item group-specific variances through Gibbs sampler
+#'Sample item group-specific variances through Gibbs sampler
 #'@param shape0 a vector of G elements, each being the shape of the
 #'    Inverse-Gamma prior of group g
 #'@param rate0 a vector of G elements, each being the rate of the
@@ -34,23 +34,19 @@ sample_sigmasq <- function(shape0, rate0, dist_mat, item_membership_list, locati
 
 
 
-#'@description Sample the leaf locations and Polya-Gamma auxilliary variables
+#'Sample the leaf locations and Polya-Gamma auxilliary variables
 #'@param item_membership_list a vector of G elements, each indicating the number of
 #'    items in this group
-#'@param root_location a vector of length J. Location of the root node on the tree
 #'@param dist_mat_old a list of leaf covariance matrix from the previous iteration. The list
 #'    has length G, the number of item groups
 #'@param Sigma_by_group a vector of length G, each denoting the variance of the
 #'    brownian motion
 #'@param pg_mat a K by J matrix of PG variables from the previous iteration
-#'@param Kappa a K by J matrix of parameters when using PG augmentation. It equals
-#'    ClassItem - 0.5 * Class_count
-#'@param Class_count a vector of length K, where the k-th element counts the number of
-#'    individuals belonging to class k
 #'@return a numeric vector of G elements, each being the newly sampled variance
 #'    of the latent location of this group
 sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
-                                     Sigma_by_group, pg_mat, a_pg, auxiliary_mat, auxiliary_mat_range, class_assignments){
+                                     Sigma_by_group, pg_mat, a_pg, auxiliary_mat, 
+                                     auxiliary_mat_range, class_assignments){
   N <- nrow(pg_mat)
   # number of classes
   K <- ncol(dist_mat_old$Dhalf_Ut)
@@ -96,7 +92,7 @@ sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
 
 
 
-#'@description sample individual class assignment Z_i, i = 1, ..., N
+#'sample individual class assignment Z_i, i = 1, ..., N
 #'@param data a N by J binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
 #'@param leaf_data a K by J matrix of logit(theta_{kj})

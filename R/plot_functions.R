@@ -80,7 +80,9 @@ plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_memb
          node parameters on the tree.")
   }
   
+  
   ## plot tree with branch length
+  branch = branch.length = NULL # Setting the variables to NULL first to avoid NSE notes in R CMD check
   t1 <- ggtree(tree_with_parameter) +
     geom_tiplab() + #size = 8
     labs(title = "Tree") +
@@ -92,6 +94,11 @@ plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_memb
   # need to change the tip label of the tree to match the class index from 1 to K
   class_order <- data.table(t1$data[t1$data$label %in% paste0("v", 1:K), c("label", "y")])
   class_order <- class_order[order(-y),]
+  
+  # due to NSE notes in R CMD check
+  node_label_new = Class_index = Item = item_names = item_group = item_names_factor = NULL 
+  y = value = color = NULL 
+  
   class_order[, node_label_new := paste0("v", 1:K)]
   # class_order <- data.table(t1$data[t1$data$label %in% paste0("v", 1:K), c("label", "y")] %>% arrange(-y))
   # node_order_new <- order(as.numeric(gsub("v", "", class_order$label)))
@@ -208,6 +215,8 @@ plot_tree_with_heatmap <- function(tree_with_parameter, response_prob, item_memb
     theme(plot.margin=unit(c(0.3, 0.3, 0.3, 0.3), "cm"))
   # leaf_data <- expit(as.matrix(tree_with_parameter@data[as.character(1:K), 1:J]))
   dat_response_prob <- data.table(value = c(response_prob))
+  item = y = value = group_label = NULL # due to NSE notes in R CMD check
+  
   dat_response_prob[, class := rep(1:K, J)]
   dat_response_prob[, item := rep(1:J, each = K)]
   

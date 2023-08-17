@@ -23,6 +23,8 @@ attach_subtree(
 \item{detach_div_time}{divergence time of subtree when it was extracted from the original tree}
 
 \item{pa_detach_node_label}{label of the parent node of the detached node}
+
+\item{c_order}{equals 1 (default) or 2 to choose divergence function}
 }
 \description{
 Attach a subtree to a given DDT at a randomly selected location

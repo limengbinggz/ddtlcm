@@ -4,12 +4,12 @@
 \alias{initialize_randomLCM}
 \title{Provide a random initial response profile based on latent class mode}
 \usage{
-initialize_randomLCM(K, response_matrix)
+initialize_randomLCM(K, data)
 }
 \arguments{
 \item{K}{number of latent classes}
 
-\item{response_matrix}{a N by J observed binary matrix, where the i,j-th element is the response
+\item{data}{a N by J observed binary matrix, where the i,j-th element is the response
 of item j for individual i}
 }
 \value{

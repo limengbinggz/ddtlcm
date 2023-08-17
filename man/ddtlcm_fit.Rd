@@ -101,3 +101,9 @@ in the DDT branching process.}
 Use DDT-LCM to estimate latent class and tree on class profiles for
 multivariate binary outcomes.
 }
+\examples{
+# load the MAP tree structure obtained from the real HCHS/SOL data
+data(synthetic_data_K3)
+list2env(setNames(data_synthetic, names(data_synthetic)), envir = parent.frame()) 
+result <- ddtlcm_fit(K = 3, data = response_matrix, item_membership_list, total_iters = 50)
+}

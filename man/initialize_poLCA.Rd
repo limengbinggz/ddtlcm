@@ -4,12 +4,12 @@
 \alias{initialize_poLCA}
 \title{Estimate an initial response profile from latent class model using poLCA()}
 \usage{
-initialize_poLCA(K, response_matrix, ...)
+initialize_poLCA(K, data, ...)
 }
 \arguments{
 \item{K}{number of latent classes}
 
-\item{response_matrix}{a N by J observed binary matrix, where the i,j-th element is the response
+\item{data}{a N by J observed binary matrix, where the i,j-th element is the response
 of item j for individual i}
 
 \item{...}{optional arguments for the poLCA function}

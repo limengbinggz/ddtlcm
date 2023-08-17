@@ -87,7 +87,7 @@ We start with demonstrating how a semi-synthetic dataset is simulated using the 
 ```{r}
 library(ddtlcm)
 # load the MAP tree structure obtained from the real HCHS/SOL data
-data(hchs_tree_nodata)
+data(hchs_tree)
 
 # look at items in group 1
 g <- 1

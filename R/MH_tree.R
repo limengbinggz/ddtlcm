@@ -156,6 +156,7 @@ reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
 #' @param tree_kept the tree to be attached to
 #' @param detach_div_time divergence time of subtree when it was extracted from the original tree
 #' @param pa_detach_node_label label of the parent node of the detached node
+#' @param c_order equals 1 (default) or 2 to choose divergence function
 #' @importFrom ape bind.tree
 attach_subtree <- function(subtree, tree_kept, detach_div_time, pa_detach_node_label, c,
                            c_order = 1, theta=0.0, alpha=0.0){
@@ -308,7 +309,7 @@ proposal_log_prob <- function(old_tree_phylo4, tree_kept, old_detach_pa_div_time
 }
 
 
-#'@description Sample divergence function parameter c for a(t) = c / (1-t) through Gibbs sampler
+#'Sample divergence function parameter c for a(t) = c / (1-t) through Gibbs sampler
 #'@param shape0 shape of the Inverse-Gamma prior
 #'@param rate0 rate of the Inverse-Gamma prior
 #'@param tree_structure a data.frame containing the divergence times and number of
@@ -323,7 +324,7 @@ sample_c_one <- function(shape0, rate0, tree_structure){
   return(rgamma(1, shape = shape, rate = rate))
 }
 
-#' Sample divergence function parameter c for a(t) = c / (1-t)^2 through Gibbs sampler
+#'Sample divergence function parameter c for a(t) = c / (1-t)^2 through Gibbs sampler
 #'@param shape0 shape of the Inverse-Gamma prior
 #'@param rate0 rate of the Inverse-Gamma prior
 #'@param tree_structure a data.frame containing the divergence times and number of
@@ -347,6 +348,7 @@ sample_c_two <- function(shape0, rate0, tree_structure){
 #'@param item_membership_list a vector of G elements, each indicating the number of
 #'    items in this group
 #'@param c a number of the divergence hyperparameter from the previous iteration
+#' @param c_order equals 1 (default) or 2 to choose divergence function
 #'@param tree_structure_old a data.frame of tree structure from the previous iteration. Each row
 #'    contains information of an internal node, including divergence times, number of data points
 #'    traveling through the left and right branches

@@ -1,6 +1,6 @@
 
 #' Summarize the output of a ddt_lcm model
-#' @param model a "ddt_lcm" object
+#' @param result a "ddt_lcm" object
 #' @param burnin number of samples to discard from the posterior chain as burn-ins. Default is 3000.
 #' @param relabel If TRUE, perform post-hoc label switching using the Equivalence Classes 
 #'  Representatives (ECR) method to solve non-identifiability issue in mixture models. If FALSE,
@@ -12,10 +12,11 @@
 #' @family ddt_lcm results
 #' @export
 summary.ddt_lcm <- function(result, burnin = 3000, relabel = T, be_quiet = F){
-  if (class(result) != "ddt_lcm"){
+  if (!inherits(result, "ddt_lcm")){
     stop("result should be a class ddt_lcm object.")
   }
   total_iters <- length(result$loglikelihood)
+  item_membership_list <- result$setting$item_membership_list
   # total number of items
   J <- length(unlist(item_membership_list))
   # number of major item groups

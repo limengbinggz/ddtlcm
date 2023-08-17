@@ -1,20 +1,20 @@
 #' Estimate an initial response profile from latent class model using poLCA()
 #'@param K number of latent classes
-#'@param response_matrix a N by J observed binary matrix, where the i,j-th element is the response
+#'@param data a N by J observed binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
 #'@param ... optional arguments for the poLCA function
 #'@family initialize parameters
 #'@return a K by J probability matrix, the k,j-th entry being the response probability to item
 #'    j of an individual in class k
-initialize_poLCA <- function(K, response_matrix, ...){
-  variable_names <- colnames(response_matrix)
+initialize_poLCA <- function(K, data, ...){
+  variable_names <- colnames(data)
   fm <- as.formula(paste("cbind(", paste(variable_names, collapse= ","), ") ~ 1"))
-  # response_matrix[,] <- as.integer(response_matrix[,])
-  model <- poLCA(fm, data.frame(response_matrix+1), nclass=K, ...)
-  # model <- poLCA(fm, data.frame(response_matrix+1), nclass=K, maxiter=100,
+  # data[,] <- as.integer(data[,])
+  model <- poLCA(fm, data.frame(data+1), nclass=K, ...)
+  # model <- poLCA(fm, data.frame(data+1), nclass=K, maxiter=100,
   #                tol=1e-5, na.rm=FALSE, nrep=10, verbose=FALSE, calc.se=TRUE)
-  response_prob_simple_lcm <- matrix(0, nrow = K, ncol = ncol(response_matrix))
-  for (j in 1:ncol(response_matrix)) {
+  response_prob_simple_lcm <- matrix(0, nrow = K, ncol = ncol(data))
+  for (j in 1:ncol(data)) {
     response_prob_simple_lcm[,j] <- model$probs[[variable_names[j]]][,2]
   }
   colnames(response_prob_simple_lcm) <- variable_names
@@ -27,13 +27,13 @@ initialize_poLCA <- function(K, response_matrix, ...){
 
 #' Provide a random initial response profile based on latent class mode
 #'@param K number of latent classes
-#'@param response_matrix a N by J observed binary matrix, where the i,j-th element is the response
+#'@param data a N by J observed binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
 #'@return a K by J probability matrix, the k,j-th entry being the response probability to item
 #'    j of an individual in class k
-initialize_randomLCM <- function(K, response_matrix){
-  J <- ncol(response_matrix)
-  N <- nrow(response_matrix)
+initialize_randomLCM <- function(K, data){
+  J <- ncol(data)
+  N <- nrow(data)
   # randomly sample initial response probabilities
   response_probs <- matrix(runif(K*J), nrow=K, ncol=J)
 
@@ -153,7 +153,7 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
     if (method_lcm == "poLCA"){
       # run classical LCM on the responses
       simple_lcm <- initialize_poLCA(K=K, data, ...)
-      # simple_lcm <- initialize_poLCA(K=K, response_matrix, maxiter=100,
+      # simple_lcm <- initialize_poLCA(K=K, data, maxiter=100,
       #                 tol=1e-5, na.rm=FALSE, nrep=10, verbose=FALSE, calc.se=TRUE)
     } else if (method_lcm == "random"){
       simple_lcm <- initialize_randomLCM(K=K, data)

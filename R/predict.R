@@ -37,6 +37,7 @@ predict.summary.ddt_lcm <- function(model_summary, data){
 predict.ddt_lcm <- function(model, data, burnin = 3000){ 
   total_iters <- length(model$loglikelihood)
   K <- model$setting$K
+  N <- nrow(data)
   
   class_assignment_freq <- matrix(0, nrow = N, ncol = K)
   for (iter in (burnin+1):total_iters) {

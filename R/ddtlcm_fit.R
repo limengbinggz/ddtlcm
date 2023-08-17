@@ -80,11 +80,11 @@
 #' \item{`data`}{the input data matrix}
 #' }
 #' 
-#' @example \dontrun{
-#'K <- 3
-#'set.seed(999)
-#'result <- ddtlcm(K, data = response_matrix, item_membership_list, total_iters = 1000)
-#'}
+#'@examples
+#'# load the MAP tree structure obtained from the real HCHS/SOL data
+#'data(synthetic_data_K3)
+#'list2env(setNames(data_synthetic, names(data_synthetic)), envir = parent.frame()) 
+#'result <- ddtlcm_fit(K = 3, data = response_matrix, item_membership_list, total_iters = 50)
 #'@export
 ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000, 
                    initials = list(), priors = list(),

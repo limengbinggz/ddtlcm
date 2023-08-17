@@ -25,6 +25,8 @@ items in this group}
 
 \item{c}{a number of the divergence hyperparameter from the previous iteration}
 
+\item{c_order}{equals 1 (default) or 2 to choose divergence function}
+
 \item{tree_structure_old}{a data.frame of tree structure from the previous iteration. Each row
 contains information of an internal node, including divergence times, number of data points
 traveling through the left and right branches}
