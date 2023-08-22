@@ -223,6 +223,7 @@ plot_tree_with_heatmap <- function(tree_with_parameter, response_prob, item_memb
     stop("The input list 'item_membership_list' should contain indices for all columns of
          node parameters on the tree.")
   }
+  branch = branch.length = NULL # Setting the variables to NULL first to avoid NSE notes in R CMD check
   t1 <- ggtree(tree_with_parameter) +
     geom_tiplab(size = 4) +
     geom_nodelab(size = 4) +
@@ -231,7 +232,9 @@ plot_tree_with_heatmap <- function(tree_with_parameter, response_prob, item_memb
     coord_cartesian(clip="off") +
     geom_brace(aes_(x=c(0, 1), y=c(0.4, 0), label = paste("Group", 1)),
                inherit.data=F, rotate=180, labelsize=3.5, color = "white") +
-    theme(plot.margin=unit(c(0.3, 0.3, 0.3, 0.3), "cm"))
+    theme(plot.margin=unit(c(0.3, 0.3, 0.3, 0.3), "cm")) +
+    geom_text(aes(x=branch, label=signif(branch.length, 2)), #size=6, 
+              vjust=-.3, color = "firebrick")
   # leaf_data <- expit(as.matrix(tree_with_parameter@data[as.character(1:K), 1:J]))
   dat_response_prob <- data.table(value = c(response_prob))
   item = y = value = group_label = NULL # due to NSE notes in R CMD check
