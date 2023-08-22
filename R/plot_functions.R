@@ -29,10 +29,11 @@ plot.summary.ddt_lcm <- function(x, log=TRUE,
   K <- nrow(x$tree_Sigma)
   response_prob <- matrix(x$response_probs_summary[,"Mean"], nrow = K)
   item_membership_list <- x$setting$item_membership_list
-  class_probability <- x$class_probs_summary[,"Mean"]
+  class_probability_lower <- x$class_probs_summary[,"2.5%"]
+  class_probability_higher <- x$class_probs_summary[,"97.5%"]
   plots <- plot_tree_with_barplot(tree_with_parameter, response_prob, item_membership_list, 
-                         item_name_list, class_probability, color_palette,
-                         return_separate_plots = T)
+                         item_name_list, class_probability, class_probability_lower, class_probability_higher, 
+                         color_palette, return_separate_plots = T)
   probs_lower <- x$response_probs_summary[, "2.5%"]
   probs_higher <- x$response_probs_summary[, "97.5%"]
   response_prob_dat <- plots[["response_prob_dat"]]
@@ -67,6 +68,10 @@ plot.summary.ddt_lcm <- function(x, log=TRUE,
 #'  the name of the major item group.
 #' @param class_probability a length K vector, where the k-th element is the
 #'  probability of assigning an individual to class k. It does not have to sum up to 1
+#' @param class_probability_lower a length K vector, 2.5% quantile of posterior 
+#'  the distribution.
+#' @param class_probability_higher a length K vector, 97.5% quantile of posterior 
+#'  the distribution.
 #' @param color_palette a vector of color names. Default is a color-blinded friendly palette.
 #' @param return_separate_plots If FALSE (default), print the combined plot of MAP tree and 
 #'  class profiles. If TRUE, return the tree plot, class profile plot, and data.table
@@ -77,6 +82,7 @@ plot.summary.ddt_lcm <- function(x, log=TRUE,
 #' @export
 plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_membership_list, 
                                    item_name_list = NULL, class_probability = NULL, 
+                                   class_probability_lower = NULL, class_probability_higher = NULL, 
                                    color_palette = c("#E69F00", "#56B4E9", "#009E73", "#000000", 
                                                      "#0072B2", "#D55E00", "#CC79A7", "#F0E442", "#999999"),
                                    return_separate_plots = F
@@ -160,6 +166,10 @@ plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_memb
     class_label <- paste0("Class ", 1:K, ": ", round(class_probability, 2))
   } else{
     class_label <- paste0("Class ", 1:K)
+  }
+  if (!(is.null(class_probability_lower) & is.null(class_probability_higher))){
+    class_label <- paste0(class_label, 
+                          " (", round(class_probability_lower, 2), ", ", round(class_probability_higher, 2), ")")
   }
   response_prob_dat$Class <- factor(response_prob_dat$Class_index, levels = 1:K, labels = class_label)
   

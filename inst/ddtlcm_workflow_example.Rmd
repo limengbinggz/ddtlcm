@@ -88,6 +88,8 @@ We start with demonstrating how a semi-synthetic dataset is simulated using the 
 library(ddtlcm)
 # load the MAP tree structure obtained from the real HCHS/SOL data
 data(data_hchs)
+# unlist the elements into variables in the global environment
+list2env(setNames(data_hchs, names(data_hchs)), envir = parent.frame()) 
 
 # look at items in group 1
 g <- 1
