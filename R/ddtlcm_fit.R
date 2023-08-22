@@ -3,7 +3,7 @@
 #' distribution of DDT-LCM
 ###############################################################
 
-#'@description Use DDT-LCM to estimate latent class and tree on class profiles for 
+#' @description Use DDT-LCM to estimate latent class and tree on class profiles for 
 #'  multivariate binary outcomes.  
 #' @param K number of classes (integer)
 #' @param data an NxJ matrix of multivariate binary responses, where
@@ -16,7 +16,7 @@
 #' \describe{
 #' \item{`tree_phylo4d`}{a phylo4d object. The initial tree have K leaves (labeled as "v1" through "vK"),
 #'  1 singleton root node (labeled as "u1"), and K-1 internal nodes (labeled as "u1" through "u{K-1}"). 
-#'  The tree also contains parameters in [tree_phylo4d@data] for the leaf nodes and the root node (which 
+#'  The tree also contains parameters for the leaf nodes and the root node (which 
 #'  equals 0). The parameters for the internal nodes can be NAs because they will not be used in the
 #'  algorithm.}
 #' \item{`response_prob`}{a K by J matrix with entries between `0` and `1`. The initial values for the 

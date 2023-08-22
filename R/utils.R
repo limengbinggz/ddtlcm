@@ -162,3 +162,141 @@ quiet <- function(x, be_quiet=T) {
     x
   }
 } 
+
+
+
+#' Create a tree-structured covariance matrix from a given tree
+#' @description Retrieve the covariance matrix of leaf nodes of a DDT tree
+#' @param tree_phylo4d a "phylo4d" object
+#' @return a K by K covariance matrix
+#' @export
+create_leaf_cor_matrix <- function(tree_phylo4d){
+  K <- nTips(tree_phylo4d)
+  # K <- nNodes(tree_phylo4d)
+  root_node <- names(rootNode(tree_phylo4d))
+  
+  # create combinations of two leaf nodes including identical combinations
+  # leaf_grid <- expand.grid(leaf_nodes, leaf_nodes)
+  leaf_grid <- expand.grid(1:K, 1:K)
+  leaf_grid <- leaf_grid[leaf_grid$Var1 >= leaf_grid$Var2, ]
+  # add "v" to match leaf node labels
+  leaf_grid[] <- data.frame(lapply(leaf_grid, function(x) paste0("v", x)))
+  ## we will construct a row covariance matrix for the matrix normal
+  # get the MRCA of each pair of leaf nodes
+  mrca_nodes <- tree_phylo4d@label[
+    as.character(apply(leaf_grid, 1, function(x) phylobase::MRCA(tree_phylo4d, x))) ]
+  
+  calculate_row_var_by_group <- function(node){
+    # internal ancestors of the MRCA
+    ancestors_internal <- c(names(shortestPath(tree_phylo4d, root_node, node)), node)
+    # parents of the internal ancestors
+    pa_ancestors_internal <- names(ancestor(tree_phylo4d, ancestors_internal))
+    # get divergence times of all ancestors of the MRCA
+    branch_lengths <- nodeHeight(tree_phylo4d, c(root_node, ancestors_internal), "root")
+    # branch_lengths <- diff(c(0, branch_lengths))
+    branch_lengths <- diff(branch_lengths)
+    names(branch_lengths) <- ancestors_internal
+    
+    # compute row variance of the matrix normal distribution of leaf nodes
+    row_var_by_group <- sum(branch_lengths)
+    return(row_var_by_group)
+  }
+  unique_mrca_nodes <- unique(mrca_nodes)
+  mrca_var_by_group <- unlist(lapply(tree_phylo4d@label, calculate_row_var_by_group))
+  # mrca_var_by_group <- matrix(unlist(mrca_var_by_group), ncol = G, nrow = 2*K-1, byrow = TRUE)
+  names(mrca_var_by_group) <- tree_phylo4d@label
+  row_var_by_group <- mrca_var_by_group[mrca_nodes]
+  
+  ## now construct a pairwise distance matrix between leaf nodes
+  tree_Sigma_hclust <- matrix(NA, nrow = K, ncol = K)
+  # create distance matrix, equivalently, row covariance matrix
+  tree_Sigma_hclust[lower.tri(tree_Sigma_hclust,diag = T)] <- row_var_by_group
+  tree_Sigma_hclust[upper.tri(tree_Sigma_hclust)] <- t(tree_Sigma_hclust)[upper.tri(tree_Sigma_hclust)]
+  rownames(tree_Sigma_hclust) <- colnames(tree_Sigma_hclust) <- paste0("v", 1:K)
+  
+  return(tree_Sigma_hclust)
+}
+
+
+
+
+#' Compute information criteria for the DDT-LCM model
+#' @description Compute information criteria for the DDT-LCM model, including the Widely Applicable 
+#'  Information Criterion (WAIC), and Deviance Information Criterion (DIC). WAIC and DIC are computed 
+#'  using two different methods described in Gelman, Hwang, and Vehtari (2013), one based on (1) posterior
+#'  means and the other based on (2) posterior variances.
+#' @param model a "ddt_lcm" object
+#' @param burnin an integer specifying the number of burn-in iterations from MCMC chain
+#' @param ncores an integer specifying the number of nores to
+#' @importFrom parallel mclapply
+#' @return a named list of the following elements
+#' \describe{
+#' \item{`WAIC_result`}{a list of WAIC-related results computed using the two methods}
+#' \item{`DIC1`}{DIC computed using method 1.}
+#' \item{`DIC2`}{DIC computed using method 2.}
+#' }
+#' @export
+compute_IC <- function(model, burnin = 5000, ncores = 1L){
+  # require(parallel)
+  num_samples <- length(model$loglikelihood[-(1:burnin)]) - 1
+  dat <- model$data
+  N <- nrow(model$data)
+  K <- model$setting$K
+  
+  ### calculate WAIC
+  compute_posteriorllk_matrix <- function(iter){
+    # print(iter)
+    leaf_data <- t(matrix(model$response_probs_samples[, iter], nrow = K))
+    # marginal loglikelihood of LCM, integrated over Z
+    class_probability <- log(model$class_probs_samples[, iter])
+    logllk_lcm_sample <- rep(0, N)
+    for (i in 1:N) {
+      logllk_lcm_sample[i] <- logSumExp(class_probability + colSums(dat[i,] * log(leaf_data) + (1 - dat[i,]) * log(1 - leaf_data)))
+    }
+    return(logllk_lcm_sample)
+  }
+  llk_matrix <- mclapply(1:num_samples+burnin, function(x) compute_posteriorllk_matrix(x), mc.cores = ncores) #num_samples
+  llk_matrix <- matrix(unlist(llk_matrix), nrow = N, ncol = num_samples, byrow = TRUE)
+  WAIC_result <- WAIC(llk_matrix)
+  
+  
+  ### calculate DIC
+  s <- summary(model, burnin)
+  leaf_data <- t(matrix(s$response_probs_summary[,'Mean'], nrow = K))
+  class_probability <- s$class_probs_summary[,"Mean"]
+  logllk_lcm_sample_thetahat <- 0
+  for (i in 1:N) {
+    logllk_lcm_sample_thetahat <- logllk_lcm_sample_thetahat +
+      logSumExp(class_probability + colSums(dat[i,] * log(leaf_data) + (1 - dat[i,]) * log(1 - leaf_data)))
+  }
+  logllk_allindividuals <- colSums(llk_matrix) #apply(llk_matrix, 2, logSumExp)
+  p_DIC_1 <- 2 * (logllk_lcm_sample_thetahat - mean(logllk_allindividuals))
+  p_DIC_2 <- 2 * var(logllk_allindividuals)
+  
+  DIC1 <- -2 * (logllk_lcm_sample_thetahat + p_DIC_1)
+  DIC2 <- -2 * (logllk_lcm_sample_thetahat + p_DIC_2)
+  
+  return(list(WAIC_result = WAIC_result, DIC1 = DIC1, DIC2 = DIC2))
+}
+
+
+#' Compute WAIC
+#' @description Compute the Widely Applicable Information Criterion (WAIC), also known
+#'   as the Widely Available Information Criterion or the Watanable-Akaike, of Watanabe (2010).
+#' @param llk_matrix a N x S matrix, where N is the number of individuals and S is the number of posterior samples
+#' @importFrom matrixStats rowVars
+#' @export
+WAIC <- function(llk_matrix) {
+  # require(matrixStats)
+  #  log pointwise predictive density
+  S <- ncol(llk_matrix)
+  part <- apply(llk_matrix, 1, logSumExp)
+  lppd <- - nrow(llk_matrix) * log(S) + sum(part)
+  pWAIC1 <- 2 * (lppd - sum(llk_matrix) / S)
+  pWAIC2 <- sum(rowVars(llk_matrix))
+  elppd_WAIC1 <- -2*lppd + 2*pWAIC1
+  elppd_WAIC2 <- -2*lppd + 2*pWAIC2
+  return(list(WAIC1=elppd_WAIC1, WAIC2=elppd_WAIC2, lppd=lppd, pWAIC2=pWAIC2, pWAIC1=pWAIC1))
+}
+
+

@@ -6,10 +6,12 @@
 \usage{
 \method{plot}{summary.ddt_lcm}(
   x,
+  log = TRUE,
   plot_option = c("all", "profile", "tree"),
   item_name_list = NULL,
   color_palette = c("#E69F00", "#56B4E9", "#009E73", "#000000", "#0072B2", "#D55E00",
-    "#CC79A7", "#F0E442", "#999999")
+    "#CC79A7", "#F0E442", "#999999"),
+  ...
 )
 }
 \arguments{

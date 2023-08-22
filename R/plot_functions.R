@@ -1,3 +1,10 @@
+#' Generic function
+#' @param x The object to print
+#' @param \dots Further arguments passed to each method
+#' @export
+plot <- function(x, log=TRUE,  ...) UseMethod('plot')
+
+
 
 #' Plot the MAP tree and class profiles of summarized DDT-LCM results
 #' @param x a "summary.ddt_lcm" object
@@ -12,9 +19,11 @@
 #' @importFrom ggplot2 geom_errorbar
 #' @importFrom ggpubr ggarrange
 #' @export
-plot.summary.ddt_lcm <- function(x, plot_option = c("all", "profile", "tree"),
+plot.summary.ddt_lcm <- function(x, log=TRUE, 
+                                 plot_option = c("all", "profile", "tree"),
                                  item_name_list = NULL, color_palette = c("#E69F00", "#56B4E9", "#009E73", "#000000", 
-                                                                          "#0072B2", "#D55E00", "#CC79A7", "#F0E442", "#999999")){
+                                                                          "#0072B2", "#D55E00", "#CC79A7", "#F0E442", "#999999"),
+                                 ...){
   plot_option = match.arg(plot_option, c("all", "profile", "tree"))
   tree_with_parameter <- x$tree_map
   K <- nrow(x$tree_Sigma)

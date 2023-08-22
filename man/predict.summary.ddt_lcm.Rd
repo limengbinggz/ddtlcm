@@ -4,10 +4,10 @@
 \alias{predict.summary.ddt_lcm}
 \title{Prediction of class memberships from posterior summaries}
 \usage{
-\method{predict}{summary.ddt_lcm}(model_summary, data)
+\method{predict}{summary.ddt_lcm}(object, data, ...)
 }
 \arguments{
-\item{model_summary}{a "summary.ddt_lcm" object}
+\item{object}{a "summary.ddt_lcm" object}
 
 \item{data}{an NxJ matrix of multivariate binary responses, where
 N is the number of individuals, and J is the number of granular items}

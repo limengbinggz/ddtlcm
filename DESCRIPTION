@@ -16,9 +16,8 @@ Authors@R: c(
             role=c("ctb"))
      )
 Maintainer: Mengbing Li <mengbing@umich.edu>
-Description: This package implements fast algorithms to fit latent class models
-    for integrating given tree-information that specifies the relatedness among
-    the observations. 
+Description: This package implements a Bayesian algorithm to fit latent class models,
+    particulary useful for weakly separated latent classes. 
 Depends:
     R(>= 4.0.0)
 Imports:

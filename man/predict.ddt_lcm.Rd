@@ -4,10 +4,10 @@
 \alias{predict.ddt_lcm}
 \title{Prediction of class memberships from posterior predictive distributions}
 \usage{
-\method{predict}{ddt_lcm}(model, data, burnin = 3000)
+\method{predict}{ddt_lcm}(object, data, burnin = 3000, ...)
 }
 \arguments{
-\item{model}{a ddt_lcm object}
+\item{object}{a ddt_lcm object}
 
 \item{data}{an NxJ matrix of multivariate binary responses, where
 N is the number of individuals, and J is the number of granular items}

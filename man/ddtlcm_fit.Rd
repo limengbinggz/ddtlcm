@@ -32,7 +32,7 @@ indices of \code{data} corresponding to items in major group g}
 \describe{
 \item{\code{tree_phylo4d}}{a phylo4d object. The initial tree have K leaves (labeled as "v1" through "vK"),
 1 singleton root node (labeled as "u1"), and K-1 internal nodes (labeled as "u1" through "u{K-1}").
-The tree also contains parameters in \link{tree_phylo4d@data} for the leaf nodes and the root node (which
+The tree also contains parameters for the leaf nodes and the root node (which
 equals 0). The parameters for the internal nodes can be NAs because they will not be used in the
 algorithm.}
 \item{\code{response_prob}}{a K by J matrix with entries between \code{0} and \code{1}. The initial values for the

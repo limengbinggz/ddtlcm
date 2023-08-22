@@ -3,8 +3,8 @@
 \docType{package}
 \name{ddtlcm}
 \alias{ddtlcm}
-\title{Dirichlet diffusion tree-latent class model (DDT-LCM)
-
+\title{Dirichlet diffusion tree-latent class model (DDT-LCM)}
+\description{
 \code{ddtlcm} is designed for
 clustering multivariate binary observations over grouped items while (1) leveraging between-cluster similarities guided
 by an unknown tree that is simultaneously estimated, and (2) accounting for varying degrees of
@@ -13,7 +13,8 @@ The model guards against potential numerical and statistical instability of clas
 when classes are weakly separated under small sample sizes. This is achieved by equipping a LCM with
 a DDT process prior on the class profiles, which are the class-conditional response probabilities. The
 posterior inference algorithm is based on Metropolis-Hastings algorithm for sampling the tree structure, and
-Gibbs sampler with Polya-Gamma augmentation for the LCM parameters.}
+Gibbs sampler with Polya-Gamma augmentation for the LCM parameters.
+}
 \section{main ddtlcm wrapper function}{
 
 \code{\link[=ddtlcm_fit]{ddtlcm_fit()}}
