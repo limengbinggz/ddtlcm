@@ -2,10 +2,13 @@
 % Please edit documentation in R/loglikehoods.R
 \name{H_n}
 \alias{H_n}
-\title{harmonic series}
+\title{Harmonic series}
 \usage{
 H_n(k)
 }
+\arguments{
+\item{k}{a positive integer}
+}
 \description{
-harmonic series
+Harmonic series
 }

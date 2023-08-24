@@ -7,9 +7,9 @@
 predict(object, ...)
 }
 \arguments{
-\item{\dots}{Further arguments passed to each method}
+\item{object}{The object to print}
 
-\item{x}{The object to print}
+\item{\dots}{Further arguments passed to each method}
 }
 \description{
 Generic function

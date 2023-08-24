@@ -1,7 +1,15 @@
-#' compute the marginal log likelihood of the locations
-#' tree_phylo4d: tree in the phylo4d class
-#' Sigma_by_group: variance of the brownian motion
-#' dist_mat_old: a known pairwise MRCA matrix between leaf nodes, to save computation time
+#' Compute log likelihood of parameters
+#' @description Compute the marginal log likelihood of the parameters on the leaves of a tree
+#' @param tree_phylo4d a "phylo4d" object
+#' @param Sigma_by_group a vector of diffusion variances of G groups 
+#' @param item_membership_list a list of G elements, where the g-th element contains the column
+#'  indices of `data` corresponding to items in major group g
+#' @param dist_mat a tree-structured covariance matrix from a given tree. Default is NULL. If given
+#'  a matrix, then computation of the covariance matrix will be skipped to save time. This is useful
+#'  in the Metropolis-Hasting algorithm when the previous proposal is not accepted.
+#' @param tol a small number to prevent underflow when computing eigenvalues
+#' @return A list of two elements: a numeric loglikelihood, a covariance matrix of the input tree
+#' @family likelihood functions
 logllk_location <- function(tree_phylo4d, Sigma_by_group, item_membership_list, dist_mat = NULL, tol = 1e-7){
   # phylobase::phylobase.options(singleton="ok")
   # total number of items
@@ -115,7 +123,8 @@ logllk_location <- function(tree_phylo4d, Sigma_by_group, item_membership_list, 
 
 
 
-#' harmonic series
+#' Harmonic series
+#' @param k a positive integer
 H_n <- function(k){
   if(k == 0) {
     return(0)
@@ -124,45 +133,64 @@ H_n <- function(k){
   }
 }
 
-#' compute factor in the exponent of the divergence time distribution
-#' l = number of data points to the left
-#' r = number of data points to the right
+#' Compute factor in the exponent of the divergence time distribution
+#' @param l number of data points to the left
+#' @param r number of data points to the right
 J_n <- function(l, r){
   sum(1/l:(r+l-1)) - H_n(r - 1)
   # H_n(r + l - 1) - H_n(l - 1) - H_n(r - 1)
 }
 
 
-#' compute loglikelihood of divergence times for a(t) = c/(1-t)
+#' Compute loglikelihood of divergence times for a(t) = c/(1-t)
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param l number of data points to the left
+#' @param r number of data points to the right
+#' @param t a number in the interval (0, 1) indicating the divergence time
+#' @family likelihood functions
 logllk_div_time_one <- function(c, l, r, t){
   return( log(c) + (c*J_n(l, r)-1) * log(1-t) )
 }
 
-#' compute loglikelihood of divergence times for a(t) = c/(1-t)^2
+#' Compute loglikelihood of divergence times for a(t) = c/(1-t)^2
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param l number of data points to the left
+#' @param r number of data points to the right
+#' @param t a number in the interval (0, 1) indicating the divergence time
+#' @family likelihood functions
 logllk_div_time_two <- function(c, l, r, t){
   return( log(c) - 2*log(1-t) + c*t/(1-t)*J_n(l, r) )
 }
 
 
-#' compute loglikelihood of the tree topology
+#' Compute loglikelihood of the tree topology
+#' @param l number of data points to the left
+#' @param r number of data points to the right
+#' @family likelihood functions
 logllk_tree_topology <- function(l, r){
   return(lfactorial(l-1) + lfactorial(r-1) - lfactorial(r+l-1))
 }
 
 
 #' Calculate loglikelihood of a DDT, including the tree structure and node parameters
-#'@param response_matrix a N by J binary matrix, where the i,j-th element is the response
-#'    of item j for individual i
-#'@param leaf_data a K by J matrix of logit(theta_{kj})
-#'@param prior_class_probability a length K vector, where the k-th element is the
-#'    probability of assigning an individual to class k. It does not have to sum up to 1
-#'@param prior_dirichlet a vector of length K. The Dirichlet prior of class probabilities
-#'@param ClassItem a K by J matrix, where the k,j-th element counts the number of individuals
-#'    that belong to class k have a positive response to item j
-#'@param Class_count a length K vector, where the k-th element counts the number of individuals
-#'    belonging to class k
-#'@return a numeric of loglikelihood
-#'@export
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param c_order equals 1 if using divergence function a(t) = c / (1-t), or 2 if 
+#'  a(t) = c / (1-t)^2. Default is 1
+#' @param Sigma_by_group a vector of diffusion variances of G groups from the previous iteration
+#' @param tree_phylo4d a "phylo4d" object
+#' @param item_membership_list a list of G elements, where the g-th element contains the column
+#'  indices of `data` corresponding to items in major group g
+#' @param tree_structure_old a list of at least named elements: loglikelihoods of the input tree topology
+#'  and divergence times. These can be directly obtained from the return of this function.
+#'  Default is NULL. If given a list, then computation of the loglikelihoods will be skipped to save time. 
+#'  This is useful in the Metropolis-Hasting algorithm when the previous proposal is not accepted.
+#' @param dist_mat_old a tree-structured covariance matrix from a given tree. Default is NULL. 
+#' @return a numeric of loglikelihood
+#' @family likelihood functions
+#' @export
 logllk_ddt <- function(c, c_order, Sigma_by_group, tree_phylo4d, item_membership_list,
                        tree_structure_old = NULL, dist_mat_old = NULL){
   # phylobase::phylobase.options(singleton="ok")
@@ -236,6 +264,7 @@ logllk_ddt <- function(c, c_order, Sigma_by_group, tree_phylo4d, item_membership
 #'@param Class_count a length K vector, where the k-th element counts the number of individuals
 #'    belonging to class k
 #'@return a numeric of loglikelihood
+#' @family likelihood functions
 #'@export
 logllk_lcm <- function(response_matrix, leaf_data, prior_class_probability,
                        prior_dirichlet, ClassItem, Class_count){
@@ -249,18 +278,30 @@ logllk_lcm <- function(response_matrix, leaf_data, prior_class_probability,
 
 
 #' Calculate loglikelihood of the DDT-LCM
-#'@param response_matrix a N by J binary matrix, where the i,j-th element is the response
+#' @param leaf_data a K by J matrix of logit(theta_{kj})
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param Sigma_by_group a vector of diffusion variances of G groups 
+#' @param tree_phylo4d a "phylo4d" object
+#' @param item_membership_list a list of G elements, where the g-th element contains the column
+#'  indices of `data` corresponding to items in major group g
+#' @param response_matrix a N by J binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
-#'@param leaf_data a K by J matrix of logit(theta_{kj})
-#'@param prior_class_probability a length K vector, where the k-th element is the
+#' @param tree_structure_old a list of at least named elements: loglikelihoods of the input tree topology
+#'  and divergence times. These can be directly obtained from the return of this function.
+#'  Default is NULL. If given a list, then computation of the loglikelihoods will be skipped to save time. 
+#'  This is useful in the Metropolis-Hasting algorithm when the previous proposal is not accepted.
+#' @param dist_mat_old a tree-structured covariance matrix from a given tree. Default is NULL. 
+#' @param prior_class_probability a length K vector, where the k-th element is the
 #'    probability of assigning an individual to class k. It does not have to sum up to 1
-#'@param prior_dirichlet a vector of length K. The Dirichlet prior of class probabilities
-#'@param ClassItem a K by J matrix, where the k,j-th element counts the number of individuals
+#' @param prior_dirichlet a vector of length K. The Dirichlet prior of class probabilities
+#' @param ClassItem a K by J matrix, where the k,j-th element counts the number of individuals
 #'    that belong to class k have a positive response to item j
-#'@param Class_count a length K vector, where the k-th element counts the number of individuals
+#' @param Class_count a length K vector, where the k-th element counts the number of individuals
 #'    belonging to class k
-#'@return a numeric of loglikelihood
-#'@export
+#' @return a numeric of loglikelihood
+#' @family likelihood functions
+#' @export
 logllk_ddt_lcm <- function(c, Sigma_by_group, tree_phylo4d, item_membership_list,
                            tree_structure_old = NULL, dist_mat_old = NULL,
                            response_matrix, leaf_data, prior_class_probability,

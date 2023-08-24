@@ -22,8 +22,8 @@ j of an individual in class k
 Estimate an initial response profile from latent class model using poLCA()
 }
 \seealso{
-Other initialize parameters: 
+Other initialization functions: 
 \code{\link{initialize_hclust}()},
 \code{\link{initialize}()}
 }
-\concept{initialize parameters}
+\concept{initialization functions}

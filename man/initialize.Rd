@@ -53,9 +53,18 @@ between-class correlation; default) or "sample_ddt" (randomly sample a small div
 the DDT process with c = 100)}
 
 \item{fixed_initials}{a named list of fixed initial values, including
-the Gamma prior for \code{c} and inverse-Gamma prior for \code{sigma_g^2}, e.g.,
-\code{list(shape_c = 1, rate_c = 1, shape_sigma = rep(2, G), rate_sigma = rep(2, G))}, where
-\code{G} is the number of major item groups. These values will not be changed during initialization.}
+the initial values for tree ("phylo4d"), response_prob, class_probability, class_assignments,
+Sigma_by_group, and c. Default is NULL. See}
+
+\item{fixed_priors}{a named list of fixed prior hyperparameters, including the
+the Gamma prior for \code{c}, inverse-Gamma prior for \code{sigma_g^2}, and Dirichlet prior
+for \code{pi}. Moreover, we allow for a type III generalized logistic distribution such
+that f(\code{eta}; a_pg) = \code{theta}. This becomes a standard logistic distribution when a_pg = 1. See
+Dalla Valle, L., Leisen, F., Rossini, L., & Zhu, W. (2021). A Pólya–Gamma sampler for a
+generalized logistic regression. Journal of Statistical Computation and Simulation, 91(14), 2899-2916.
+An example input list is
+\code{list(shape_c = 1, rate_c = 1, shape_sigma = rep(2, G), rate_sigma = rep(2, G), a_pg = 1.0)}, where
+\code{G} is the number of major item groups. Default is NULL.}
 
 \item{alpha, theta}{hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 For DDT, alpha = theta = 0}
@@ -69,8 +78,10 @@ phylo4d object of tree topology
 Initialize the MH-within-Gibbs algorithm for DDT-LCM
 }
 \seealso{
-Other initialize parameters: 
+\code{\link[=ddtlcm_fit]{ddtlcm_fit()}}
+
+Other initialization functions: 
 \code{\link{initialize_hclust}()},
 \code{\link{initialize_poLCA}()}
 }
-\concept{initialize parameters}
+\concept{initialization functions}

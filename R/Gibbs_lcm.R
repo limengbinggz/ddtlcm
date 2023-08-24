@@ -1,6 +1,6 @@
 ###############################################################
-#' Gibbs sampler with polya-gamma and logistic data augmentation
-#' to sample LCM parameters.
+# Gibbs sampler with polya-gamma and logistic data augmentation
+# to sample LCM parameters.
 ###############################################################
 
 #'Sample item group-specific variances through Gibbs sampler
@@ -42,8 +42,14 @@ sample_sigmasq <- function(shape0, rate0, dist_mat, item_membership_list, locati
 #'@param Sigma_by_group a vector of length G, each denoting the variance of the
 #'    brownian motion
 #'@param pg_mat a K by J matrix of PG variables from the previous iteration
-#'@return a numeric vector of G elements, each being the newly sampled variance
-#'    of the latent location of this group
+#'@param a_pg a N by J matrix of hyperparameters of the generalized logistic distribution
+#'@param auxiliary_mat a N by J matrix of truncated normal variables from previous iteration
+#'@param auxiliary_mat_range a list of two named elements: lb and ub. Each is an N by J 
+#'  matrix of the lower/upper bounds of the truncated normal variables.
+#'@param class_assignments an integer vector of length N for the individual class assignments.
+#'  Each element takes value in {1, ..., K}.
+#'@return a named list of three matrices: the newly sampled leaf parameters, the Polya-gamma random variables,
+#'  and the auxiliary truncated normal variables
 sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
                                      Sigma_by_group, pg_mat, a_pg, auxiliary_mat, 
                                      auxiliary_mat_range, class_assignments){
@@ -92,10 +98,12 @@ sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
 
 
 
-#'sample individual class assignment Z_i, i = 1, ..., N
+#' Sample individual class assignments Z_i, i = 1, ..., N
 #'@param data a N by J binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
 #'@param leaf_data a K by J matrix of logit(theta_{kj})
+#'@param a_pg a N by J matrix of hyperparameters of the generalized logistic distribution
+#'@param auxiliary_mat a N by J matrix of truncated normal variables from previous iteration
 #'@param class_probability a length K vector, where the k-th element is the
 #'    probability of assigning an individual to class k. It does not have to sum up to 1
 #'@return a vector of length N, where the i-th element is the class assignment of

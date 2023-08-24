@@ -9,6 +9,9 @@ WAIC(llk_matrix)
 \arguments{
 \item{llk_matrix}{a N x S matrix, where N is the number of individuals and S is the number of posterior samples}
 }
+\value{
+a named list
+}
 \description{
 Compute the Widely Applicable Information Criterion (WAIC), also known
 as the Widely Available Information Criterion or the Watanable-Akaike, of Watanabe (2010).

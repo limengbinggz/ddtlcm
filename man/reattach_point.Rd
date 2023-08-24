@@ -2,9 +2,7 @@
 % Please edit documentation in R/MH_tree.R
 \name{reattach_point}
 \alias{reattach_point}
-\title{choose a divergence time, location, and tree topology to reattach a subtree
-tree_kept: the tree to be attached to
-Attach a subtree to a given DDT at a randomly selected location}
+\title{Attach a subtree to a given DDT at a randomly selected location}
 \usage{
 reattach_point(tree_kept, c, c_order = 1, theta = 0, alpha = 0)
 }
@@ -32,7 +30,11 @@ individual class assignments.}
 }
 }
 \description{
-choose a divergence time, location, and tree topology to reattach a subtree
-tree_kept: the tree to be attached to
 Attach a subtree to a given DDT at a randomly selected location
 }
+\seealso{
+Other sample trees: 
+\code{\link{attach_subtree}()},
+\code{\link{random_detach_subtree}()}
+}
+\concept{sample trees}

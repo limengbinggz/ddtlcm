@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{draw_mnorm}
 \alias{draw_mnorm}
-\title{sample multivariate normal using precision matrix
+\title{Efficiently sample multivariate normal using precision matrix
 from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix}
 \usage{
 draw_mnorm(precision_mat, precision_a_vec)
@@ -14,6 +14,6 @@ draw_mnorm(precision_mat, precision_a_vec)
 Q^{-1}a}
 }
 \description{
-sample multivariate normal using precision matrix
+Efficiently sample multivariate normal using precision matrix
 from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix
 }

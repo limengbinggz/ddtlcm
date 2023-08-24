@@ -23,7 +23,7 @@ sample_tree_topology(
 \item{item_membership_list}{a vector of G elements, each indicating the number of
 items in this group}
 
-\item{c}{a number of the divergence hyperparameter from the previous iteration}
+\item{c}{hyparameter of divergence function a(t)}
 
 \item{c_order}{equals 1 (default) or 2 to choose divergence function}
 

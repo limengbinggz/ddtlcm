@@ -3,10 +3,21 @@
 #' branch lengths from the DDT branching process.
 ###############################################################
 
-
-# Metropolis-Hastings algorithm for DDT -----------------------------------
-
-#' randomly detach a subtree from a given tree
+#' @description Randomly detach a subtree from a given tree
+#' @param tree_phylo4 a "phylo4" object
+#' @return a list containing the following elements:
+#' \describe{
+#' \item{`tree_detached`}{a "phylo" tree detached from the input tree}
+#' \item{`tree_kept`}{the remaining "phylo" tree after detachment}
+#' \item{`pa_detach_node_label`}{a character label of the parent of the node 
+#'  from which the detachment happens}
+#' \item{`pa_div_time`}{a number in (0, 1) indicating the divergence time of 
+#'  the parent of the detached node}
+#' \item{`detach_div_time`}{a number in (0, 1) indicating the divergence time of the detached node}
+#' \item{`detach_node_label`}{a character label of the parent of the detached node}
+#' }
+#' @family sample trees
+#' @export
 random_detach_subtree <- function(tree_phylo4){
   # phylobase::phylobase.options(singleton="ok")
   # number of samples
@@ -60,8 +71,7 @@ random_detach_subtree <- function(tree_phylo4){
 
 
 
-#' choose a divergence time, location, and tree topology to reattach a subtree
-#' tree_kept: the tree to be attached to
+
 #' Attach a subtree to a given DDT at a randomly selected location
 #' @param tree_kept the tree to be attached to
 #' @param c hyparameter of divergence function a(t)
@@ -79,6 +89,7 @@ random_detach_subtree <- function(tree_phylo4){
 #' \item{`div_dist_to_root_child`}{a N-vector with integer entries from {1, ..., K}. The initial values for
 #'  individual class assignments.}
 #' }
+#' @family sample trees
 reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
   # number of leaves of the remaining tree
   tree_kept_ntip <- phylobase::nTips(tree_kept)
@@ -156,8 +167,14 @@ reattach_point <- function(tree_kept, c, c_order=1, theta=0.0, alpha=0.0){
 #' @param tree_kept the tree to be attached to
 #' @param detach_div_time divergence time of subtree when it was extracted from the original tree
 #' @param pa_detach_node_label label of the parent node of the detached node
+#' @param c hyparameter of divergence function a(t)
 #' @param c_order equals 1 (default) or 2 to choose divergence function
+#' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+#'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
+#'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
+#'    theta = 0 in inference because multifurcating trees have not been tested rigorously.
 #' @importFrom ape bind.tree
+#' @family sample trees
 attach_subtree <- function(subtree, tree_kept, detach_div_time, pa_detach_node_label, c,
                            c_order = 1, theta=0.0, alpha=0.0){
   # phylobase::phylobase.options(singleton="ok")
@@ -232,14 +249,37 @@ attach_subtree <- function(subtree, tree_kept, detach_div_time, pa_detach_node_l
 
 
 
+#' Calculate proposal likelihood
+#' @description Given an old tree, propose a new tree and calculate the original
+#'  and proposal tree likelihood in the DDT process
+#' @param old_tree_phylo4 the old "phylo4" object
+#' @param tree_kept the remaining "phylo" tree after detachment
+#' @param old_detach_pa_div_time a number in (0, 1) indicating the divergence time 
+#'  of the detached node on the old tree
+#' @param old_pa_detach_node_label a character label of the parent of the detached node 
+#'  on the old tree
+#' @param old_detach_node_label a character label of the detached node 
+#'  on the old tree
+#' @param new_div_time a number in (0, 1) indicating the divergence time at which
+#'  the detached subtree will be re-attached on the proposal tree
+#' @param new_attach_root,new_attach_to a character label of the starting and ending
+#'  nodes of the branch on the proposal tree, which the detached subtree will be re-attached to
+#' @param c hyparameter of divergence function a(t)
+#' @param c_order equals 1 (default) or 2 to choose divergence function
+#' @return a list containing the following elements:
+#' \describe{
+#' \item{`q_new`}{a "phylo" tree detached from the input tree}
+#' \item{`q_old`}{the remaining "phylo" tree after detachment}
+#' }
+#' @export
 proposal_log_prob <- function(old_tree_phylo4, tree_kept, old_detach_pa_div_time, old_pa_detach_node_label, old_detach_node_label,
                               new_div_time, new_attach_root, new_attach_to, c, c_order=1){
   # phylobase::phylobase.options(singleton="ok")
   if (c_order) {
-    A <- A_t_one
+    A <- a_t_one_cum
     a_t <- a_t_one
   } else{
-    A <- A_t_two
+    A <- a_t_two_cum
     a_t <- a_t_two
   }
   # if the given only has one leaf
@@ -347,7 +387,7 @@ sample_c_two <- function(shape0, rate0, tree_structure){
 #'@param Sigma_by_group a vector of diffusion variances of G groups from the previous iteration
 #'@param item_membership_list a vector of G elements, each indicating the number of
 #'    items in this group
-#'@param c a number of the divergence hyperparameter from the previous iteration
+#' @param c hyparameter of divergence function a(t)
 #' @param c_order equals 1 (default) or 2 to choose divergence function
 #'@param tree_structure_old a data.frame of tree structure from the previous iteration. Each row
 #'    contains information of an internal node, including divergence times, number of data points

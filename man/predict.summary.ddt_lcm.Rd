@@ -11,6 +11,8 @@
 
 \item{data}{an NxJ matrix of multivariate binary responses, where
 N is the number of individuals, and J is the number of granular items}
+
+\item{\dots}{Further arguments passed to each method}
 }
 \description{
 Predict individual class memberships based on posterior summary (point estimates

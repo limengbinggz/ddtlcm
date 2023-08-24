@@ -26,10 +26,20 @@ has length G, the number of item groups}
 brownian motion}
 
 \item{pg_mat}{a K by J matrix of PG variables from the previous iteration}
+
+\item{a_pg}{a N by J matrix of hyperparameters of the generalized logistic distribution}
+
+\item{auxiliary_mat}{a N by J matrix of truncated normal variables from previous iteration}
+
+\item{auxiliary_mat_range}{a list of two named elements: lb and ub. Each is an N by J
+matrix of the lower/upper bounds of the truncated normal variables.}
+
+\item{class_assignments}{an integer vector of length N for the individual class assignments.
+Each element takes value in {1, ..., K}.}
 }
 \value{
-a numeric vector of G elements, each being the newly sampled variance
-of the latent location of this group
+a named list of three matrices: the newly sampled leaf parameters, the Polya-gamma random variables,
+and the auxiliary truncated normal variables
 }
 \description{
 Sample the leaf locations and Polya-Gamma auxilliary variables

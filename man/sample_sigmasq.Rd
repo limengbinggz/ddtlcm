@@ -2,9 +2,7 @@
 % Please edit documentation in R/Gibbs_lcm.R
 \name{sample_sigmasq}
 \alias{sample_sigmasq}
-\title{Gibbs sampler with polya-gamma and logistic data augmentation
-to sample LCM parameters.
-Sample item group-specific variances through Gibbs sampler}
+\title{Sample item group-specific variances through Gibbs sampler}
 \usage{
 sample_sigmasq(shape0, rate0, dist_mat, item_membership_list, locations)
 }
@@ -28,7 +26,5 @@ a numeric vector of G elements, each being the newly sampled variance
 of the latent location of this group
 }
 \description{
-Gibbs sampler with polya-gamma and logistic data augmentation
-to sample LCM parameters.
 Sample item group-specific variances through Gibbs sampler
 }

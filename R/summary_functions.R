@@ -7,13 +7,14 @@ summary <- function(object, ...) UseMethod('summary')
 
 
 #' Summarize the output of a ddt_lcm model
-#' @param result a "ddt_lcm" object
+#' @param object a "ddt_lcm" object
 #' @param burnin number of samples to discard from the posterior chain as burn-ins. Default is 3000.
 #' @param relabel If TRUE, perform post-hoc label switching using the Equivalence Classes 
 #'  Representatives (ECR) method to solve non-identifiability issue in mixture models. If FALSE,
 #'  no label switching algorithm will be performed. 
 #' @param be_quiet If TRUE, do not print information during summarization. If FALSE, print label 
 #'  switching information and model summary.
+#' @param \dots	Further arguments passed to each method
 #' @rdname summary.ddt_lcm
 #' @method summary ddt_lcm
 #' @importFrom label.switching label.switching

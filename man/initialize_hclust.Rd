@@ -19,7 +19,9 @@ initialize_hclust(
 \arguments{
 \item{leaf_data}{a K by J matrix of logit(theta_{kj})}
 
-\item{c}{hyparameter of divergence function  a(t) = c / (1-t)}
+\item{c}{hyparameter of divergence function a(t)}
+
+\item{c_order}{equals 1 (default) or 2 to choose divergence function}
 
 \item{method_dist}{string specifying the distance measure to be used in dist().
 This must be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
@@ -47,8 +49,8 @@ phylo4d object of tree topology
 Estimate an initial binary tree on latent classes using hclust()
 }
 \seealso{
-Other initialize parameters: 
+Other initialization functions: 
 \code{\link{initialize_poLCA}()},
 \code{\link{initialize}()}
 }
-\concept{initialize parameters}
+\concept{initialization functions}

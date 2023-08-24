@@ -10,6 +10,8 @@
 \item{x}{a "summary.ddt_lcm" object}
 
 \item{digits}{integer indicating the number of decimal places (round) to be used.}
+
+\item{\dots}{Further arguments passed to each method}
 }
 \description{
 Print out summary of a ddt_lcm model

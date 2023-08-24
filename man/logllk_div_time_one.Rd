@@ -2,10 +2,30 @@
 % Please edit documentation in R/loglikehoods.R
 \name{logllk_div_time_one}
 \alias{logllk_div_time_one}
-\title{compute loglikelihood of divergence times for a(t) = c/(1-t)}
+\title{Compute loglikelihood of divergence times for a(t) = c/(1-t)}
 \usage{
 logllk_div_time_one(c, l, r, t)
 }
-\description{
-compute loglikelihood of divergence times for a(t) = c/(1-t)
+\arguments{
+\item{c}{a positive number for the divergence hyperparameter. A larger value implies
+earlier divergence on the tree}
+
+\item{l}{number of data points to the left}
+
+\item{r}{number of data points to the right}
+
+\item{t}{a number in the interval (0, 1) indicating the divergence time}
 }
+\description{
+Compute loglikelihood of divergence times for a(t) = c/(1-t)
+}
+\seealso{
+Other likelihood functions: 
+\code{\link{logllk_ddt_lcm}()},
+\code{\link{logllk_ddt}()},
+\code{\link{logllk_div_time_two}()},
+\code{\link{logllk_lcm}()},
+\code{\link{logllk_location}()},
+\code{\link{logllk_tree_topology}()}
+}
+\concept{likelihood functions}

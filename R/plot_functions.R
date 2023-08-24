@@ -1,8 +1,9 @@
 #' Generic function
 #' @param x The object to print
+#' @param log Default argument passed to plot(). Not used.
 #' @param \dots Further arguments passed to each method
 #' @export
-plot <- function(x, log=TRUE,  ...) UseMethod('plot')
+plot <- function(x, log=TRUE, ...) UseMethod('plot')
 
 
 
@@ -15,6 +16,8 @@ plot <- function(x, log=TRUE,  ...) UseMethod('plot')
 #'  of item names for items in `item_membership_list[[g]]`. The name of the g-th element is 
 #'  the name of the major item group.
 #' @param color_palette a vector of color names. Default is a color-blinded friendly palette.
+#' @param log Default argument passed to plot(). Not used.
+#' @param \dots	Further arguments passed to each method
 #' @method plot summary.ddt_lcm
 #' @importFrom ggplot2 geom_errorbar
 #' @importFrom ggpubr ggarrange
@@ -29,6 +32,7 @@ plot.summary.ddt_lcm <- function(x, log=TRUE,
   K <- nrow(x$tree_Sigma)
   response_prob <- matrix(x$response_probs_summary[,"Mean"], nrow = K)
   item_membership_list <- x$setting$item_membership_list
+  class_probability <- x$class_probs_summary[,"Mean%"]
   class_probability_lower <- x$class_probs_summary[,"2.5%"]
   class_probability_higher <- x$class_probs_summary[,"97.5%"]
   plots <- plot_tree_with_barplot(tree_with_parameter, response_prob, item_membership_list, 

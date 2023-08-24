@@ -3,7 +3,7 @@
 #'@param data a N by J observed binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
 #'@param ... optional arguments for the poLCA function
-#'@family initialize parameters
+#'@family initialization functions
 #'@return a K by J probability matrix, the k,j-th entry being the response probability to item
 #'    j of an individual in class k
 initialize_poLCA <- function(K, data, ...){
@@ -49,7 +49,8 @@ initialize_randomLCM <- function(K, data){
 
 #' Estimate an initial binary tree on latent classes using hclust()
 #'@param leaf_data a K by J matrix of logit(theta_{kj})
-#'@param c hyparameter of divergence function  a(t) = c / (1-t)
+#'@param c hyparameter of divergence function a(t)
+#'@param c_order equals 1 (default) or 2 to choose divergence function
 #'@param method_dist string specifying the distance measure to be used in dist().
 #'    This must be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
 #'    Any unambiguous substring can be given.
@@ -65,7 +66,7 @@ initialize_randomLCM <- function(K, data){
 #'    For DDT, alpha = theta = 0
 #'@param ... optional arguments for the poLCA function
 #'@importFrom ape as.phylo bind.tree
-#'@family initialize parameters
+#'@family initialization functions
 #'@return phylo4d object of tree topology
 initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean", method_hclust = "ward.D",
                               method_add_root = "min_cor",
@@ -129,14 +130,23 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
 #'    between-class correlation; default) or "sample_ddt" (randomly sample a small divergence time from
 #'    the DDT process with c = 100)
 #'@param fixed_initials a named list of fixed initial values, including
-#' the Gamma prior for `c` and inverse-Gamma prior for `sigma_g^2`, e.g., 
-#' `list(shape_c = 1, rate_c = 1, shape_sigma = rep(2, G), rate_sigma = rep(2, G))`, where
-#' `G` is the number of major item groups. These values will not be changed during initialization.
+#' the initial values for tree ("phylo4d"), response_prob, class_probability, class_assignments,
+#' Sigma_by_group, and c. Default is NULL. See 
+#'@param fixed_priors a named list of fixed prior hyperparameters, including the 
+#' the Gamma prior for `c`, inverse-Gamma prior for `sigma_g^2`, and Dirichlet prior
+#' for `pi`. Moreover, we allow for a type III generalized logistic distribution such 
+#' that f(`eta`; a_pg) = `theta`. This becomes a standard logistic distribution when a_pg = 1. See
+#' Dalla Valle, L., Leisen, F., Rossini, L., & Zhu, W. (2021). A Pólya–Gamma sampler for a 
+#' generalized logistic regression. Journal of Statistical Computation and Simulation, 91(14), 2899-2916.
+#' An example input list is 
+#' `list(shape_c = 1, rate_c = 1, shape_sigma = rep(2, G), rate_sigma = rep(2, G), a_pg = 1.0)`, where
+#' `G` is the number of major item groups. Default is NULL. 
 #'@param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0
 #'@param ... optional arguments for the poLCA function
 #'@return phylo4d object of tree topology
-#'@family initialize parameters
+#'@family initialization functions
+#'@seealso [ddtlcm_fit()]
 #'@export
 initialize <- function(K, data, item_membership_list, c=1, c_order=1,
                        method_lcm = "random", #c("poLCA", "random"),

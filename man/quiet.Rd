@@ -2,10 +2,15 @@
 % Please edit documentation in R/utils.R
 \name{quiet}
 \alias{quiet}
-\title{suppress print from cat()}
+\title{Suppress print from cat()}
 \usage{
 quiet(x, be_quiet = T)
 }
+\arguments{
+\item{x}{evaluation of a statement that may explicitly or implicitly involve cat()}
+
+\item{be_quiet}{logical. TRUE to suppress print from cat(); FALSE to continue printing}
+}
 \description{
-suppress print from cat()
+Suppress print from cat()
 }

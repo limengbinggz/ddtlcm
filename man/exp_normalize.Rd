@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{exp_normalize}
 \alias{exp_normalize}
-\title{compute normalized probabilities: exp(x_i) / sum_j exp(x_j)}
+\title{Compute normalized probabilities: exp(x_i) / sum_j exp(x_j)}
 \usage{
 exp_normalize(x)
 }
@@ -10,5 +10,5 @@ exp_normalize(x)
 \item{x}{a rea-valued vector}
 }
 \description{
-compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
+Compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
 }

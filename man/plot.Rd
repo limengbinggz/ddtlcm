@@ -9,6 +9,8 @@ plot(x, log = TRUE, ...)
 \arguments{
 \item{x}{The object to print}
 
+\item{log}{Default argument passed to plot(). Not used.}
+
 \item{\dots}{Further arguments passed to each method}
 }
 \description{

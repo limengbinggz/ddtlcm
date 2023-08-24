@@ -24,8 +24,21 @@ attach_subtree(
 
 \item{pa_detach_node_label}{label of the parent node of the detached node}
 
+\item{c}{hyparameter of divergence function a(t)}
+
 \item{c_order}{equals 1 (default) or 2 to choose divergence function}
+
+\item{alpha, theta}{hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
+specify positive values to alpha and theta. It is, however, recommended using alpha =
+theta = 0 in inference because multifurcating trees have not been tested rigorously.}
 }
 \description{
 Attach a subtree to a given DDT at a randomly selected location
 }
+\seealso{
+Other sample trees: 
+\code{\link{random_detach_subtree}()},
+\code{\link{reattach_point}()}
+}
+\concept{sample trees}

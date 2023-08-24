@@ -10,6 +10,8 @@ plot_tree_with_barplot(
   item_membership_list,
   item_name_list = NULL,
   class_probability = NULL,
+  class_probability_lower = NULL,
+  class_probability_higher = NULL,
   color_palette = c("#E69F00", "#56B4E9", "#009E73", "#000000", "#0072B2", "#D55E00",
     "#CC79A7", "#F0E442", "#999999"),
   return_separate_plots = F
@@ -30,6 +32,12 @@ the name of the major item group.}
 
 \item{class_probability}{a length K vector, where the k-th element is the
 probability of assigning an individual to class k. It does not have to sum up to 1}
+
+\item{class_probability_lower}{a length K vector, 2.5\% quantile of posterior
+the distribution.}
+
+\item{class_probability_higher}{a length K vector, 97.5\% quantile of posterior
+the distribution.}
 
 \item{color_palette}{a vector of color names. Default is a color-blinded friendly palette.}
 

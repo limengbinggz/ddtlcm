@@ -2,7 +2,7 @@
 % Please edit documentation in R/Gibbs_lcm.R
 \name{sample_class_assignment}
 \alias{sample_class_assignment}
-\title{sample individual class assignment Z_i, i = 1, ..., N}
+\title{Sample individual class assignments Z_i, i = 1, ..., N}
 \usage{
 sample_class_assignment(
   data,
@@ -18,6 +18,10 @@ of item j for individual i}
 
 \item{leaf_data}{a K by J matrix of logit(theta_{kj})}
 
+\item{a_pg}{a N by J matrix of hyperparameters of the generalized logistic distribution}
+
+\item{auxiliary_mat}{a N by J matrix of truncated normal variables from previous iteration}
+
 \item{class_probability}{a length K vector, where the k-th element is the
 probability of assigning an individual to class k. It does not have to sum up to 1}
 }
@@ -26,5 +30,5 @@ a vector of length N, where the i-th element is the class assignment of
 individual i
 }
 \description{
-sample individual class assignment Z_i, i = 1, ..., N
+Sample individual class assignments Z_i, i = 1, ..., N
 }

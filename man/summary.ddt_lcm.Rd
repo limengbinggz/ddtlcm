@@ -7,6 +7,8 @@
 \method{summary}{ddt_lcm}(object, burnin = 3000, relabel = T, be_quiet = F, ...)
 }
 \arguments{
+\item{object}{a "ddt_lcm" object}
+
 \item{burnin}{number of samples to discard from the posterior chain as burn-ins. Default is 3000.}
 
 \item{relabel}{If TRUE, perform post-hoc label switching using the Equivalence Classes
@@ -16,7 +18,7 @@ no label switching algorithm will be performed.}
 \item{be_quiet}{If TRUE, do not print information during summarization. If FALSE, print label
 switching information and model summary.}
 
-\item{result}{a "ddt_lcm" object}
+\item{\dots}{Further arguments passed to each method}
 }
 \value{
 \code{NULL}

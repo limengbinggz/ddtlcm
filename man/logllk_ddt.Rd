@@ -15,21 +15,25 @@ logllk_ddt(
 )
 }
 \arguments{
-\item{response_matrix}{a N by J binary matrix, where the i,j-th element is the response
-of item j for individual i}
+\item{c}{a positive number for the divergence hyperparameter. A larger value implies
+earlier divergence on the tree}
 
-\item{leaf_data}{a K by J matrix of logit(theta_{kj})}
+\item{c_order}{equals 1 if using divergence function a(t) = c / (1-t), or 2 if
+a(t) = c / (1-t)^2. Default is 1}
 
-\item{prior_class_probability}{a length K vector, where the k-th element is the
-probability of assigning an individual to class k. It does not have to sum up to 1}
+\item{Sigma_by_group}{a vector of diffusion variances of G groups from the previous iteration}
 
-\item{prior_dirichlet}{a vector of length K. The Dirichlet prior of class probabilities}
+\item{tree_phylo4d}{a "phylo4d" object}
 
-\item{ClassItem}{a K by J matrix, where the k,j-th element counts the number of individuals
-that belong to class k have a positive response to item j}
+\item{item_membership_list}{a list of G elements, where the g-th element contains the column
+indices of \code{data} corresponding to items in major group g}
 
-\item{Class_count}{a length K vector, where the k-th element counts the number of individuals
-belonging to class k}
+\item{tree_structure_old}{a list of at least named elements: loglikelihoods of the input tree topology
+and divergence times. These can be directly obtained from the return of this function.
+Default is NULL. If given a list, then computation of the loglikelihoods will be skipped to save time.
+This is useful in the Metropolis-Hasting algorithm when the previous proposal is not accepted.}
+
+\item{dist_mat_old}{a tree-structured covariance matrix from a given tree. Default is NULL.}
 }
 \value{
 a numeric of loglikelihood
@@ -37,3 +41,13 @@ a numeric of loglikelihood
 \description{
 Calculate loglikelihood of a DDT, including the tree structure and node parameters
 }
+\seealso{
+Other likelihood functions: 
+\code{\link{logllk_ddt_lcm}()},
+\code{\link{logllk_div_time_one}()},
+\code{\link{logllk_div_time_two}()},
+\code{\link{logllk_lcm}()},
+\code{\link{logllk_location}()},
+\code{\link{logllk_tree_topology}()}
+}
+\concept{likelihood functions}

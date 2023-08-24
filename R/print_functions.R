@@ -7,6 +7,7 @@ print <- function(x, ...) UseMethod('print')
 
 #' Print out setup of a ddt_lcm model
 #' @param x a "ddt_lcm" object
+#' @param \dots	Further arguments passed to each method
 #' @rdname print.ddt_lcm
 #' @method print ddt_lcm
 #' @family ddt_lcm results
@@ -30,6 +31,7 @@ print.ddt_lcm <- function(x, ...){
 #' Print out summary of a ddt_lcm model
 #' @param x a "summary.ddt_lcm" object
 #' @param digits integer indicating the number of decimal places (round) to be used.
+#' @param \dots Further arguments passed to each method
 #' @method print summary.ddt_lcm
 #' @family ddt_lcm results
 #' @export

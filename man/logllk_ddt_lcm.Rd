@@ -20,6 +20,23 @@ logllk_ddt_lcm(
 )
 }
 \arguments{
+\item{c}{a positive number for the divergence hyperparameter. A larger value implies
+earlier divergence on the tree}
+
+\item{Sigma_by_group}{a vector of diffusion variances of G groups}
+
+\item{tree_phylo4d}{a "phylo4d" object}
+
+\item{item_membership_list}{a list of G elements, where the g-th element contains the column
+indices of \code{data} corresponding to items in major group g}
+
+\item{tree_structure_old}{a list of at least named elements: loglikelihoods of the input tree topology
+and divergence times. These can be directly obtained from the return of this function.
+Default is NULL. If given a list, then computation of the loglikelihoods will be skipped to save time.
+This is useful in the Metropolis-Hasting algorithm when the previous proposal is not accepted.}
+
+\item{dist_mat_old}{a tree-structured covariance matrix from a given tree. Default is NULL.}
+
 \item{response_matrix}{a N by J binary matrix, where the i,j-th element is the response
 of item j for individual i}
 
@@ -42,3 +59,13 @@ a numeric of loglikelihood
 \description{
 Calculate loglikelihood of the DDT-LCM
 }
+\seealso{
+Other likelihood functions: 
+\code{\link{logllk_ddt}()},
+\code{\link{logllk_div_time_one}()},
+\code{\link{logllk_div_time_two}()},
+\code{\link{logllk_lcm}()},
+\code{\link{logllk_location}()},
+\code{\link{logllk_tree_topology}()}
+}
+\concept{likelihood functions}

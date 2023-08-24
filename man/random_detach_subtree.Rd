@@ -3,13 +3,32 @@
 \name{random_detach_subtree}
 \alias{random_detach_subtree}
 \title{Metropolis-Hasting algorithm for sampling tree topology and
-branch lengths from the DDT branching process.
-randomly detach a subtree from a given tree}
+branch lengths from the DDT branching process.}
 \usage{
 random_detach_subtree(tree_phylo4)
 }
-\description{
-Metropolis-Hasting algorithm for sampling tree topology and
-branch lengths from the DDT branching process.
-randomly detach a subtree from a given tree
+\arguments{
+\item{tree_phylo4}{a "phylo4" object}
 }
+\value{
+a list containing the following elements:
+\describe{
+\item{\code{tree_detached}}{a "phylo" tree detached from the input tree}
+\item{\code{tree_kept}}{the remaining "phylo" tree after detachment}
+\item{\code{pa_detach_node_label}}{a character label of the parent of the node
+from which the detachment happens}
+\item{\code{pa_div_time}}{a number in (0, 1) indicating the divergence time of
+the parent of the detached node}
+\item{\code{detach_div_time}}{a number in (0, 1) indicating the divergence time of the detached node}
+\item{\code{detach_node_label}}{a character label of the parent of the detached node}
+}
+}
+\description{
+Randomly detach a subtree from a given tree
+}
+\seealso{
+Other sample trees: 
+\code{\link{attach_subtree}()},
+\code{\link{reattach_point}()}
+}
+\concept{sample trees}

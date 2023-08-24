@@ -17,6 +17,8 @@
 \arguments{
 \item{x}{a "summary.ddt_lcm" object}
 
+\item{log}{Default argument passed to plot(). Not used.}
+
 \item{plot_option}{option to select which part of the plot to return. If "all", return
 the plot of MAP tree on the left and the plot of class profiles on the right. If "profile",
 only return the plot of class profiles. If "tree", only return the plot of MAP tree.}
@@ -26,6 +28,8 @@ of item names for items in \code{item_membership_list[[g]]}. The name of the g-t
 the name of the major item group.}
 
 \item{color_palette}{a vector of color names. Default is a color-blinded friendly palette.}
+
+\item{\dots}{Further arguments passed to each method}
 }
 \description{
 Plot the MAP tree and class profiles of summarized DDT-LCM results

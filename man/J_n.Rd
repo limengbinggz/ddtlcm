@@ -2,14 +2,15 @@
 % Please edit documentation in R/loglikehoods.R
 \name{J_n}
 \alias{J_n}
-\title{compute factor in the exponent of the divergence time distribution
-l = number of data points to the left
-r = number of data points to the right}
+\title{Compute factor in the exponent of the divergence time distribution}
 \usage{
 J_n(l, r)
 }
+\arguments{
+\item{l}{number of data points to the left}
+
+\item{r}{number of data points to the right}
+}
 \description{
-compute factor in the exponent of the divergence time distribution
-l = number of data points to the left
-r = number of data points to the right
+Compute factor in the exponent of the divergence time distribution
 }

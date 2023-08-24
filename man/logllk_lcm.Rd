@@ -36,3 +36,13 @@ a numeric of loglikelihood
 \description{
 Calculate loglikelihood of the latent class model, conditional on tree structure
 }
+\seealso{
+Other likelihood functions: 
+\code{\link{logllk_ddt_lcm}()},
+\code{\link{logllk_ddt}()},
+\code{\link{logllk_div_time_one}()},
+\code{\link{logllk_div_time_two}()},
+\code{\link{logllk_location}()},
+\code{\link{logllk_tree_topology}()}
+}
+\concept{likelihood functions}

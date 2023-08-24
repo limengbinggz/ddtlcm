@@ -13,6 +13,8 @@
 N is the number of individuals, and J is the number of granular items}
 
 \item{burnin}{number of samples to discard from the posterior chain as burn-ins. Default is 3000.}
+
+\item{\dots}{Further arguments passed to each method}
 }
 \description{
 Predict individual class memberships based on posterior predictive distributions.

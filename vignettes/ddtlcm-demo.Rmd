@@ -1,0 +1,19 @@
+---
+title: "Vignettes for ddtlcm: An R package for fitting tree-regularized Bayesian latent class models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ddtlcm-demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ddtlcm)
+```

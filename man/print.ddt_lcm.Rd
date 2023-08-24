@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{a "ddt_lcm" object}
+
+\item{\dots}{Further arguments passed to each method}
 }
 \description{
 Print out setup of a ddt_lcm model

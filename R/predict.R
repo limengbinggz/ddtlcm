@@ -1,5 +1,5 @@
 #' Generic function
-#' @param x The object to print
+#' @param object The object to print
 #' @param \dots Further arguments passed to each method
 #' @export
 predict <- function(object, ...) UseMethod('predict')
@@ -11,6 +11,7 @@ predict <- function(object, ...) UseMethod('predict')
 #' @param object a "summary.ddt_lcm" object
 #' @param data an NxJ matrix of multivariate binary responses, where
 #'   N is the number of individuals, and J is the number of granular items
+#' @param \dots Further arguments passed to each method
 #' @export
 predict.summary.ddt_lcm <- function(object, data, ...){ 
   class_probability <- object$class_probs_summary[,'Mean']
@@ -39,6 +40,7 @@ predict.summary.ddt_lcm <- function(object, data, ...){
 #' @param data an NxJ matrix of multivariate binary responses, where
 #'   N is the number of individuals, and J is the number of granular items
 #' @param burnin number of samples to discard from the posterior chain as burn-ins. Default is 3000.
+#' @param \dots Further arguments passed to each method
 #' @export
 predict.ddt_lcm <- function(object, data, burnin = 3000, ...){ 
   total_iters <- length(object$loglikelihood)

@@ -1,26 +1,76 @@
-
-# divergence function a(t) = c / (1-t)
+#' Compute divergence function a(t) = c / (1-t)
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param t a number in the interval (0, 1) indicating the divergence time
+#' @family divergence functions
+#' @return a positive number 
+#' @export
 a_t_one <- function(c, t) c/(1-t)
-# cumulative hazard function for a(t) = c / (1-t)
-A_t_one <- function(c, t) -c * log(1-t)
-#' inverse divergence function for a(t) = c / (1-t)
+
+#' Compute cumulative hazard function for a(t) = c / (1-t)
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param t a number in the interval (0, 1) indicating the divergence time
+#' @family divergence functions
+#' @return a positive number 
+#' @export
+a_t_one_cum <- function(c, t) -c * log(1-t)
+
+#' Compute inverse divergence function for a(t) = c / (1-t)
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param y a positive number to take inverse 
+#' @family divergence functions
+#' @return a number in the interval (0, 1)
+#' @export
 A_t_inv_one <- function(c, y) 1.0 - exp(- y/c)
 
-# divergence function a(t) = c / (1-t)^2
+#' Compute divergence function a(t) = c / (1-t)^2
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param t a number in the interval (0, 1) indicating the divergence time
+#' @family divergence functions
+#' @return a positive number 
+#' @export
 a_t_two <- function(c, t) c/(1-t)^2
-# cumulative hazard function for a(t) = c / (1-t)^2
-A_t_two <- function(c, t) -c + c / (1.0-t)
-#' inverse divergence function for a(t) = c / (1-t)^2
-A_t_inv_two <- function(c, y) 1.0 - c / (c+y)
 
-# sample divergence time on an edge uv previously traversed by m(v) data points
+#' Compute cumulative hazard function for a(t) = c / (1-t)^2
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param t a number in the interval (0, 1) indicating the divergence time
+#' @family divergence functions
+#' @return a positive number 
+#' @export
+a_t_two_cum <- function(c, t) -c + c / (1.0-t)
+
+#' Compute inverse divergence function for a(t) = c / (1-t)^2
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param y a positive number to take inverse 
+#' @family divergence functions
+#' @return a number in the interval (0, 1)
+#' @export
+A_t_inv_two <- function(c, y) y / (c+y)
+
+#' Sample divergence time on an edge uv previously traversed by m(v) data points
+#' @param t_u a number in the interval (0, 1) indicating the divergence time at node u
+#' @param m_v an integer for the number of data points traversed through node v
+#' @param c a positive number for the divergence hyperparameter. A larger value implies
+#'  earlier divergence on the tree
+#' @param c_order equals 1 if using divergence function a(t) = c / (1-t), or 2 if 
+#'  a(t) = c / (1-t)^2. Default is 1
+#' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+#'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
+#'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
+#'    theta = 0 in inference because multifurcating trees have not been tested rigorously.
+#' @return a number in the interval (0, 1)
 div_time <- function(t_u, m_v, c, c_order = 1, alpha = 0, theta = 0){
   u <- runif(1)
   if (c_order == 1){
-    x = A_t_one(c, t_u) - exp( lgamma(m_v+1.0+theta) - lgamma(m_v-alpha) ) * log(1-u)
+    x = a_t_one_cum(c, t_u) - exp( lgamma(m_v+1.0+theta) - lgamma(m_v-alpha) ) * log(1-u)
     return (A_t_inv_one(c, x))
   } else if (c_order == 2){
-    x = A_t_two(c, t_u) - exp( lgamma(m_v+1.0+theta) - lgamma(m_v-alpha) ) * log(1-u);
+    x = a_t_two_cum(c, t_u) - exp( lgamma(m_v+1.0+theta) - lgamma(m_v-alpha) ) * log(1-u);
     return (A_t_inv_two(c, x))
   } else {
     stop("c_order must take value 1 or 2.")
@@ -28,11 +78,13 @@ div_time <- function(t_u, m_v, c, c_order = 1, alpha = 0, theta = 0){
 }
 
 
-#' add a leaf branch to an existing tree tree_old
-#' div_t: divergence time of the new branch
-#' new_leaf_label: the label of the newly added leaf
-#' where: node name of to which node in the existing tree the new leaf branch should connect to
-#' position: the numerical location of the left side of the added branch
+#' Add a leaf branch to an existing tree tree_old
+#' @param tree_old the original "phylo" tree (with K leaves) to which the leaf branch will be added
+#' @param div_t divergence time of the new branch
+#' @param new_leaf_label the label of the newly added leaf
+#' @param where node name of to which node in the existing tree the new leaf branch should connect to
+#' @param position the numerical location of the left side of the added branch
+#' @return a "phylo" tree with K+1 leaves
 add_leaf_branch <- function(tree_old, div_t, new_leaf_label, where, position){
   leaf_branch <- list(edge = matrix(c(2,1), nrow = 1),
                       tip.label = new_leaf_label,
@@ -45,10 +97,12 @@ add_leaf_branch <- function(tree_old, div_t, new_leaf_label, where, position){
   return(tree_new)
 }
 
-#' add a leaf branch to an existing tree tree_old to make a multichotomus branch
-#' div_t: divergence time of the new branch
-#' new_leaf_label: the label of the newly added leaf
-#' where: node name of to which node in the existing tree the new leaf branch should connect to
+#' Add a leaf branch to an existing tree tree_old to make a multichotomus branch
+#' @param tree_old the original "phylo" tree (with K leaves) to which the leaf branch will be added
+#' @param div_t divergence time of the new branch
+#' @param new_leaf_label the label of the newly added leaf
+#' @param where node name of to which node in the existing tree the new leaf branch should connect to
+#' @return a "phylo" tree with K+1 leaves that could possibly be multichotomus
 add_multichotomous_tip <- function(tree_old, div_t, new_leaf_label, where){
   branch <- list(edge = matrix(c(2,1), nrow = 1),
                  tip.label = new_leaf_label,
@@ -64,6 +118,13 @@ add_multichotomous_tip <- function(tree_old, div_t, new_leaf_label, where){
 
 
 
+#' Add a singular root node to an existing nonsingular tree 
+#' @param tree_old the original nonsingular "phylo" tree
+#' @param root_edge_length a number in (0, 1) representing the distance 
+#'  between the new and the original root nodes
+#' @param root_label a character label of the new root node 
+#' @param leaf_label a character label of the leaf node 
+#' @return a singular "phylo" tree 
 add_root <- function(tree_old, root_edge_length, root_label, leaf_label){
   leaf_branch <- list(edge = matrix(c(2,1), nrow = 1),
                       node.label = root_label,
@@ -76,19 +137,18 @@ add_root <- function(tree_old, root_edge_length, root_label, leaf_label){
 }
 
 
-#' compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
+#' Compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
 #' @param x a rea-valued vector
 exp_normalize <- function(x){
   return(exp(x - logSumExp(x)))
 }
 
 
-#' sample multivariate normal using precision matrix
-#' from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix
+#' Efficiently sample multivariate normal using precision matrix
+#'  from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix
 #' @param precision_mat precision matrix Q of the multivariate normal distribution
 #' @param precision_a_vec a vector a such that the mean of the multivariate normal distribution is
 #'  Q^{-1}a
-#' @export
 draw_mnorm <- function(precision_mat, precision_a_vec){
   U <- chol(precision_mat)
   b <- rnorm(nrow(precision_mat))
@@ -134,6 +194,8 @@ logit <- function(x){
 }
 
 
+#' Numerically accurately compute f(x) = log(x / (1/x)). 
+#' @param x a value or a numeric vector between 0 and 1 (exclusive)
 log_expit <- function(x){
   out <- x
   idx <- which(x < -33.3)
@@ -152,7 +214,9 @@ log_expit <- function(x){
 }
 
 
-#' suppress print from cat()
+#' Suppress print from cat()
+#' @param x evaluation of a statement that may explicitly or implicitly involve cat()
+#' @param be_quiet logical. TRUE to suppress print from cat(); FALSE to continue printing
 quiet <- function(x, be_quiet=T) { 
   if (be_quiet){
     sink(tempfile()) 
@@ -285,6 +349,7 @@ compute_IC <- function(model, burnin = 5000, ncores = 1L){
 #'   as the Widely Available Information Criterion or the Watanable-Akaike, of Watanabe (2010).
 #' @param llk_matrix a N x S matrix, where N is the number of individuals and S is the number of posterior samples
 #' @importFrom matrixStats rowVars
+#' @return a named list
 #' @export
 WAIC <- function(llk_matrix) {
   # require(matrixStats)

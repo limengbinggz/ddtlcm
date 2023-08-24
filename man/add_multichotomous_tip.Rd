@@ -2,16 +2,22 @@
 % Please edit documentation in R/utils.R
 \name{add_multichotomous_tip}
 \alias{add_multichotomous_tip}
-\title{add a leaf branch to an existing tree tree_old to make a multichotomus branch
-div_t: divergence time of the new branch
-new_leaf_label: the label of the newly added leaf
-where: node name of to which node in the existing tree the new leaf branch should connect to}
+\title{Add a leaf branch to an existing tree tree_old to make a multichotomus branch}
 \usage{
 add_multichotomous_tip(tree_old, div_t, new_leaf_label, where)
 }
+\arguments{
+\item{tree_old}{the original "phylo" tree (with K leaves) to which the leaf branch will be added}
+
+\item{div_t}{divergence time of the new branch}
+
+\item{new_leaf_label}{the label of the newly added leaf}
+
+\item{where}{node name of to which node in the existing tree the new leaf branch should connect to}
+}
+\value{
+a "phylo" tree with K+1 leaves that could possibly be multichotomus
+}
 \description{
-add a leaf branch to an existing tree tree_old to make a multichotomus branch
-div_t: divergence time of the new branch
-new_leaf_label: the label of the newly added leaf
-where: node name of to which node in the existing tree the new leaf branch should connect to
+Add a leaf branch to an existing tree tree_old to make a multichotomus branch
 }
