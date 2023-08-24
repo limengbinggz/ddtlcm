@@ -32,7 +32,7 @@ plot.summary.ddt_lcm <- function(x, log=TRUE,
   K <- nrow(x$tree_Sigma)
   response_prob <- matrix(x$response_probs_summary[,"Mean"], nrow = K)
   item_membership_list <- x$setting$item_membership_list
-  class_probability <- x$class_probs_summary[,"Mean%"]
+  class_probability <- x$class_probs_summary[,"Mean"]
   class_probability_lower <- x$class_probs_summary[,"2.5%"]
   class_probability_higher <- x$class_probs_summary[,"97.5%"]
   plots <- plot_tree_with_barplot(tree_with_parameter, response_prob, item_membership_list, 

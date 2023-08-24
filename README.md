@@ -10,10 +10,9 @@ An R package for Tree-regularized Latent Class Models with a DDT process prior o
 please cite the following preprint:
  -->
 
-<!-- |       | Citation     | Paper Link
+|       | Citation     | Paper Link
 | -------------  | -------------  | -------------  |
-| Bayesian tree-integrative LCM    | Li M, Park D, Aziz M, Liu CM, Price L, Wu Z (2021). Integrating Sample Similarity Information into Latent Class Analysis: A Tree-Structured Shrinkage Approach. *Biometrics*.   |[Link](https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.13580)| 
- -->
+| Bayesian tree-regularized LCM    | Li M, Stephenson B, Wu Z (2023). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *ArXiv:2306.04700*.   |[Link](https://arxiv.org/abs/2306.04700)| 
 
 ## Table of content
 - [1. Installation](#id-section1)
