@@ -75,7 +75,7 @@ logllk_location <- function(tree_phylo4d, Sigma_by_group, item_membership_list, 
       ## now construct a pairwise distance matrix between leaf nodes
       dist_mat_by_group <- matrix(NA, nrow = K, ncol = K)
       # create distance matrix, equivalently, row covariance matrix
-      dist_mat_by_group[lower.tri(dist_mat_by_group,diag = T)] <- row_var_by_group[,g]
+      dist_mat_by_group[lower.tri(dist_mat_by_group,diag = TRUE)] <- row_var_by_group[,g]
       dist_mat_by_group[upper.tri(dist_mat_by_group)] <- t(dist_mat_by_group)[upper.tri(dist_mat_by_group)]
 
       # perform SVD on the dist_mat
@@ -216,7 +216,7 @@ logllk_ddt <- function(c, c_order, Sigma_by_group, tree_phylo4d, item_membership
     tree_structure <- tree_structure[tree_structure$descendant > K,]
     # add divergence time info
     tree_structure <- merge(x = tree_structure, y = tree_structure_df[, c("node", "div_times", "m_v")],
-                            by.x = "descendant", by.y = "node", all.x = T)
+                            by.x = "descendant", by.y = "node", all.x = TRUE)
     # get the number of data points passing through each internal node from the left side
     tree_structure2 <- merge(x = tree_structure, y = tree_structure[,c("ancestor", "m_v")],
                              by.x = "descendant", by.y = "ancestor", all.x=T, all.y=F)

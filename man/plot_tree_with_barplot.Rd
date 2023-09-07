@@ -14,7 +14,7 @@ plot_tree_with_barplot(
   class_probability_higher = NULL,
   color_palette = c("#E69F00", "#56B4E9", "#009E73", "#000000", "#0072B2", "#D55E00",
     "#CC79A7", "#F0E442", "#999999"),
-  return_separate_plots = F
+  return_separate_plots = FALSE
 )
 }
 \arguments{
@@ -47,4 +47,11 @@ used to create the plots in a list, without printing the combined plot.}
 }
 \description{
 Plot the MAP tree and class profiles (bar plot) of summarized DDT-LCM results
+}
+\examples{
+# load the MAP tree structure obtained from the real HCHS/SOL data
+data(data_synthetic)
+# extract elements into the global environment
+list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+plot_tree_with_barplot(tree_with_parameter, response_prob, item_membership_list)
 }

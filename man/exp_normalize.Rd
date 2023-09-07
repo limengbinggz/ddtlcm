@@ -7,7 +7,10 @@
 exp_normalize(x)
 }
 \arguments{
-\item{x}{a rea-valued vector}
+\item{x}{a number or rea-valued vector}
+}
+\value{
+a number or rea-valued vector
 }
 \description{
 Compute normalized probabilities: exp(x_i) / sum_j exp(x_j)

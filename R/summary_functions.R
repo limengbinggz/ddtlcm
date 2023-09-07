@@ -1,11 +1,3 @@
-#' Generic function
-#' @param object The object to summarize
-#' @param \dots Further arguments passed to each method
-#' @export
-summary <- function(object, ...) UseMethod('summary')
-
-
-
 #' Summarize the output of a ddt_lcm model
 #' @param object a "ddt_lcm" object
 #' @param burnin number of samples to discard from the posterior chain as burn-ins. Default is 3000.
@@ -19,9 +11,31 @@ summary <- function(object, ...) UseMethod('summary')
 #' @method summary ddt_lcm
 #' @importFrom label.switching label.switching
 #' @family ddt_lcm results
-#' @return \code{NULL}
+#' @return an object of class "ddt_lcm"; a list containing the following elements:
+#' \describe{
+#' \item{`tree_map`}{the MAP tree of "phylo4d" class}
+#' \item{`tree_Sigma`}{the tree-structured covariance matrix associated with `tree_map`}
+#' \item{`response_probs_summary`, `class_probs_summary`, `Sigma_summary`, `c_summary`}{
+#'  each is a matrix with 7 columns of summary statistics of posterior chains, including means, standard
+#'  deviation, and five quantiles. In particular, for the summary of item response probabilities, 
+#'  each row name theta_k,g,j represents the response probability of a person in class k to consume item j in group g}
+#' \item{`max_llk_full`}{a numeric value of the maximum log-likelihood of the full model (tree and LCM)}
+#' \item{`max_llk_lcm`}{a numeric value of the maximum log-likelihood of the LCM only}
+#' \item{`Z_samples`}{a `N` x `total_iters` integer matrix of posterior samples of individual class assignments}
+#' \item{`Sigma_by_group_samples`}{a `G` x `total_iters` matrix of posterior samples of diffusion variances}
+#' \item{`c_samples`}{a `total_iters` vector of posterior samples of divergence function hyperparameter}
+#' \item{`loglikelihood`}{a `total_iters` vector of log-likelihoods of the full model}
+#' \item{`loglikelihood_lcm`}{a `total_iters` vector of log-likelihoods of the LCM model only}
+#' \item{`setting`}{a list of model setup information. See \code{\link{ddtlcm_fit}}}
+#' \item{`controls`}{a list of model controls. See \code{\link{ddtlcm_fit}}}
+#' \item{`data`}{the input data matrix}
+#' }
+#'@examples
+#'# load the result of fitting semi-synthetic data with 100 (for the sake of time) posterior samples
+#'data(result_hchs)
+#'summarized_result <- summary(result_hchs, burnin = 50, relabel = TRUE, be_quiet = TRUE)
 #' @export
-summary.ddt_lcm <- function(object, burnin = 3000, relabel = T, be_quiet = F, ...){
+summary.ddt_lcm <- function(object, burnin = 3000, relabel = TRUE, be_quiet = FALSE, ...){
   if (!inherits(object, "ddt_lcm")){
     stop("result should be a class ddt_lcm object.")
   }

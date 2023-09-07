@@ -9,7 +9,14 @@ logit(x)
 \arguments{
 \item{x}{a value or a numeric vector between 0 and 1 (exclusive)}
 }
+\value{
+a number or rea-valued vector
+}
 \description{
 The logit function: f(x) = log(x / (1/x)). Large absolute values of
 x will be truncated to +/- 5 after logit transformation according to its sign.
+}
+\examples{
+logit(0.2)
+logit(c(0.2, 0.6, 0.95))
 }

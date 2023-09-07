@@ -26,6 +26,21 @@
 "data_hchs"
 
 
+#' Result of fitting DDT-LCM to a semi-synthetic data example
+#'
+#' This is a "ddtlcm" object obtained from running `ddtlcm_fit` to a semi-synthetic dataset with
+#'  100 posterior samples (for the sake of time). See \code{\link{ddtlcm_fit}} for description of 
+#'  the object.
+#'
+#' @docType data
+#' @keywords datasets
+#' @name result_hchs
+#' @usage data(result_hchs)
+#' @format A list with 8 elements
+"result_hchs"
+
+
+
 #' Synthetic data example
 #'
 #' This list contains one synthetic data with K = 3 latent classes.

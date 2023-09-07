@@ -65,14 +65,14 @@ sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
     precision_mat <- crossprod(dist_mat_old$Dhalf_Ut) / Sigma_by_group[g]
     # extract indices
     indices <- item_membership_list[[g]]
-    pg_mat_g <- pg_mat[, indices, drop = F]
-    auxiliary_mat_g <- auxiliary_mat[, indices, drop = F]
+    pg_mat_g <- pg_mat[, indices, drop = FALSE]
+    auxiliary_mat_g <- auxiliary_mat[, indices, drop = FALSE]
     xi_1_raw <- pg_mat_g * auxiliary_mat_g
     xi_0 <- matrix(0, nrow = K, ncol = J_g)
     xi_1 <- matrix(0, nrow = K, ncol = J_g)
     for (k in 1:K) {
-      xi_0[k,] <- colSums(pg_mat_g[class_assignments == k, , drop = F])
-      xi_1[k,] <- colSums(xi_1_raw[class_assignments == k, , drop = F])
+      xi_0[k,] <- colSums(pg_mat_g[class_assignments == k, , drop = FALSE])
+      xi_1[k,] <- colSums(xi_1_raw[class_assignments == k, , drop = FALSE])
     }
     # precision_mat <- Matrix::kronecker(precision_mat, Diagonal(item_membership_list[g]))
     precision_mat <- Matrix::kronecker(Matrix::Diagonal(J_g), precision_mat)

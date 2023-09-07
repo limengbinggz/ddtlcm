@@ -22,3 +22,10 @@ column indices of the observed data matrix corresponding to items in major group
 \description{
 Plot the MAP tree and class profiles (heatmap) of summarized DDT-LCM results
 }
+\examples{
+# load the MAP tree structure obtained from the real HCHS/SOL data
+data(data_synthetic)
+# extract elements into the global environment
+list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+plot_tree_with_heatmap(tree_with_parameter, response_prob, item_membership_list)
+}

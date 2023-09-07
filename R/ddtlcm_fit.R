@@ -9,7 +9,7 @@
 #' @param data an NxJ matrix of multivariate binary responses, where
 #'   N is the number of individuals, and J is the number of granular items
 #' @param item_membership_list a list of G elements, where the g-th element contains the column
-#'  indices of `data` corresponding to items in major group g
+#'  indices of `data` corresponding to items in major group g, and G is number of major item groups
 #' @param total_iters number of posterior samples to collect (integer)
 #' 
 #' @param initials a named list of initial values of the following parameters:
@@ -53,7 +53,7 @@
 #' \describe{
 #' \item{`fix_tree`}{a logical. If `TRUE` (default), the tree structure will be sampled in the algorithm. If `FALSE`,
 #'  the tree structure will be fixed at the initial input.}
-#' \item{`c_order`}{a value. If `1`, the divergence function is a(t) = c/(1-t). If `2`, the divergence 
+#' \item{`c_order`}{a numeric value. If `1`, the divergence function is a(t) = c/(1-t). If `2`, the divergence 
 #' function is a(t) = c/(1-t)^2.}
 #' }
 #' 
@@ -62,7 +62,7 @@
 #' 
 #' @return an object of class "ddt_lcm"; a list containing the following elements:
 #' \describe{
-#' \item{`tree_samples`}{a list of information of the tree collected from the sampling algorithm, containing: 
+#' \item{`tree_samples`}{a list of information of the tree collected from the sampling algorithm, including: 
 #'  `accept`: a binary vector where `1` indicates acceptance of the proposal tree and `0` indicates rejection. 
 #'  `tree_list`: a list of posterior samples of the tree.
 #'  `dist_mat_list`: a list of tree-structured covariance matrices representing the marginal covariances 
@@ -75,15 +75,19 @@
 #' \item{`c_samples`}{a `total_iters` vector of posterior samples of divergence function hyperparameter}
 #' \item{`loglikelihood`}{a `total_iters` vector of log-likelihoods of the full model}
 #' \item{`loglikelihood_lcm`}{a `total_iters` vector of log-likelihoods of the LCM model only}
-#' \item{`setting`}{a list of model setup information}
-#' \item{`controls`}{a list of model controls}
+#' \item{`setting`}{a list of model setup information, including: `K`, `item_membership_list`, and `G`}
+#' \item{`controls`}{a list of model controls, including: 
+#'  `fix_tree`: FALSE to perform MH sampling of the tree, TRUE to fix the tree at the initial input.
+#'  `c_order`: a numeric value of `1` or `2` (see Arguments))}
 #' \item{`data`}{the input data matrix}
 #' }
 #' 
 #'@examples
 #'# load the MAP tree structure obtained from the real HCHS/SOL data
-#'data(synthetic_data_K3)
-#'list2env(setNames(data_synthetic, names(data_synthetic)), envir = parent.frame()) 
+#'data(data_synthetic)
+#'# extract elements into the global environment
+#'list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+#'# run DDT-LCM
 #'result <- ddtlcm_fit(K = 3, data = response_matrix, item_membership_list, total_iters = 50)
 #'@export
 ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000, 
@@ -271,9 +275,9 @@ ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000,
     Class_count <- tabulate(class_assignments, nbins = K) * 1.0
     ClassItem <- matrix(0, nrow = K, ncol = J)
     for (k in 1:K) {
-      class_k <- data[class_assignments == k,,drop = F]
+      class_k <- data[class_assignments == k,,drop = FALSE]
       if (length(class_k) > 0){
-        ClassItem[k,] <- colSums(data[class_assignments == k,,drop = F])
+        ClassItem[k,] <- colSums(data[class_assignments == k,,drop = FALSE])
       } else{
         ClassItem[k,] <- 0
       }

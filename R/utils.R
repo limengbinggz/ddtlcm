@@ -1,54 +1,52 @@
-#' Compute divergence function a(t) = c / (1-t)
+#' Compute divergence function
+#' @description Compute value, cumulative hazard, and inverse for divergence function a(t) = c / (1-t)
+#' @describeIn a_t_one value of the divergence function
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
 #' @param t a number in the interval (0, 1) indicating the divergence time
 #' @family divergence functions
-#' @return a positive number 
+#' @return The value and cumulative hazard return a positive number. The inverse function returns a number in the interval (0, 1).
+#' @examples
+#' a_t_one(1, 0.5)
 #' @export
 a_t_one <- function(c, t) c/(1-t)
 
-#' Compute cumulative hazard function for a(t) = c / (1-t)
-#' @param c a positive number for the divergence hyperparameter. A larger value implies
-#'  earlier divergence on the tree
-#' @param t a number in the interval (0, 1) indicating the divergence time
-#' @family divergence functions
-#' @return a positive number 
+#' @describeIn a_t_one cumulative hazard function
+#' @examples
+#' a_t_one_cum(1, 0.5)
 #' @export
 a_t_one_cum <- function(c, t) -c * log(1-t)
 
-#' Compute inverse divergence function for a(t) = c / (1-t)
-#' @param c a positive number for the divergence hyperparameter. A larger value implies
-#'  earlier divergence on the tree
 #' @param y a positive number to take inverse 
-#' @family divergence functions
-#' @return a number in the interval (0, 1)
+#' @describeIn a_t_one inverse function
+#' @examples
+#' A_t_inv_one(1, 2)
 #' @export
 A_t_inv_one <- function(c, y) 1.0 - exp(- y/c)
 
-#' Compute divergence function a(t) = c / (1-t)^2
+#' Compute divergence function
+#' @description Compute value, cumulative hazard, and inverse for divergence function a(t) = c / (1-t)^2
+#' @describeIn a_t_two value of the divergence function
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
 #' @param t a number in the interval (0, 1) indicating the divergence time
 #' @family divergence functions
-#' @return a positive number 
+#' @return The value and cumulative hazard return a positive number. The inverse function returns a number in the interval (0, 1).
+#' @examples
+#' a_t_two(1, 0.5)
 #' @export
 a_t_two <- function(c, t) c/(1-t)^2
 
-#' Compute cumulative hazard function for a(t) = c / (1-t)^2
-#' @param c a positive number for the divergence hyperparameter. A larger value implies
-#'  earlier divergence on the tree
-#' @param t a number in the interval (0, 1) indicating the divergence time
-#' @family divergence functions
-#' @return a positive number 
+#' @describeIn a_t_two cumulative hazard function
+#' @examples
+#' a_t_two_cum(1, 0.5)
 #' @export
 a_t_two_cum <- function(c, t) -c + c / (1.0-t)
 
-#' Compute inverse divergence function for a(t) = c / (1-t)^2
-#' @param c a positive number for the divergence hyperparameter. A larger value implies
-#'  earlier divergence on the tree
 #' @param y a positive number to take inverse 
-#' @family divergence functions
-#' @return a number in the interval (0, 1)
+#' @describeIn a_t_two inverse function
+#' @examples
+#' A_t_inv_two(1, 2)
 #' @export
 A_t_inv_two <- function(c, y) y / (c+y)
 
@@ -138,7 +136,8 @@ add_root <- function(tree_old, root_edge_length, root_label, leaf_label){
 
 
 #' Compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
-#' @param x a rea-valued vector
+#' @param x a number or rea-valued vector
+#' @return a number or rea-valued vector
 exp_normalize <- function(x){
   return(exp(x - logSumExp(x)))
 }
@@ -160,7 +159,11 @@ draw_mnorm <- function(precision_mat, precision_a_vec){
 #' @description The expit function: f(x) = exp(x) / (1+exp(x)), computed
 #'  in a way to avoid numerical underflow.
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
+#' @return a number or real-valued vector
 #' @export
+#' @examples
+#' expit(0.2)
+#' expit(c(-1, -0.3, 0.6))
 expit <- function(x){
   out <- x
   positives <- which(x >= 0)
@@ -183,7 +186,11 @@ expit <- function(x){
 #' @description The logit function: f(x) = log(x / (1/x)). Large absolute values of 
 #'  x will be truncated to +/- 5 after logit transformation according to its sign.
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
+#' @return a number or rea-valued vector
 #' @export
+#' @examples
+#' logit(0.2)
+#' logit(c(0.2, 0.6, 0.95))
 logit <- function(x){
   y <- log(x / (1-x))
   large <- which(abs(y) > 5)
@@ -196,6 +203,7 @@ logit <- function(x){
 
 #' Numerically accurately compute f(x) = log(x / (1/x)). 
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
+#' @return a number or rea-valued vector
 log_expit <- function(x){
   out <- x
   idx <- which(x < -33.3)
@@ -234,6 +242,12 @@ quiet <- function(x, be_quiet=T) {
 #' @param tree_phylo4d a "phylo4d" object
 #' @return a K by K covariance matrix
 #' @export
+#'@examples
+#'# load the MAP tree structure obtained from the real HCHS/SOL data
+#'data(data_synthetic)
+#'# extract elements into the global environment
+#'list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+#'create_leaf_cor_matrix(tree_with_parameter)
 create_leaf_cor_matrix <- function(tree_phylo4d){
   K <- nTips(tree_phylo4d)
   # K <- nNodes(tree_phylo4d)
@@ -274,7 +288,7 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
   ## now construct a pairwise distance matrix between leaf nodes
   tree_Sigma_hclust <- matrix(NA, nrow = K, ncol = K)
   # create distance matrix, equivalently, row covariance matrix
-  tree_Sigma_hclust[lower.tri(tree_Sigma_hclust,diag = T)] <- row_var_by_group
+  tree_Sigma_hclust[lower.tri(tree_Sigma_hclust,diag = TRUE)] <- row_var_by_group
   tree_Sigma_hclust[upper.tri(tree_Sigma_hclust)] <- t(tree_Sigma_hclust)[upper.tri(tree_Sigma_hclust)]
   rownames(tree_Sigma_hclust) <- colnames(tree_Sigma_hclust) <- paste0("v", 1:K)
   
@@ -289,9 +303,10 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
 #'  Information Criterion (WAIC), and Deviance Information Criterion (DIC). WAIC and DIC are computed 
 #'  using two different methods described in Gelman, Hwang, and Vehtari (2013), one based on (1) posterior
 #'  means and the other based on (2) posterior variances.
-#' @param model a "ddt_lcm" object
+#' @param result a "ddt_lcm" object
 #' @param burnin an integer specifying the number of burn-in iterations from MCMC chain
-#' @param ncores an integer specifying the number of nores to
+#' @param ncores an integer specifying the number of cores to compute marginal posterior log-likelihood
+#'  in parallel
 #' @importFrom parallel mclapply
 #' @return a named list of the following elements
 #' \describe{
@@ -300,19 +315,23 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
 #' \item{`DIC2`}{DIC computed using method 2.}
 #' }
 #' @export
-compute_IC <- function(model, burnin = 5000, ncores = 1L){
+#' @examples
+#' data(result_hchs)
+#' IC_result <- compute_IC(result = result_hchs, burnin = 50, ncores = 1L)
+compute_IC <- function(result, burnin = 5000, ncores = 1L){
   # require(parallel)
-  num_samples <- length(model$loglikelihood[-(1:burnin)]) - 1
-  dat <- model$data
-  N <- nrow(model$data)
-  K <- model$setting$K
+  num_samples <- length(result$loglikelihood[-(1:burnin)]) - 1
+  dat <- result$data
+  N <- nrow(result$data)
+  K <- result$setting$K
   
   ### calculate WAIC
   compute_posteriorllk_matrix <- function(iter){
     # print(iter)
-    leaf_data <- t(matrix(model$response_probs_samples[, iter], nrow = K))
+    # leaf_data <- t(matrix(result$response_probs_samples[iter, ,], nrow = K))
+    leaf_data <- t(result$response_probs_samples[iter, ,])
     # marginal loglikelihood of LCM, integrated over Z
-    class_probability <- log(model$class_probs_samples[, iter])
+    class_probability <- log(result$class_probs_samples[, iter])
     logllk_lcm_sample <- rep(0, N)
     for (i in 1:N) {
       logllk_lcm_sample[i] <- logSumExp(class_probability + colSums(dat[i,] * log(leaf_data) + (1 - dat[i,]) * log(1 - leaf_data)))
@@ -325,7 +344,7 @@ compute_IC <- function(model, burnin = 5000, ncores = 1L){
   
   
   ### calculate DIC
-  s <- summary(model, burnin)
+  s <- summary(result, burnin)
   leaf_data <- t(matrix(s$response_probs_summary[,'Mean'], nrow = K))
   class_probability <- s$class_probs_summary[,"Mean"]
   logllk_lcm_sample_thetahat <- 0
@@ -350,7 +369,6 @@ compute_IC <- function(model, burnin = 5000, ncores = 1L){
 #' @param llk_matrix a N x S matrix, where N is the number of individuals and S is the number of posterior samples
 #' @importFrom matrixStats rowVars
 #' @return a named list
-#' @export
 WAIC <- function(llk_matrix) {
   # require(matrixStats)
   #  log pointwise predictive density

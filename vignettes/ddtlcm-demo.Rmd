@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Vignettes for ddtlcm: An R package for fitting tree-regularized Bayesian latent class models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  % \VignetteDepends{xfun}
 output:
   rmarkdown::html_vignette:
     number_sections: yes
@@ -135,6 +136,7 @@ response_prob <- sim_data$response_prob
 tree_with_parameter <- sim_data$tree_with_parameter
 plot_tree_with_heatmap(tree_with_parameter, response_prob, item_membership_list)
 ```
+
 On the left is the MAP tree estimated from the real HCHS/SOL data, with leaf nodes labeled "v1", ..., "v6" corresponding to latent classes 1 to 6. On the right is a heatmap of the simulated class profiles, where the 78 columns correspond to items with curly brackets underneath denoting the pre-specified major item groups.
 
 

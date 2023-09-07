@@ -34,3 +34,9 @@ the name of the major item group.}
 \description{
 Plot the MAP tree and class profiles of summarized DDT-LCM results
 }
+\examples{
+data(result_hchs)
+burnin <- 50
+summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+plot(x = summarized_result, item_name_list = NULL, plot_option = "all")
+}

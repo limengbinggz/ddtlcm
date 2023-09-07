@@ -4,14 +4,15 @@
 \alias{compute_IC}
 \title{Compute information criteria for the DDT-LCM model}
 \usage{
-compute_IC(model, burnin = 5000, ncores = 1L)
+compute_IC(result, burnin = 5000, ncores = 1L)
 }
 \arguments{
-\item{model}{a "ddt_lcm" object}
+\item{result}{a "ddt_lcm" object}
 
 \item{burnin}{an integer specifying the number of burn-in iterations from MCMC chain}
 
-\item{ncores}{an integer specifying the number of nores to}
+\item{ncores}{an integer specifying the number of cores to compute marginal posterior log-likelihood
+in parallel}
 }
 \value{
 a named list of the following elements
@@ -26,4 +27,8 @@ Compute information criteria for the DDT-LCM model, including the Widely Applica
 Information Criterion (WAIC), and Deviance Information Criterion (DIC). WAIC and DIC are computed
 using two different methods described in Gelman, Hwang, and Vehtari (2013), one based on (1) posterior
 means and the other based on (2) posterior variances.
+}
+\examples{
+data(result_hchs)
+IC_result <- compute_IC(result = result_hchs, burnin = 50, ncores = 1L)
 }

@@ -4,7 +4,7 @@
 \alias{summary.ddt_lcm}
 \title{Summarize the output of a ddt_lcm model}
 \usage{
-\method{summary}{ddt_lcm}(object, burnin = 3000, relabel = T, be_quiet = F, ...)
+\method{summary}{ddt_lcm}(object, burnin = 3000, relabel = TRUE, be_quiet = FALSE, ...)
 }
 \arguments{
 \item{object}{a "ddt_lcm" object}
@@ -21,10 +21,33 @@ switching information and model summary.}
 \item{\dots}{Further arguments passed to each method}
 }
 \value{
-\code{NULL}
+an object of class "ddt_lcm"; a list containing the following elements:
+\describe{
+\item{\code{tree_map}}{the MAP tree of "phylo4d" class}
+\item{\code{tree_Sigma}}{the tree-structured covariance matrix associated with \code{tree_map}}
+\item{\code{response_probs_summary}, \code{class_probs_summary}, \code{Sigma_summary}, \code{c_summary}}{
+each is a matrix with 7 columns of summary statistics of posterior chains, including means, standard
+deviation, and five quantiles. In particular, for the summary of item response probabilities,
+each row name theta_k,g,j represents the response probability of a person in class k to consume item j in group g}
+\item{\code{max_llk_full}}{a numeric value of the maximum log-likelihood of the full model (tree and LCM)}
+\item{\code{max_llk_lcm}}{a numeric value of the maximum log-likelihood of the LCM only}
+\item{\code{Z_samples}}{a \code{N} x \code{total_iters} integer matrix of posterior samples of individual class assignments}
+\item{\code{Sigma_by_group_samples}}{a \code{G} x \code{total_iters} matrix of posterior samples of diffusion variances}
+\item{\code{c_samples}}{a \code{total_iters} vector of posterior samples of divergence function hyperparameter}
+\item{\code{loglikelihood}}{a \code{total_iters} vector of log-likelihoods of the full model}
+\item{\code{loglikelihood_lcm}}{a \code{total_iters} vector of log-likelihoods of the LCM model only}
+\item{\code{setting}}{a list of model setup information. See \code{\link{ddtlcm_fit}}}
+\item{\code{controls}}{a list of model controls. See \code{\link{ddtlcm_fit}}}
+\item{\code{data}}{the input data matrix}
+}
 }
 \description{
 Summarize the output of a ddt_lcm model
+}
+\examples{
+# load the result of fitting semi-synthetic data with 100 (for the sake of time) posterior samples
+data(result_hchs)
+summarized_result <- summary(result_hchs, burnin = 50, relabel = TRUE, be_quiet = TRUE)
 }
 \seealso{
 Other ddt_lcm results: 

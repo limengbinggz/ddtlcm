@@ -24,7 +24,7 @@ ddtlcm_fit(
 N is the number of individuals, and J is the number of granular items}
 
 \item{item_membership_list}{a list of G elements, where the g-th element contains the column
-indices of \code{data} corresponding to items in major group g}
+indices of \code{data} corresponding to items in major group g, and G is number of major item groups}
 
 \item{total_iters}{number of posterior samples to collect (integer)}
 
@@ -69,7 +69,7 @@ distribution.}
 \describe{
 \item{\code{fix_tree}}{a logical. If \code{TRUE} (default), the tree structure will be sampled in the algorithm. If \code{FALSE},
 the tree structure will be fixed at the initial input.}
-\item{\code{c_order}}{a value. If \code{1}, the divergence function is a(t) = c/(1-t). If \code{2}, the divergence
+\item{\code{c_order}}{a numeric value. If \code{1}, the divergence function is a(t) = c/(1-t). If \code{2}, the divergence
 function is a(t) = c/(1-t)^2.}
 }}
 
@@ -79,7 +79,7 @@ function is a(t) = c/(1-t)^2.}
 \value{
 an object of class "ddt_lcm"; a list containing the following elements:
 \describe{
-\item{\code{tree_samples}}{a list of information of the tree collected from the sampling algorithm, containing:
+\item{\code{tree_samples}}{a list of information of the tree collected from the sampling algorithm, including:
 \code{accept}: a binary vector where \code{1} indicates acceptance of the proposal tree and \code{0} indicates rejection.
 \code{tree_list}: a list of posterior samples of the tree.
 \code{dist_mat_list}: a list of tree-structured covariance matrices representing the marginal covariances
@@ -92,8 +92,10 @@ in the DDT branching process.}
 \item{\code{c_samples}}{a \code{total_iters} vector of posterior samples of divergence function hyperparameter}
 \item{\code{loglikelihood}}{a \code{total_iters} vector of log-likelihoods of the full model}
 \item{\code{loglikelihood_lcm}}{a \code{total_iters} vector of log-likelihoods of the LCM model only}
-\item{\code{setting}}{a list of model setup information}
-\item{\code{controls}}{a list of model controls}
+\item{\code{setting}}{a list of model setup information, including: \code{K}, \code{item_membership_list}, and \code{G}}
+\item{\code{controls}}{a list of model controls, including:
+\code{fix_tree}: FALSE to perform MH sampling of the tree, TRUE to fix the tree at the initial input.
+\code{c_order}: a numeric value of \code{1} or \code{2} (see Arguments))}
 \item{\code{data}}{the input data matrix}
 }
 }
@@ -103,7 +105,9 @@ multivariate binary outcomes.
 }
 \examples{
 # load the MAP tree structure obtained from the real HCHS/SOL data
-data(synthetic_data_K3)
-list2env(setNames(data_synthetic, names(data_synthetic)), envir = parent.frame()) 
+data(data_synthetic)
+# extract elements into the global environment
+list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+# run DDT-LCM
 result <- ddtlcm_fit(K = 3, data = response_matrix, item_membership_list, total_iters = 50)
 }

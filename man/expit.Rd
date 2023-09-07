@@ -9,7 +9,14 @@ expit(x)
 \arguments{
 \item{x}{a value or a numeric vector between 0 and 1 (exclusive)}
 }
+\value{
+a number or real-valued vector
+}
 \description{
 The expit function: f(x) = exp(x) / (1+exp(x)), computed
 in a way to avoid numerical underflow.
+}
+\examples{
+expit(0.2)
+expit(c(-1, -0.3, 0.6))
 }

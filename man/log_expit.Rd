@@ -9,6 +9,9 @@ log_expit(x)
 \arguments{
 \item{x}{a value or a numeric vector between 0 and 1 (exclusive)}
 }
+\value{
+a number or rea-valued vector
+}
 \description{
 Numerically accurately compute f(x) = log(x / (1/x)).
 }

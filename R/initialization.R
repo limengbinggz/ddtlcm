@@ -38,7 +38,7 @@ initialize_randomLCM <- function(K, data){
   response_probs <- matrix(runif(K*J), nrow=K, ncol=J)
 
   class_probability <- rep(1/K, K)
-  class_assignments <- sample(1:K, N, prob = class_probability, replace = T)
+  class_assignments <- sample(1:K, N, prob = class_probability, replace = TRUE)
   return(list(response_probs = response_probs,
               class_probability = class_probability,
               class_assignments = class_assignments))
@@ -139,7 +139,7 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
 #' Dalla Valle, L., Leisen, F., Rossini, L., & Zhu, W. (2021). A Pólya–Gamma sampler for a 
 #' generalized logistic regression. Journal of Statistical Computation and Simulation, 91(14), 2899-2916.
 #' An example input list is 
-#' `list(shape_c = 1, rate_c = 1, shape_sigma = rep(2, G), rate_sigma = rep(2, G), a_pg = 1.0)`, where
+#' `list("shape_c" = 1, "rate_c" = 1, "shape_sigma" = rep(2, G), "rate_sigma" = rep(2, G), "a_pg" = 1.0)`, where
 #' `G` is the number of major item groups. Default is NULL. 
 #'@param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0
@@ -148,6 +148,16 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
 #'@family initialization functions
 #'@seealso [ddtlcm_fit()]
 #'@export
+#'@examples
+#' # load the MAP tree structure obtained from the real HCHS/SOL data
+#' data(data_synthetic)
+#' # extract elements into the global environment
+#' list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+#' K <- 3
+#' G <- length(item_membership_list)
+#' fixed_initials <- list("shape_c" = 2, "rate_c" = 2)
+#' fixed_priors <- list("rate_sigma" = rep(3, G))
+#' initials <- initialize(K, data = response_matrix, item_membership_list, c=1, c_order=1, fixed_initials = fixed_initials, fixed_priors = fixed_priors)
 initialize <- function(K, data, item_membership_list, c=1, c_order=1,
                        method_lcm = "random", #c("poLCA", "random"),
                        method_dist = "euclidean", method_hclust = "ward.D",
