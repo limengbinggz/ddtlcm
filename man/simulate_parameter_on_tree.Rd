@@ -31,6 +31,26 @@ root node "u1", and internal nodes "u2", ..., "uK".
 \description{
 Simulate node parameters along a given tree.
 }
+\examples{
+library(ape)
+tr_txt <- "(((v1:0.25, v2:0.25):0.65, v3:0.9):0.1);"
+tree <- read.tree(text = tr_txt)
+tree$node.label <- paste0("u", 1:Nnode(tree))
+plot(tree, show.node.label = TRUE)
+# create a list of item membership indices of 7 major groups
+item_membership_list <- list()
+num_items_per_group <- c(rep(10, 5), 15, 15)
+G <- length(num_items_per_group)
+j <- 0
+for (g in 1:G) {
+  item_membership_list[[g]] <- (j+1):(j+num_items_per_group[g])
+  j <- j+num_items_per_group[g]
+}
+# variance of logit response probabilities of items in each group
+Sigma_by_group <- c(rep(0.6**2, 5), rep(2**2, 2)) #rep(1**2, G)
+set.seed(50)
+tree_with_parameter <- simulate_parameter_on_tree(tree, Sigma_by_group, item_membership_list)
+}
 \seealso{
 Other simulate DDT-LCM data: 
 \code{\link{simulate_DDT_tree}()},

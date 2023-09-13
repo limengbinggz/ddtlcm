@@ -26,6 +26,14 @@ the parent of the detached node}
 \description{
 Randomly detach a subtree from a given tree
 }
+\examples{
+library(phylobase)
+# load the MAP tree structure obtained from the real HCHS/SOL data
+data(data_synthetic)
+# extract elements into the global environment
+list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+detachment <- random_detach_subtree(extractTree(tree_with_parameter)) 
+}
 \seealso{
 Other sample trees: 
 \code{\link{attach_subtree}()},

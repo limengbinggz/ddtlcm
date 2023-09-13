@@ -18,3 +18,9 @@ N is the number of individuals, and J is the number of granular items}
 Predict individual class memberships based on posterior summary (point estimates
 of model parameters). The predicted class memberships are modal assignments.
 }
+\examples{
+data(result_hchs)
+burnin <- 50
+summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+predicted <- predict(summarized_result, result_hchs$data)
+}

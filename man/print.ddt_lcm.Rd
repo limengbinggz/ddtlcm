@@ -14,6 +14,10 @@
 \description{
 Print out setup of a ddt_lcm model
 }
+\examples{
+data(result_hchs)
+print(result_hchs)
+}
 \seealso{
 Other ddt_lcm results: 
 \code{\link{print.summary.ddt_lcm}()},

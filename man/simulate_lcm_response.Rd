@@ -31,6 +31,17 @@ Z_i ~ Categorical_K(prior_class_probability)
 For item j = 1, ..., J,
 Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})
 }
+\examples{
+# number of latent classes
+K <- 6
+# number of items
+J <- 78
+response_prob <- matrix(runif(K*J), nrow = K)
+class_probability <- rep(1/K, K)
+# number of individuals
+N <- 100
+response_matrix <- simulate_lcm_response(N, response_prob, class_probability)
+}
 \seealso{
 Other simulate DDT-LCM data: 
 \code{\link{simulate_DDT_tree}()},

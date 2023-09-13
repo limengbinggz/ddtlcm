@@ -37,6 +37,7 @@ Imports:
     truncnorm (>= 1.0-8),
     BayesLogit (>= 2.1),
     Matrix (>= 1.5-1),
+    Rdpack (>= 2.5),
     R.utils (>= 2.12.2)
 Suggests:
     knitr,

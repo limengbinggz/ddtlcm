@@ -17,6 +17,7 @@ add_one_sample(tree_old, c, c_order, theta, alpha)
 a(t) = c/(1-t) or c/(1-t)^2.}
 
 \item{alpha, theta}{hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+Allowable range: 0 <= beta <= 1, and alpha >= -2 beta
 For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
 specify positive values to alpha and theta. It is, however, recommended using alpha =
 theta = 0 in inference because multifurcating trees have not been tested rigorously.}

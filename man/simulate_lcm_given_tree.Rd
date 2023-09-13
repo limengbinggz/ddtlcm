@@ -62,6 +62,22 @@ Z_i ~ Categorical_K(prior_class_probability)
 For item j = 1, ..., J,
 Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})
 }
+\examples{
+# load the MAP tree structure obtained from the real HCHS/SOL data
+data(data_hchs)
+# unlist the elements into variables in the global environment
+list2env(setNames(data_hchs, names(data_hchs)), envir = globalenv()) 
+# number of individuals
+N <- 496
+# set random seed to generate node parameters given the tree
+seed_parameter = 1
+# set random seed to generate multivariate binary observations from LCM
+seed_response = 1
+# simulate data given the parameters
+sim_data <- simulate_lcm_given_tree(tree_phylo, N, 
+                                    class_probability, item_membership_list, Sigma_by_group, 
+                                    root_node_location = 0, seed_parameter = 1, seed_response = 1)
+}
 \seealso{
 Other simulate DDT-LCM data: 
 \code{\link{simulate_DDT_tree}()},

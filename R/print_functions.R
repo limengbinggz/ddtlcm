@@ -1,10 +1,3 @@
-#' Generic function
-#' @param x The object to print
-#' @param \dots Further arguments passed to each method
-#' @export
-print <- function(x, ...) UseMethod('print')
-
-
 #' Print out setup of a ddt_lcm model
 #' @param x a "ddt_lcm" object
 #' @param \dots	Further arguments passed to each method
@@ -12,6 +5,9 @@ print <- function(x, ...) UseMethod('print')
 #' @method print ddt_lcm
 #' @family ddt_lcm results
 #' @export
+#' @examples
+#' data(result_hchs)
+#' print(result_hchs)
 print.ddt_lcm <- function(x, ...){
   # total number of items
   J <- length(unlist(x$setting$item_membership_list))
@@ -35,6 +31,11 @@ print.ddt_lcm <- function(x, ...){
 #' @method print summary.ddt_lcm
 #' @family ddt_lcm results
 #' @export
+#' @examples
+#' data(result_hchs)
+#' burnin <- 50
+#' summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+#' print(summarized_result)
 print.summary.ddt_lcm <- function(x, digits = 3L, ...){
   # total number of items
   J <- length(unlist(x$setting$item_membership_list))

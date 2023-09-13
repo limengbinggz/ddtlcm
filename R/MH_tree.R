@@ -18,6 +18,13 @@
 #' }
 #' @family sample trees
 #' @export
+#' @examples
+#' library(phylobase)
+#' # load the MAP tree structure obtained from the real HCHS/SOL data
+#' data(data_synthetic)
+#' # extract elements into the global environment
+#' list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+#' detachment <- random_detach_subtree(extractTree(tree_with_parameter)) 
 random_detach_subtree <- function(tree_phylo4){
   # phylobase::phylobase.options(singleton="ok")
   # number of samples
@@ -271,7 +278,6 @@ attach_subtree <- function(subtree, tree_kept, detach_div_time, pa_detach_node_l
 #' \item{`q_new`}{a "phylo" tree detached from the input tree}
 #' \item{`q_old`}{the remaining "phylo" tree after detachment}
 #' }
-#' @export
 proposal_log_prob <- function(old_tree_phylo4, tree_kept, old_detach_pa_div_time, old_pa_detach_node_label, old_detach_node_label,
                               new_div_time, new_attach_root, new_attach_to, c, c_order=1){
   # phylobase::phylobase.options(singleton="ok")

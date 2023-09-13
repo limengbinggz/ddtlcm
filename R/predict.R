@@ -1,10 +1,3 @@
-#' Generic function
-#' @param object The object to print
-#' @param \dots Further arguments passed to each method
-#' @export
-predict <- function(object, ...) UseMethod('predict')
-
-
 #' Prediction of class memberships from posterior summaries
 #' @description Predict individual class memberships based on posterior summary (point estimates
 #'  of model parameters). The predicted class memberships are modal assignments. 
@@ -13,6 +6,11 @@ predict <- function(object, ...) UseMethod('predict')
 #'   N is the number of individuals, and J is the number of granular items
 #' @param \dots Further arguments passed to each method
 #' @export
+#' @examples
+#' data(result_hchs)
+#' burnin <- 50
+#' summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+#' predicted <- predict(summarized_result, result_hchs$data)
 predict.summary.ddt_lcm <- function(object, data, ...){ 
   class_probability <- object$class_probs_summary[,'Mean']
   K <- length(class_probability)
@@ -42,6 +40,10 @@ predict.summary.ddt_lcm <- function(object, data, ...){
 #' @param burnin number of samples to discard from the posterior chain as burn-ins. Default is 3000.
 #' @param \dots Further arguments passed to each method
 #' @export
+#' @examples
+#' data(result_hchs)
+#' burnin <- 50
+#' predicted <- predict(result_hchs, result_hchs$data, burnin)
 predict.ddt_lcm <- function(object, data, burnin = 3000, ...){ 
   total_iters <- length(object$loglikelihood)
   K <- object$setting$K

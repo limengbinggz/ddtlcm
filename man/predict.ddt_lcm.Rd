@@ -21,3 +21,8 @@ Predict individual class memberships based on posterior predictive distributions
 For each posterior sample, let the class memberships be modal assignments. Then aggregate over
 all posterior samples to obtain the most likely assigned classes.
 }
+\examples{
+data(result_hchs)
+burnin <- 50
+predicted <- predict(result_hchs, result_hchs$data, burnin)
+}

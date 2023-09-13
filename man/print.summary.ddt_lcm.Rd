@@ -16,6 +16,12 @@
 \description{
 Print out summary of a ddt_lcm model
 }
+\examples{
+data(result_hchs)
+burnin <- 50
+summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+print(summarized_result)
+}
 \seealso{
 Other ddt_lcm results: 
 \code{\link{print.ddt_lcm}()},

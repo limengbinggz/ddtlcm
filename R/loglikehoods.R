@@ -190,7 +190,6 @@ logllk_tree_topology <- function(l, r){
 #' @param dist_mat_old a tree-structured covariance matrix from a given tree. Default is NULL. 
 #' @return a numeric of loglikelihood
 #' @family likelihood functions
-#' @export
 logllk_ddt <- function(c, c_order, Sigma_by_group, tree_phylo4d, item_membership_list,
                        tree_structure_old = NULL, dist_mat_old = NULL){
   # phylobase::phylobase.options(singleton="ok")
@@ -264,8 +263,7 @@ logllk_ddt <- function(c, c_order, Sigma_by_group, tree_phylo4d, item_membership
 #'@param Class_count a length K vector, where the k-th element counts the number of individuals
 #'    belonging to class k
 #'@return a numeric of loglikelihood
-#' @family likelihood functions
-#'@export
+#'@family likelihood functions
 logllk_lcm <- function(response_matrix, leaf_data, prior_class_probability,
                        prior_dirichlet, ClassItem, Class_count){
   # loglikelihood of the responses
@@ -301,7 +299,6 @@ logllk_lcm <- function(response_matrix, leaf_data, prior_class_probability,
 #'    belonging to class k
 #' @return a numeric of loglikelihood
 #' @family likelihood functions
-#' @export
 logllk_ddt_lcm <- function(c, Sigma_by_group, tree_phylo4d, item_membership_list,
                            tree_structure_old = NULL, dist_mat_old = NULL,
                            response_matrix, leaf_data, prior_class_probability,

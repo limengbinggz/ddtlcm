@@ -1,6 +1,6 @@
 **ddtlcm**: Dirichlet diffusion tree-latent class model (DDT-LCM)
 
-An R package for Tree-regularized Latent Class Models with a DDT process prior on class profiles
+An R package for Tree-regularized latent class mModels with a DDT process prior on class profiles
 
 **Maintainer**: Mengbing Li (mengbing@umich.edu)
 
@@ -40,8 +40,7 @@ devtools::install_github("limengbinggz/ddtlcm")
 
 Overview
 ----------
-`ddtlcm` is designed for analyzing multivariate binary observations over grouped items in a tree-regularized Bayesian LCM framework. Between-class similarities are guided by an unknown tree, where classes positioned closer on the tree are more similar _a priori_. This framework facilitates the sharing of information between classes to make better estimates of parameters using less data. The model is built upon equipping LCMs with a DDT process prior on the class profiles, with varying degrees of shrinkage across major item groups. The model is particularly promising for addressing weak separation of latent classes when sample sizes are small. The posterior inferential algorithm is based on 
-a hybrid Metropolis-Hastings-within-Gibbs algorithm and can provide posterior uncertainty quantifications.
+`ddtlcm` is designed for analyzing multivariate binary observations over grouped items in a tree-regularized Bayesian LCM framework. Between-class similarities are guided by an unknown tree, where classes positioned closer on the tree are more similar _a priori_. This framework facilitates the sharing of information between classes to make better estimates of parameters using less data. The model is built upon equipping LCMs with a DDT process prior on the class profiles, with varying degrees of shrinkage across major item groups. The model is particularly promising for addressing weak separation of latent classes when sample sizes are small. The posterior inferential algorithm is based on a hybrid Metropolis-Hastings-within-Gibbs algorithm and can provide posterior uncertainty quantifications.
 
 
 **ddtlcm** works for 

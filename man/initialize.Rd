@@ -63,7 +63,7 @@ that f(\code{eta}; a_pg) = \code{theta}. This becomes a standard logistic distri
 Dalla Valle, L., Leisen, F., Rossini, L., & Zhu, W. (2021). A Pólya–Gamma sampler for a
 generalized logistic regression. Journal of Statistical Computation and Simulation, 91(14), 2899-2916.
 An example input list is
-\code{list(shape_c = 1, rate_c = 1, shape_sigma = rep(2, G), rate_sigma = rep(2, G), a_pg = 1.0)}, where
+\code{list("shape_c" = 1, "rate_c" = 1, "shape_sigma" = rep(2, G), "rate_sigma" = rep(2, G), "a_pg" = 1.0)}, where
 \code{G} is the number of major item groups. Default is NULL.}
 
 \item{alpha, theta}{hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
@@ -76,6 +76,18 @@ phylo4d object of tree topology
 }
 \description{
 Initialize the MH-within-Gibbs algorithm for DDT-LCM
+}
+\examples{
+# load the MAP tree structure obtained from the real HCHS/SOL data
+data(data_synthetic)
+# extract elements into the global environment
+list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+K <- 3
+G <- length(item_membership_list)
+fixed_initials <- list("shape_c" = 2, "rate_c" = 2)
+fixed_priors <- list("rate_sigma" = rep(3, G))
+initials <- initialize(K, data = response_matrix, item_membership_list, 
+  c=1, c_order=1, fixed_initials = fixed_initials, fixed_priors = fixed_priors)
 }
 \seealso{
 \code{\link[=ddtlcm_fit]{ddtlcm_fit()}}

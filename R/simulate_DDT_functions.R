@@ -9,6 +9,7 @@
 #' @param c_order equals 1 (default) or 2 to choose divergence function
 #'  a(t) = c/(1-t) or c/(1-t)^2.
 #' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+#'    Allowable range: 0 <= beta <= 1, and alpha >= -2 beta
 #'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
 #'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
 #'    theta = 0 in inference because multifurcating trees have not been tested rigorously.
@@ -107,20 +108,32 @@ add_one_sample <- function(tree_old, c, c_order, theta, alpha){
 
 #' Simulate a tree from a DDT process. Only the tree topology and branch lengths
 #'  are simulated, without node parameters.
-#'@param K number of leaves (classes) on the tree
-#'@param c hyparameter of divergence function a(t)
-#'@param c_order equals 1 (default) or 2 to choose divergence function
+#' @param K number of leaves (classes) on the tree
+#' @param c hyparameter of divergence function a(t)
+#' @param c_order equals 1 (default) or 2 to choose divergence function
 #'  a(t) = c/(1-t) or c/(1-t)^2.
-#'@param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
+#' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
 #'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
 #'    theta = 0 in inference because multifurcating trees have not been tested rigorously.
-#'@importFrom ape read.tree
-#'@return A class "phylo" tree with K leaves. The leaf nodes are labeled "v1", ..., "vK", 
+#' @importFrom ape read.tree
+#' @importFrom Rdpack reprompt
+#' @return A class "phylo" tree with K leaves. The leaf nodes are labeled "v1", ..., "vK", 
 #'  root node "u1", and internal nodes "u2", ..., "uK". Note that this tree does not contain
 #'  any node parameters.
-#'@family simulate DDT-LCM data
-#'@export
+#' @family simulate DDT-LCM data
+#' @references {
+#'  Knowles, D. A., & Ghahramani, Z. (2014). Pitman yor diffusion trees for bayesian hierarchical 
+#'  clustering. IEEE transactions on pattern analysis and machine intelligence, 37(2), 271-289.
+#' }
+#' @export
+#' @examples
+#' K <- 6
+#' c <- 5
+#' c_order <- 1
+#' tree1 <- simulate_DDT_tree(K, c, c_order)
+#' tree2 <- simulate_DDT_tree(K, c, c_order, alpha = 0.4, theta = 0.1)
+#' tree3 <- simulate_DDT_tree(K, c, c_order, alpha = 0.8, theta = 0.1)
 simulate_DDT_tree <- function(K, c, c_order = 1, alpha = 0, theta = 0){
   # the first data point does not diverge, and reaches t = 1 directly.
   # the second data point diverges at some time t_2
@@ -153,6 +166,25 @@ simulate_DDT_tree <- function(K, c, c_order = 1, alpha = 0, theta = 0){
 #'@importFrom ape Ntip Nnode
 #'@family simulate DDT-LCM data
 #'@export
+#'@examples
+#' library(ape)
+#' tr_txt <- "(((v1:0.25, v2:0.25):0.65, v3:0.9):0.1);"
+#' tree <- read.tree(text = tr_txt)
+#' tree$node.label <- paste0("u", 1:Nnode(tree))
+#' plot(tree, show.node.label = TRUE)
+#' # create a list of item membership indices of 7 major groups
+#' item_membership_list <- list()
+#' num_items_per_group <- c(rep(10, 5), 15, 15)
+#' G <- length(num_items_per_group)
+#' j <- 0
+#' for (g in 1:G) {
+#'   item_membership_list[[g]] <- (j+1):(j+num_items_per_group[g])
+#'   j <- j+num_items_per_group[g]
+#' }
+#' # variance of logit response probabilities of items in each group
+#' Sigma_by_group <- c(rep(0.6**2, 5), rep(2**2, 2)) #rep(1**2, G)
+#' set.seed(50)
+#' tree_with_parameter <- simulate_parameter_on_tree(tree, Sigma_by_group, item_membership_list)
 simulate_parameter_on_tree <- function(tree_phylo, Sigma_by_group, item_membership_list, 
                                        root_node_location = 0){
   # total number of items
@@ -230,7 +262,17 @@ simulate_parameter_on_tree <- function(tree_phylo, Sigma_by_group, item_membersh
 #'  probabilities. Entries should be nonzero and sum up to 1, or otherwise will be normalized}
 #' }
 #' @family simulate DDT-LCM data
-#'@export
+#' @export
+#' @examples
+#' # number of latent classes
+#' K <- 6
+#' # number of items
+#' J <- 78
+#' response_prob <- matrix(runif(K*J), nrow = K)
+#' class_probability <- rep(1/K, K)
+#' # number of individuals
+#' N <- 100
+#' response_matrix <- simulate_lcm_response(N, response_prob, class_probability)
 simulate_lcm_response <- function(N, response_prob, class_probability){
   # number of classes
   K <- nrow(response_prob)
@@ -289,7 +331,22 @@ simulate_lcm_response <- function(N, response_prob, class_probability){
 #' \item{`item_membership_list`}{same as input}
 #' }
 #' @family simulate DDT-LCM data
-#'@export
+#' @export
+#' @examples
+#' # load the MAP tree structure obtained from the real HCHS/SOL data
+#' data(data_hchs)
+#' # unlist the elements into variables in the global environment
+#' list2env(setNames(data_hchs, names(data_hchs)), envir = globalenv()) 
+#' # number of individuals
+#' N <- 496
+#' # set random seed to generate node parameters given the tree
+#' seed_parameter = 1
+#' # set random seed to generate multivariate binary observations from LCM
+#' seed_response = 1
+#' # simulate data given the parameters
+#' sim_data <- simulate_lcm_given_tree(tree_phylo, N, 
+#'                                     class_probability, item_membership_list, Sigma_by_group, 
+#'                                     root_node_location = 0, seed_parameter = 1, seed_response = 1)
 simulate_lcm_given_tree <- function(tree_phylo, N, 
             class_probability = 1, item_membership_list, Sigma_by_group = NULL, 
             root_node_location = 0, seed_parameter = 1, seed_response = 1) {

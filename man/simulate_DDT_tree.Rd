@@ -29,6 +29,20 @@ any node parameters.
 Simulate a tree from a DDT process. Only the tree topology and branch lengths
 are simulated, without node parameters.
 }
+\examples{
+K <- 6
+c <- 5
+c_order <- 1
+tree1 <- simulate_DDT_tree(K, c, c_order)
+tree2 <- simulate_DDT_tree(K, c, c_order, alpha = 0.4, theta = 0.1)
+tree3 <- simulate_DDT_tree(K, c, c_order, alpha = 0.8, theta = 0.1)
+}
+\references{
+{
+Knowles, D. A., & Ghahramani, Z. (2014). Pitman yor diffusion trees for bayesian hierarchical
+clustering. IEEE transactions on pattern analysis and machine intelligence, 37(2), 271-289.
+}
+}
 \seealso{
 Other simulate DDT-LCM data: 
 \code{\link{simulate_lcm_given_tree}()},

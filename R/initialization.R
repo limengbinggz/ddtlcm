@@ -157,7 +157,8 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
 #' G <- length(item_membership_list)
 #' fixed_initials <- list("shape_c" = 2, "rate_c" = 2)
 #' fixed_priors <- list("rate_sigma" = rep(3, G))
-#' initials <- initialize(K, data = response_matrix, item_membership_list, c=1, c_order=1, fixed_initials = fixed_initials, fixed_priors = fixed_priors)
+#' initials <- initialize(K, data = response_matrix, item_membership_list, 
+#'   c=1, c_order=1, fixed_initials = fixed_initials, fixed_priors = fixed_priors)
 initialize <- function(K, data, item_membership_list, c=1, c_order=1,
                        method_lcm = "random", #c("poLCA", "random"),
                        method_dist = "euclidean", method_hclust = "ward.D",
