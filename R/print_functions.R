@@ -5,6 +5,7 @@
 #' @method print ddt_lcm
 #' @family ddt_lcm results
 #' @export
+#' @return NULL
 #' @examples
 #' data(result_hchs)
 #' print(result_hchs)
@@ -31,6 +32,7 @@ print.ddt_lcm <- function(x, ...){
 #' @method print summary.ddt_lcm
 #' @family ddt_lcm results
 #' @export
+#' @return NULL
 #' @examples
 #' data(result_hchs)
 #' burnin <- 50

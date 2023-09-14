@@ -12,7 +12,12 @@
 #' @method plot summary.ddt_lcm
 #' @importFrom ggplot2 geom_errorbar
 #' @importFrom ggpubr ggarrange
-#' @export
+#' @return a ggplot2 object. If plot_option is "all", then a plot with maximum a posterior 
+#'  tree structure on the left and a bar plot of item response probabilities (with 95% 
+#'  credible intervals and class probabilities) on the right. If plot_option is 
+#'  "profile", then only a bar plot of item response probabilities. If plot_option is 
+#'  "tree", then only a plot of the tree structure.
+#' @export 
 #' @examples
 #' data(result_hchs)
 #' burnin <- 50
@@ -79,6 +84,7 @@ plot.summary.ddt_lcm <- function(x, log=TRUE,
 #' @import ggplot2
 #' @importFrom ggtext element_markdown
 #' @importFrom ggpubr ggarrange
+#' @return a ggplot2 object. A bar plot of item response probabilities. 
 #' @export
 #' @examples
 #' # load the MAP tree structure obtained from the real HCHS/SOL data
@@ -220,6 +226,9 @@ plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_memb
 #' @importFrom ggpubr ggarrange
 #' @importFrom ggtree ggtree geom_tiplab geom_nodelab
 #' @importFrom ggpubr ggarrange
+#' @return a ggplot2 object. A plot with the tree structure on the left and a heatmap
+#'  of item response probabilities on the right, with indication of item group 
+#'  memberships beneath the heatmap.
 #' @export
 #' @examples 
 #' # load the MAP tree structure obtained from the real HCHS/SOL data

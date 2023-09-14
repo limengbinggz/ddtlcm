@@ -225,7 +225,7 @@ log_expit <- function(x){
 #' Suppress print from cat()
 #' @param x evaluation of a statement that may explicitly or implicitly involve cat()
 #' @param be_quiet logical. TRUE to suppress print from cat(); FALSE to continue printing
-quiet <- function(x, be_quiet=T) { 
+quiet <- function(x, be_quiet=TRUE) { 
   if (be_quiet){
     sink(tempfile()) 
     on.exit(sink()) 

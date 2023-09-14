@@ -4,7 +4,7 @@
 \alias{quiet}
 \title{Suppress print from cat()}
 \usage{
-quiet(x, be_quiet = T)
+quiet(x, be_quiet = TRUE)
 }
 \arguments{
 \item{x}{evaluation of a statement that may explicitly or implicitly involve cat()}

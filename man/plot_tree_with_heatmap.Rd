@@ -19,6 +19,11 @@ probability of item j for individuals in class k}
 \item{item_membership_list}{a list of G elements, where the g-th element contains the
 column indices of the observed data matrix corresponding to items in major group g}
 }
+\value{
+a ggplot2 object. A plot with the tree structure on the left and a heatmap
+of item response probabilities on the right, with indication of item group
+memberships beneath the heatmap.
+}
 \description{
 Plot the MAP tree and class profiles (heatmap) of summarized DDT-LCM results
 }

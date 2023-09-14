@@ -31,6 +31,13 @@ the name of the major item group.}
 
 \item{\dots}{Further arguments passed to each method}
 }
+\value{
+a ggplot2 object. If plot_option is "all", then a plot with maximum a posterior
+tree structure on the left and a bar plot of item response probabilities (with 95\%
+credible intervals and class probabilities) on the right. If plot_option is
+"profile", then only a bar plot of item response probabilities. If plot_option is
+"tree", then only a plot of the tree structure.
+}
 \description{
 Plot the MAP tree and class profiles of summarized DDT-LCM results
 }

@@ -6,6 +6,13 @@
 #'   N is the number of individuals, and J is the number of granular items
 #' @param \dots Further arguments passed to each method
 #' @export
+#' @return a list of the following named elements:
+#' \describe{
+#' \item{`class_assignments`}{an integer vector of individual predicted class memberships
+#'  taking values in {1, ..., K}}
+#' \item{`predictive_probs`}{a N x K matrix of probabilities, where the (i,k)-th element
+#'  is the probability that the i-th individual is predicted to belong to class k.}
+#' }
 #' @examples
 #' data(result_hchs)
 #' burnin <- 50
@@ -40,6 +47,13 @@ predict.summary.ddt_lcm <- function(object, data, ...){
 #' @param burnin number of samples to discard from the posterior chain as burn-ins. Default is 3000.
 #' @param \dots Further arguments passed to each method
 #' @export
+#' @return a list of the following named elements:
+#' \describe{
+#' \item{`class_assignments`}{an integer vector of individual predicted class memberships
+#'  taking values in {1, ..., K}}
+#' \item{`predictive_probs`}{a N x K matrix of probabilities, where the (i,k)-th element
+#'  is the probability that the i-th individual is predicted to belong to class k.}
+#' }
 #' @examples
 #' data(result_hchs)
 #' burnin <- 50

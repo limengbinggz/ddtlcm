@@ -45,6 +45,9 @@ the distribution.}
 class profiles. If TRUE, return the tree plot, class profile plot, and data.table
 used to create the plots in a list, without printing the combined plot.}
 }
+\value{
+a ggplot2 object. A bar plot of item response probabilities.
+}
 \description{
 Plot the MAP tree and class profiles (bar plot) of summarized DDT-LCM results
 }

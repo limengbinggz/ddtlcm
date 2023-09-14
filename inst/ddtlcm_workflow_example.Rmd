@@ -134,7 +134,6 @@ On the left is the MAP tree estimated from the real HCHS/SOL data, with leaf nod
 We assume that the number of latent classes $K = 6$ is known. Throughout the paper, we use divergence function $a(t) = c / (1-t)$ to parameterize the DDT branching process, where $c > 0$ is a hyperparameter. To use the function `ddtlcm_fit`, we need to specify the number of classes (`K`), a matrix of multivariate binary observations (`data`), a list of item group memberships (`item_membership_list`), and the number of posterior samples to collect (`total_iters`). In Section 5.1 of the manuscript, we set `total_iters = 15000`. For the purpose of quickly illustrating the output, here we run the function with a smaller number `total_iters = 100`.
 
 ```{r}
-# number of classes
 set.seed(999)
 # number of latent classes, or number of leaves on the tree
 K <- 6
@@ -156,7 +155,9 @@ summarized_result <- summary(result_hchs, burnin, relabel = T, be_quiet = T)
 
 We can visualize the summarized result, including the MAP tree and the class profiles. Due to limited space, the item labels are scrambled together. Please refer to Figure 4 in the manuscript for a clearer version.
 ```{r fig.height = 6, fig.width = 7}
+pdf(paste0("K", K, "_test.pdf"), width = 14, height = 8)
 plot(x = summarized_result, item_name_list = item_name_list, plot_option = "all")
+dev.off()
 ```
 
 
