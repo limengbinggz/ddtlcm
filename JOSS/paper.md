@@ -25,7 +25,7 @@ authors:
 affiliations:
  - name: 'Department of Biostatistics, University of Michigan'
    index: 1
- - name: 'Department of Computer Science, Harvard University'
+ - name: 'Department of Computer Science, University of Michigan'
    index: 2
  - name: 'Department of Biostatistics, Harvard University'
    index: 3
