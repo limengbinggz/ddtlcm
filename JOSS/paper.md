@@ -12,19 +12,23 @@ authors:
     corresponding: true 
     affiliation: 1
   - name: Bolin Wu Without ORCID
-    affiliation: 1
-  - name: Briana Stephenson Without ORCID
     affiliation: 2
-  - name: Zhenke Wu Without ORCID
+  - name: Briana Stephenson Without ORCID
+    affiliation: 3
+  - name: Zhenke Wu
+    orcid: 0000-0001-7582-669X
     affiliation: 1
     corresponding: true 
-    # ML: Zhenke, shall we have Briana here?
+    # ML: Zhenke, shall we have Briana here? 
+    # This looks fine with me. Ask if Briana wants to co-author
 
 affiliations:
- - name: 'University of Michigan'
+ - name: 'Department of Biostatistics, University of Michigan'
    index: 1
- - name: 'Harvard University'
+ - name: 'Department of Computer Science, Harvard University'
    index: 2
+ - name: 'Department of Biostatistics, Harvard University'
+   index: 3
 citation_author: Mengbing Li et. al.
 date: 7 September 2023
 year: 2023
