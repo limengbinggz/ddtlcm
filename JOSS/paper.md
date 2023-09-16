@@ -11,9 +11,9 @@ authors:
     orcid: 0000-0002-2264-8006
     corresponding: true 
     affiliation: 1
-  - name: Bolin Wu Without ORCID
+  - name: Bolin Wu
     affiliation: 2
-  - name: Briana Stephenson Without ORCID
+  - name: Briana Stephenson
     affiliation: 3
   - name: Zhenke Wu
     orcid: 0000-0001-7582-669X
@@ -54,7 +54,7 @@ preamble: >
 
 # Summary
 
-Latent class models (LCMs) have been a popular tool used by social, behavioral, and medical researchers to cluster individuals based on categorical responses over a collection of items. Traditional applications of LCMs often focus on scenarios where clear class separation is evident, resulting in well-defined and easily distinguishable classes. However, in real-world applications, weak class separation is a common challenge, where the classes are less distinct and overlapping. For example, nutritional epidemiologists often encounter weak class separation when deriving dietary patterns from dietary intake assessment, where each class profile represents the probabilities of exposure to a set of diet components. LCM-derived dietary patterns can exhibit strong similarities, or weak separation, resulting in numerical and inferential instabilities that challenge scientific interpretation. This issue is exacerbated in small-sized subpopulations. 
+Latent class models (LCMs) have been a popular tool used by social, behavioral, and medical researchers to cluster individuals based on categorical responses. Traditional applications of LCMs often focus on scenarios where clear class separation is evident, resulting in well-defined and easily distinguishable classes. However, in numerous real-world applications, weak class separation is a common challenge, where the classes are less distinct and overlapping. For example, nutritional epidemiologists often encounter weak class separation when deriving dietary patterns from dietary intake assessment, which are defined by a few classes each containing a vector of probabilities of exposure to a set of diet components [@li2023tree]. LCM-derived dietary patterns can exhibit strong similarities, or weak separation, resulting in numerical and inferential instabilities that challenge scientific interpretation. This issue is exacerbated in small-sized subpopulations. 
 
 To address these issues, we develop an R package \texttt{ddtlcm} that empowers LCMs to account for weak class separation.
 This package implements a tree-regularized Bayesian LCM that leverages statistical strength between latent classes to make better estimates using limited data. With a tree-structured prior distribution over class profiles, classes that share proximity to one another in the tree are shrunk towards ancestral classes \textit{a priori}, with the degree of shrinkage varying across pre-specified major item groups. This software package takes data on multivariate binary responses over items in pre-specified major groups, and generates statistics and visualizations based on the inferred tree structures and LCM parameters. Overall, ``ddtlcm`` provides tools specifically designed to enhance the robustness and interpretability of LCMs in the presence of weak class separation, particularly useful for small sample sizes.
