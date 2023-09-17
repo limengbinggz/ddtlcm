@@ -51,13 +51,14 @@ We also describe how the simulation results of the manuscript can be reproduced 
 
 The `ddtlcm` package can by installed by running the following command.
 
-```{r eval=FALSE, include=FALSE}
-install.packages("/Users/mengbing/Dropbox (University of Michigan)/from_box/research/R_packages/ddtlcm_0.1.1.tar.gz", repos = NULL, type="source")
-```
 
 ```{r eval=FALSE}
-install.packages("devtools",repos="https://cloud.r-project.org")
-devtools::install_github("limengbinggz/ddtlcm")
+# install from source:
+# install.packages("devtools",repos="https://cloud.r-project.org")
+# devtools::install_github("limengbinggz/ddtlcm")
+
+# install from Cran:
+install.packages("ddtlcm")
 ```
 
 Throughout the document, we assume the working directory is where this R Markdown file is located.
@@ -72,7 +73,7 @@ We provide a detailed workflow of applying our model to a semi-synthetic dataset
 
 ## Simulate data
 
-We start with demonstrating how a semi-synthetic dataset is simulated using the parameters estimated from applying DDT-LCM to the real data. As described in the manuscript, our analysis cohort consists of $N = 496$ subjects and $J = 78$ food items. These food items are categorized into $G = 7$ pre-defined major food groups, including dairy, fat, fruit, grain, meat, sugar, and vegetables. The \textit{maximum a posterior} (MAP) tree estimate with $K = 6$ latent classes can be accessed via loading the data file "data_hchs" contained in the package. This data file contains the following objects:
+We start with demonstrating how a semi-synthetic dataset is simulated using the parameters estimated from applying DDT-LCM to the real data. As described in the manuscript, our analysis cohort consists of $N = 496$ subjects and $J = 78$ food items. These food items are categorized into $G = 7$ pre-defined major food groups, including dairy, fat, fruit, grain, meat, sugar, and vegetables. The \textit{maximum a posterior} (MAP) tree estimate with $K = 6$ latent classes can be accessed via loading the data file "parameter_hchs" contained in the package. This data file contains the following objects:
 
 * `tree_phylo`: a "phylo" object. The MAP tree estimated from the real HCHS/SOL data.
 
@@ -87,9 +88,9 @@ We start with demonstrating how a semi-synthetic dataset is simulated using the 
 ```{r}
 library(ddtlcm)
 # load the MAP tree structure obtained from the real HCHS/SOL data
-data(data_hchs)
+data(parameter_hchs)
 # unlist the elements into variables in the global environment
-list2env(setNames(data_hchs, names(data_hchs)), envir = globalenv()) 
+list2env(setNames(parameter_hchs, names(parameter_hchs)), envir = globalenv()) 
 
 # look at items in group 1
 g <- 1
@@ -145,7 +146,7 @@ system.time({
 print(result_hchs)
 ```
 
-We next summarize the posterior chain by discarding the first 50 iterations as burn-ins (`burnin = 30`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = T`. To save space in the document, we do not print the summary result here (`be_quiet = T`).
+We next summarize the posterior chain by discarding the first 50 iterations as burn-ins (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = T`. To save space in the document, we do not print the summary result here (`be_quiet = T`).
 ```{r}
 burnin <- 50
 summarized_result <- summary(result_hchs, burnin, relabel = T, be_quiet = T)

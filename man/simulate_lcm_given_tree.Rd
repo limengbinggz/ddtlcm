@@ -64,9 +64,9 @@ Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})
 }
 \examples{
 # load the MAP tree structure obtained from the real HCHS/SOL data
-data(data_hchs)
+data(parameter_hchs)
 # unlist the elements into variables in the global environment
-list2env(setNames(data_hchs, names(data_hchs)), envir = globalenv()) 
+list2env(setNames(parameter_hchs, names(parameter_hchs)), envir = globalenv()) 
 # number of individuals
 N <- 496
 # set random seed to generate node parameters given the tree

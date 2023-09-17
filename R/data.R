@@ -20,10 +20,10 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name data_hchs
-#' @usage data(data_hchs)
+#' @name parameter_hchs
+#' @usage data(parameter_hchs)
 #' @references \url{https://arxiv.org/abs/2306.04700}
-"data_hchs"
+"parameter_hchs"
 
 
 #' Result of fitting DDT-LCM to a semi-synthetic data example
