@@ -171,12 +171,10 @@ plot(x = summarized_result, item_name_list = item_name_list, plot_option = "all"
 
 
 # Interactive Illustration with RShiny
-We have also developed a Shiny app accompanying the R package, accesible at (https://bolinw.shinyapps.io/ddtlcm_app/), which provides interactivity via point-and-click to allow users to explore and visualize the results of the "DDT-LCM" model implemented in our package.
+We also provide an accompayning Shiny app with point-and-click interactivity to allow visualization and exploration of model results. The app, accesible at (https://bolinw.shinyapps.io/ddtlcm_app/),  is designed with three modes, allowing users to 1) simulate data using user-specified parameters or exemplar parameters mimicking a real data set, 2) upload raw multivariate binary observed data matrix, or 3) upload posterior samples collected from a completed fit of the DDT-LCM. Users can explore the app to fully understand the properties of the model, analyze their own data, save the fitted results, and produce visualizations. 
 
-The app is divided into three modes, each of which is denoted by a radio button on the left. The three modes allow users to 1) simulate data using user-specified parameters or exemplar parameters mimicking a real data set, 2) upload raw multivariate binary observed data matrix, or 3) upload posterior samples collected from a previous fit of the DDT-LCM. Users can explore the app to fully understand the properties of the model, analyze their own data, save the fitted results, and produce visualizations. 
-
-On the right hand side of the interface, three tabs are available during an actual data analysis. The "Analysis" tab visualizes tree structure over latent classes and class profiles for a set of food items grouped into major food categories, and allows users to download figures. The "Parameter" tab displays the detailed values of the estimated model parameters and users can explore the posterior distribution of model parameters. The "Data" tab shows the binary data matrix for easier examination of the analyzed data. Model fitting results can be downloaded. In addition, for simulated data, there is another tab "Truth" displaying true paramter settings. Overall, the Shiny app is a front-end interface that may enhance the accessibility and usability of the underlying "ddtlcm" package.
-
+<!-- On the right hand side of the interface, three tabs are available during an actual data analysis. The "Analysis" tab visualizes tree structure over latent classes and class profiles for a set of food items grouped into major food categories, and allows users to download figures. The "Parameter" tab displays the detailed values of the estimated model parameters and users can explore the posterior distribution of model parameters. The "Data" tab shows the binary data matrix for easier examination of the analyzed data. Model fitting results can be downloaded. In addition, for simulated data, there is another tab "Truth" displaying true paramter settings. Overall, the Shiny app is a front-end interface that may enhance the accessibility and usability of the underlying "ddtlcm" package.
+ -->
 
 
 # Conclusions
