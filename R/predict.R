@@ -14,10 +14,10 @@
 #'  is the probability that the i-th individual is predicted to belong to class k.}
 #' }
 #' @examples
-#' data(result_hchs)
+#' data(result_diet)
 #' burnin <- 50
-#' summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
-#' predicted <- predict(summarized_result, result_hchs$data)
+#' summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
+#' predicted <- predict(summarized_result, result_diet$data)
 predict.summary.ddt_lcm <- function(object, data, ...){ 
   class_probability <- object$class_probs_summary[,'Mean']
   K <- length(class_probability)
@@ -55,9 +55,9 @@ predict.summary.ddt_lcm <- function(object, data, ...){
 #'  is the probability that the i-th individual is predicted to belong to class k.}
 #' }
 #' @examples
-#' data(result_hchs)
+#' data(result_diet)
 #' burnin <- 50
-#' predicted <- predict(result_hchs, result_hchs$data, burnin)
+#' predicted <- predict(result_diet, result_diet$data, burnin)
 predict.ddt_lcm <- function(object, data, burnin = 3000, ...){ 
   total_iters <- length(object$loglikelihood)
   K <- object$setting$K

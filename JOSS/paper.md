@@ -19,8 +19,6 @@ authors:
     orcid: 0000-0001-7582-669X
     affiliation: 1
     corresponding: true 
-    # ML: Zhenke, shall we have Briana here? 
-    # This looks fine with me. Ask if Briana wants to co-author
 
 affiliations:
  - name: 'Department of Biostatistics, University of Michigan'
@@ -58,8 +56,6 @@ Latent class models (LCMs) is a model-based clustering tool frequently used by s
 
 To address these issues, we have developed an R package \texttt{ddtlcm} that empowers LCMs to account for weak class separation.
 This package implements a tree-regularized Bayesian LCM that leverages statistical strength between latent classes to make better estimates using limited data. With a tree-structured prior distribution over class profiles, classes that share proximity to one another in the tree are shrunk towards ancestral classes \textit{a priori}, with the degree of shrinkage varying across pre-specified item groups defined thematically with clinical significance. The \texttt{ddtlcm} package takes data on multivariate binary responses over items in pre-specified major groups, and generates statistics and visualizations based on the inferred tree structures and LCM parameters. Overall, ``ddtlcm`` provides tools specifically designed to enhance the robustness and interpretability of LCMs in the presence of weak class separation, particularly useful for small sample sizes.
-
-<!-- This package implements a tree-regularized Bayesian LCM that leverages statistical strength between dietary patterns to make better estimates using limited data. This is achieved via a Dirichlet diffusion tree process that specifies a prior distribution for the unknown tree over classes. Dietary patterns that share proximity to one another in the tree are shrunk towards ancestral dietary patterns a priori, with the degree of shrinkage varying across pre-specified food groups. This software package takes data on multivariate binary responses over items in pre-specified groups, and generates statistics and visualizations based on the inferred tree structures and LCM parameters. Overall, ``ddtlcm`` provides robust tools that can yield insight on dietary patterns, particularly for small-sized subpopulations. -->
 
 
 # Statement of Need
@@ -134,7 +130,7 @@ The primary model fitting function is ``ddtlcm_fit()``, which implements a hybri
 
 ```r
 set.seed(999)
-# number of latent classes, or number of leaves on the tree
+# number of latent classes, same as number of leaves on the tree
 K <- 6
 result_hchs <- ddtlcm_fit(K = K, data = sim_data$response_matrix, 
   item_membership_list = item_membership_list, total_iters = 100)

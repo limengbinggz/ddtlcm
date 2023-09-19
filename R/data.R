@@ -20,10 +20,10 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name parameter_hchs
-#' @usage data(parameter_hchs)
+#' @name parameter_diet
+#' @usage data(parameter_diet)
 #' @references \url{https://arxiv.org/abs/2306.04700}
-"parameter_hchs"
+"parameter_diet"
 
 
 #' Result of fitting DDT-LCM to a semi-synthetic data example
@@ -34,10 +34,10 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name result_hchs
-#' @usage data(result_hchs)
+#' @name result_diet
+#' @usage data(result_diet)
 #' @format A list with 8 elements
-"result_hchs"
+"result_diet"
 
 
 
