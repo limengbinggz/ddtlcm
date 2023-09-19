@@ -15,8 +15,8 @@
 Print out setup of a ddt_lcm model
 }
 \examples{
-data(result_hchs)
-print(result_hchs)
+data(result_diet)
+print(result_diet)
 }
 \seealso{
 Other ddt_lcm results: 

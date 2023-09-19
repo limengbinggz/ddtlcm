@@ -28,8 +28,8 @@ Predict individual class memberships based on posterior summary (point estimates
 of model parameters). The predicted class memberships are modal assignments.
 }
 \examples{
-data(result_hchs)
+data(result_diet)
 burnin <- 50
-summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
-predicted <- predict(summarized_result, result_hchs$data)
+summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
+predicted <- predict(summarized_result, result_diet$data)
 }

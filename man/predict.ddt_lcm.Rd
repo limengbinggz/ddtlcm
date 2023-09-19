@@ -31,7 +31,7 @@ For each posterior sample, let the class memberships be modal assignments. Then 
 all posterior samples to obtain the most likely assigned classes.
 }
 \examples{
-data(result_hchs)
+data(result_diet)
 burnin <- 50
-predicted <- predict(result_hchs, result_hchs$data, burnin)
+predicted <- predict(result_diet, result_diet$data, burnin)
 }
