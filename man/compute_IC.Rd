@@ -29,6 +29,6 @@ using two different methods described in Gelman, Hwang, and Vehtari (2013), one 
 means and the other based on (2) posterior variances.
 }
 \examples{
-data(result_hchs)
-IC_result <- compute_IC(result = result_hchs, burnin = 50, ncores = 1L)
+data(result_diet)
+IC_result <- compute_IC(result = result_diet, burnin = 50, ncores = 1L)
 }

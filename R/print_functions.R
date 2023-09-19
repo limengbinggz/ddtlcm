@@ -7,8 +7,8 @@
 #' @export
 #' @return NULL
 #' @examples
-#' data(result_hchs)
-#' print(result_hchs)
+#' data(result_diet)
+#' print(result_diet)
 print.ddt_lcm <- function(x, ...){
   # total number of items
   J <- length(unlist(x$setting$item_membership_list))
@@ -34,9 +34,9 @@ print.ddt_lcm <- function(x, ...){
 #' @export
 #' @return NULL
 #' @examples
-#' data(result_hchs)
+#' data(result_diet)
 #' burnin <- 50
-#' summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+#' summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
 #' print(summarized_result)
 print.summary.ddt_lcm <- function(x, digits = 3L, ...){
   # total number of items

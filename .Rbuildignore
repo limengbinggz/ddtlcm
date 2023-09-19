@@ -4,3 +4,5 @@
 ^\.github$
 JOSS/
 JOSS/*
+^CRAN-SUBMISSION$
+^cran-comments\.md$

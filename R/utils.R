@@ -316,8 +316,8 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
 #' }
 #' @export
 #' @examples
-#' data(result_hchs)
-#' IC_result <- compute_IC(result = result_hchs, burnin = 50, ncores = 1L)
+#' data(result_diet)
+#' IC_result <- compute_IC(result = result_diet, burnin = 50, ncores = 1L)
 compute_IC <- function(result, burnin = 5000, ncores = 1L){
   # require(parallel)
   num_samples <- length(result$loglikelihood[-(1:burnin)]) - 1

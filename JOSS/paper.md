@@ -19,8 +19,6 @@ authors:
     orcid: 0000-0001-7582-669X
     affiliation: 1
     corresponding: true 
-    # ML: Zhenke, shall we have Briana here? 
-    # This looks fine with me. Ask if Briana wants to co-author
 
 affiliations:
  - name: 'Department of Biostatistics, University of Michigan'
@@ -59,8 +57,6 @@ Latent class model (LCM) is a model-based clustering tool frequently used by soc
 To address these issues, we have developed an R package \texttt{ddtlcm} that empowers LCMs to account for weak class separation.
 This package implements a tree-regularized Bayesian LCM that leverages statistical strength between latent classes to make better estimates using limited data. With a tree-structured prior distribution over class profiles, classes that share proximity to one another in the tree are shrunk towards ancestral classes \textit{a priori}, with the degree of shrinkage varying across pre-specified item groups defined thematically with clinical significance. The \texttt{ddtlcm} package takes data on multivariate binary responses over items in pre-specified major groups, and generates statistics and visualizations based on the inferred tree structures and LCM parameters. Overall, ``ddtlcm`` provides tools specifically designed to enhance the robustness and interpretability of LCMs in the presence of weak class separation, particularly useful for small sample sizes.
 
-<!-- This package implements a tree-regularized Bayesian LCM that leverages statistical strength between dietary patterns to make better estimates using limited data. This is achieved via a Dirichlet diffusion tree process that specifies a prior distribution for the unknown tree over classes. Dietary patterns that share proximity to one another in the tree are shrunk towards ancestral dietary patterns a priori, with the degree of shrinkage varying across pre-specified food groups. This software package takes data on multivariate binary responses over items in pre-specified groups, and generates statistics and visualizations based on the inferred tree structures and LCM parameters. Overall, ``ddtlcm`` provides robust tools that can yield insight on dietary patterns, particularly for small-sized subpopulations. -->
-
 
 # Statement of Need
 
@@ -72,22 +68,22 @@ The package ``ddtlcm`` implements the tree-regularized LCM proposed in @li2023tr
 
 # Usage
 
-In the following, we use an example list of model parameters, named "parameter_hchs"&ZeroWidthSpace;, that comes with the package to demonstrate the utility of `ddtlcm` in deriving weakly separated latent class profiles. We start with demonstrating how a simulated dataset is generated. We next apply the primary model fitting function to the simulated dataset. Finally we summarize the fitted model and visualize the result.
+In the following, we use an example list of model parameters, named "parameter_diet"&ZeroWidthSpace;, that comes with the package to demonstrate the utility of `ddtlcm` in deriving weakly separated latent class profiles. We start with demonstrating how a simulated dataset is generated. We next apply the primary model fitting function to the simulated dataset. Finally we summarize the fitted model and visualize the result.
 
 <!-- Note that &ZeroWidthSpace; is needed here to avoid the comma going inside the quotation -->
 
 
 #### Data Loading
 
-The "parameter_hchs" contains model parameters obtained from applying DDT-LCM to dietary assessment data described in @li2023tree. We use it as a semi-synthetic data-generating mechanism to mimic the weak separation issue in the real world. Specifically, the data set includes a tree named "tree_phylo" (class "phylo"), a list of $J = 78$ food item labels, and a list of $G = 7$ pre-defined major food groups to which the food items belong. The food groups are dairy, fat, fruit, grain, meat, sugar, and vegetables.
+The "parameter_diet" contains model parameters obtained from applying DDT-LCM to dietary assessment data described in @li2023tree. We use it as a semi-synthetic data-generating mechanism to mimic the weak separation issue in the real world. Specifically, the data set includes a tree named "tree_phylo" (class "phylo"), a list of $J = 78$ food item labels, and a list of $G = 7$ pre-defined major food groups to which the food items belong. The food groups are dairy, fat, fruit, grain, meat, sugar, and vegetables.
 
 ```r
 install.packages("ddtlcm")
 library(ddtlcm)
 # load the data
-data(parameter_hchs)
+data(parameter_diet)
 # unlist the elements into variables in the global environment
-list2env(setNames(parameter_hchs, names(parameter_hchs)), envir = globalenv()) 
+list2env(setNames(parameter_diet, names(parameter_diet)), envir = globalenv()) 
 # look at items in group 1
 g <- 1
 # indices of the items in group 1
@@ -112,7 +108,7 @@ $Dairy
 
 #### Data Simulation
 
-Data simulation given the true parameter values in ``parameter_hchs`` is handled by the ``simulate_lcm_gi``&ZeroWidthSpace;``ven_tree()`` function. Following the dietary assessment example, we simulate a multivariate binary data matrix of $N = 496$ subjects over the $J = 78$ food items, from $K = 6$ latent classes along "tree_phylo". The resulting class profiles are weakly separated. Note that the number of latent classes equals the number of leaves in "tree_phylo".
+Data simulation given the true parameter values in ``parameter_diet`` is handled by the ``simulate_lcm_gi``&ZeroWidthSpace;``ven_tree()`` function. Following the dietary assessment example, we simulate a multivariate binary data matrix of $N = 496$ subjects over the $J = 78$ food items, from $K = 6$ latent classes along "tree_phylo". The resulting class profiles are weakly separated. Note that the number of latent classes equals the number of leaves in "tree_phylo".
 
 ```r
 # number of individuals
@@ -134,11 +130,11 @@ The primary model fitting function is ``ddtlcm_fit()``, which implements a hybri
 
 ```r
 set.seed(999)
-# number of latent classes, or number of leaves on the tree
+# number of latent classes, same as number of leaves on the tree
 K <- 6
-result_hchs <- ddtlcm_fit(K = K, data = sim_data$response_matrix, 
+result_diet <- ddtlcm_fit(K = K, data = sim_data$response_matrix, 
   item_membership_list = item_membership_list, total_iters = 100)
-print(result_hchs)
+print(result_diet)
 ```
 
 ```
@@ -150,10 +146,10 @@ items in 7 major groups. 100 iterations of posterior samples drawn.
 
 #### Model Summary
 
-We next summarize the posterior samples using the generic function ``summary()``. We discard the first 50 iterations as burn-in's (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = TRUE`. To save space in the document, we do not print the summary result here (`be_quiet = TRUE`).
+We next summarize the posterior samples using the generic function ``summary()``. We discard the first 50 iterations as burn-in's (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR, @papastamoulis2014HandlingLabel) method by specifying `relabel = TRUE`. To save space in the document, we do not print the summary result here (`be_quiet = TRUE`).
 ```r
 burnin <- 50
-summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
 ```
 
 
@@ -171,7 +167,7 @@ plot(x = summarized_result, item_name_list = item_name_list, plot_option = "all"
 
 
 # Interactive Illustration with RShiny
-We also provide an accompayning Shiny app with point-and-click interactivity to allow visualization and exploration of model results. The app, accesible at (https://bolinw.shinyapps.io/ddtlcm_app/),  is designed with three modes, allowing users to 1) simulate data using user-specified parameters or exemplar parameters mimicking a real data set, 2) upload raw multivariate binary observed data matrix, or 3) upload posterior samples collected from a completed fit of the DDT-LCM. Users can explore the app to fully understand the properties of the model, analyze their own data, save the fitted results, and produce visualizations. 
+We also provide an accompayning Shiny app with point-and-click interactivity to allow visualization and exploration of model results. The app, accesible at (https://bolinw.shinyapps.io/ddtlcm_app/), is designed with three modes, allowing users to 1) simulate data using user-specified parameters or exemplar parameters mimicking a real data set, 2) upload raw multivariate binary observed data matrix, or 3) upload posterior samples collected from a completed fit of the DDT-LCM. Users can explore the app to fully understand the properties of the model, analyze their own data, save the fitted results, and produce visualizations. 
 
 <!-- On the right hand side of the interface, three tabs are available during an actual data analysis. The "Analysis" tab visualizes tree structure over latent classes and class profiles for a set of food items grouped into major food categories, and allows users to download figures. The "Parameter" tab displays the detailed values of the estimated model parameters and users can explore the posterior distribution of model parameters. The "Data" tab shows the binary data matrix for easier examination of the analyzed data. Model fitting results can be downloaded. In addition, for simulated data, there is another tab "Truth" displaying true paramter settings. Overall, the Shiny app is a front-end interface that may enhance the accessibility and usability of the underlying "ddtlcm" package.
  -->

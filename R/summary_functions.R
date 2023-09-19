@@ -32,8 +32,8 @@
 #' }
 #'@examples
 #'# load the result of fitting semi-synthetic data with 100 (for the sake of time) posterior samples
-#'data(result_hchs)
-#'summarized_result <- summary(result_hchs, burnin = 50, relabel = TRUE, be_quiet = TRUE)
+#'data(result_diet)
+#'summarized_result <- summary(result_diet, burnin = 50, relabel = TRUE, be_quiet = TRUE)
 #' @export
 summary.ddt_lcm <- function(object, burnin = 3000, relabel = TRUE, be_quiet = FALSE, ...){
   if (!inherits(object, "ddt_lcm")){

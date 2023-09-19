@@ -19,9 +19,9 @@
 #'  "tree", then only a plot of the tree structure.
 #' @export 
 #' @examples
-#' data(result_hchs)
+#' data(result_diet)
 #' burnin <- 50
-#' summarized_result <- summary(result_hchs, burnin, relabel = TRUE, be_quiet = TRUE)
+#' summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
 #' plot(x = summarized_result, item_name_list = NULL, plot_option = "all")
 plot.summary.ddt_lcm <- function(x, log=TRUE, 
                                  plot_option = c("all", "profile", "tree"),
