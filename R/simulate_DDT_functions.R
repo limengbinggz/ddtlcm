@@ -195,6 +195,9 @@ simulate_parameter_on_tree <- function(tree_phylo, Sigma_by_group, item_membersh
   if (length(Sigma_by_group) != G){
     stop("Sigma_by_group must be a length G vector, where G is the number of major item groups.")
   }
+  if (any(Sigma_by_group <= 0)){
+    stop("Sigma_by_group must contain positive values.")
+  }
   
   # add labels to all nodes in the tree
   tree_phylo$tip.label <- paste("v", 1:ape::Ntip(tree_phylo), sep="")
@@ -387,7 +390,6 @@ simulate_lcm_given_tree <- function(tree_phylo, N,
   sim_data[["response_matrix"]] <- response_matrix
   sim_data[["class_assignment"]] <- class_assignment_true
   sim_data[["Sigma_by_group"]] <- Sigma_by_group
-  sim_data[["c"]] <- c
   sim_data[["item_membership_list"]] <- item_membership_list
  
   return(sim_data) 

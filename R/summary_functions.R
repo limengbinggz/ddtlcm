@@ -11,7 +11,7 @@
 #' @method summary ddt_lcm
 #' @importFrom label.switching label.switching
 #' @family ddt_lcm results
-#' @return an object of class "ddt_lcm"; a list containing the following elements:
+#' @return an object of class "summary.ddt_lcm"; a list containing the following elements:
 #' \describe{
 #' \item{`tree_map`}{the MAP tree of "phylo4d" class}
 #' \item{`tree_Sigma`}{the tree-structured covariance matrix associated with `tree_map`}

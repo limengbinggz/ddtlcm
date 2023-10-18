@@ -25,6 +25,7 @@
 #' @import data.table
 #' @import matrixStats
 #' @import phylobase
+#' @import testthat
 #' @importFrom BayesLogit rpg
 #' @importFrom data.table `:=`
 #' @importFrom extraDistr rdirichlet 

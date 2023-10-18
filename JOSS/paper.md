@@ -126,7 +126,7 @@ sim_data <- simulate_lcm_given_tree(tree_phylo, N,
 
 #### Model Fitting
 
-The primary model fitting function，``ddtlcm_fit()``, implements a hybrid Metropolis-Hastings-within-Gibbs algorithm to sample from the posterior distribution of model parameters. We assume that the number of latent classes $K = 6$ is known. To use `ddtlcm_fit()`, we need to specify the number of classes (`K`), a matrix of multivariate binary observations (`data`), a list of item group memberships (`item_membership_list`), and the number of posterior samples to collect (`total_iters`). For a quick illustration, here we specify a small number `total_iters = 100`.
+The primary model fitting function, ``ddtlcm_fit()``, implements a hybrid Metropolis-Hastings-within-Gibbs algorithm to sample from the posterior distribution of model parameters. We assume that the number of latent classes $K = 6$ is known. To use `ddtlcm_fit()`, we need to specify the number of classes (`K`), a matrix of multivariate binary observations (`data`), a list of item group memberships (`item_membership_list`), and the number of posterior samples to collect (`total_iters`). For a quick illustration, here we specify a small number `total_iters = 100`.
 
 ```r
 set.seed(999)

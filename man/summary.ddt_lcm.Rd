@@ -21,7 +21,7 @@ switching information and model summary.}
 \item{\dots}{Further arguments passed to each method}
 }
 \value{
-an object of class "ddt_lcm"; a list containing the following elements:
+an object of class "summary.ddt_lcm"; a list containing the following elements:
 \describe{
 \item{\code{tree_map}}{the MAP tree of "phylo4d" class}
 \item{\code{tree_Sigma}}{the tree-structured covariance matrix associated with \code{tree_map}}

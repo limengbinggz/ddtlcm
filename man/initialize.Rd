@@ -84,8 +84,8 @@ data(data_synthetic)
 list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
 K <- 3
 G <- length(item_membership_list)
-fixed_initials <- list("shape_c" = 2, "rate_c" = 2)
-fixed_priors <- list("rate_sigma" = rep(3, G))
+fixed_initials <- list("c" = 5)
+fixed_priors <- list("rate_sigma" = rep(3, G), "shape_c" = 2, "rate_c" = 2)
 initials <- initialize(K, data = response_matrix, item_membership_list, 
   c=1, c_order=1, fixed_initials = fixed_initials, fixed_priors = fixed_priors)
 }

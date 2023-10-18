@@ -34,6 +34,7 @@ Imports:
     methods (>= 4.2.3),
     phylobase (>= 0.8.10),
     poLCA (>= 1.6.0.1),
+    testthat (>= 3.1.7),
     truncnorm (>= 1.0-8),
     BayesLogit (>= 2.1),
     Matrix (>= 1.5-1),
@@ -42,7 +43,6 @@ Imports:
 Suggests:
     knitr,
     parallel,
-    testthat,
     rmarkdown,
     xfun
 License: MIT + file LICENSE
@@ -53,3 +53,4 @@ RoxygenNote: 7.2.3
 URL: https://github.com/limengbinggz/ddtlcm
 BugReports: https://github.com/limengbinggz/ddtlcm/issues
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
