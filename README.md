@@ -17,7 +17,7 @@ please cite the following preprint:
 ## Table of content
 - [1. Installation](#id-section1)
 - [2. Overview](#id-section2)
-- [2. Example](#id-section3)
+- [3. Example](#id-section3)
 
 <div id='id-section1'/>
 
