@@ -235,7 +235,7 @@ ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000,
       dist_mat_old <- sampled_tree$dist_mat
       # to save memory, we only update the tree list if the proposal is accepted; otherwise
       # create a pointer to the old object
-      if (sampled_tree$accept | iter == 1) {
+      if (sampled_tree$accept || iter == 1) {
         tree_list[[iter]] <- sampled_tree$tree_phylo4d
         dist_mat_list[[iter]] <- sampled_tree$dist_mat
         tree_phylo4d_old <- sampled_tree$tree_phylo4d

@@ -55,7 +55,7 @@ logllk_location <- function(tree_phylo4d, Sigma_by_group, item_membership_list, 
       names(branch_lengths) <- ancestors_internal
 
       # compute row variance of the matrix normal distribution of leaf nodes
-      row_var_by_group <- unlist(t(sapply(1:length(pa_ancestors_internal),
+      row_var_by_group <- unlist(t(sapply(seq_along(pa_ancestors_internal),
                                           function(x) branch_lengths[x])))
       # row_var_by_group <- colSums(matrix(row_var_by_group, ncol = G))
       row_var_by_group <- sum(row_var_by_group)
