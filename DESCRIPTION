@@ -21,6 +21,7 @@ Description: Implements a Bayesian algorithm for overcoming weak separation in B
     Reference: Li et al. (2023) <arXiv:2306.04700>.
 Depends:
     R(>= 4.0.0)
+biocViews:
 Imports:
     ape (>= 5.6-2),
     data.table (>= 1.14.4),
