@@ -60,7 +60,7 @@ sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
   J <- length(unlist(item_membership_list))
   # cumulative index of item groups
   new_leaf_data <- matrix(NA, nrow = K, ncol = J)
-  for (g in 1:length(item_membership_list)) {
+  for (g in seq_along(item_membership_list)) {
     J_g <- length(item_membership_list[[g]])
     precision_mat <- crossprod(dist_mat_old$Dhalf_Ut) / Sigma_by_group[g]
     # extract indices
