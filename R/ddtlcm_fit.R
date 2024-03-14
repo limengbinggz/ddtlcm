@@ -227,8 +227,10 @@ ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000,
     
     ### Sample tree topology
     if (!fix_tree){
-      sampled_tree <- sample_tree_topology(tree_phylo4d_old, Sigma_by_group, item_membership_list, c = c, c_order,
-                                           tree_structure_old = tree_structure_old, dist_mat_old = dist_mat_old)#NULL
+      sampled_tree <- suppressWarnings({
+        sample_tree_topology(tree_phylo4d_old, Sigma_by_group, item_membership_list, c = c, c_order,
+                             tree_structure_old = tree_structure_old, dist_mat_old = dist_mat_old)#NULL
+      })
       accept[iter] <- sampled_tree$accept
       logllk_model[iter] <- sampled_tree$logllk_model
       tree_structure_old <- sampled_tree$tree_structure

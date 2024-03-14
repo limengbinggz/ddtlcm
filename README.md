@@ -68,3 +68,16 @@ Examples
 * *ddtlcm* estimates the tree over classes and class profiles simultaneously ![](inst/ddtlcm_output_example.png)
 
 
+
+Note
+---------
+
+* When running some functions in the package, such as ``ddtlcm_fit``, a warning that "Tree contains singleton nodes" may be displayed. This warning originates from the checkPhylo4 in the phylobase package to perform basic checks on the validity of S4 phylogenetic objects. We would like to point out that seeing such warnings shall not pose any concerns about the statistical validity of the implemented algorithm. This is because any tree generaetd from a DDT process contains a singleton node (having only one child node) as the root node. To avoid repeated appearances of this warning, we recommend either of the followings:
+
+    - 
+
+
+
+
+
+

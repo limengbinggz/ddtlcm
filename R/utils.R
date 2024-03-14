@@ -242,7 +242,7 @@ quiet <- function(x, be_quiet=TRUE) {
 #' @param tree_phylo4d a "phylo4d" object
 #' @return a K by K covariance matrix
 #' @export
-#'@examples
+#' @examples
 #'# load the MAP tree structure obtained from the real HCHS/SOL data
 #'data(data_synthetic)
 #'# extract elements into the global environment
@@ -294,6 +294,8 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
   
   return(tree_Sigma_hclust)
 }
+
+
 
 
 
