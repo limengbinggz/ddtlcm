@@ -120,7 +120,8 @@ seed_response = 1
 # simulate data given the parameters
 sim_data <- simulate_lcm_given_tree(tree_phylo, N, 
     class_probability, item_membership_list, Sigma_by_group, 
-    root_node_location = 0, seed_parameter = 1, seed_response = 1)
+    root_node_location = 0, seed_parameter = seed_parameter,
+    seed_response = seed_response)
 ```
 
 

@@ -179,7 +179,7 @@ plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_memb
   } else{
     class_label <- paste0("Class ", 1:K)
   }
-  if (!(is.null(class_probability_lower) & is.null(class_probability_higher))){
+  if (!(is.null(class_probability_lower) && is.null(class_probability_higher))){
     class_label <- paste0(class_label, 
                           " (", round(class_probability_lower, 2), ", ", round(class_probability_higher, 2), ")")
   }
