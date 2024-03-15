@@ -68,8 +68,34 @@ Examples
 * *ddtlcm* estimates the tree over classes and class profiles simultaneously ![](inst/ddtlcm_output_example.png)
 
 
+A Quickstart
+---------
+```r
+library(ddtlcm)
 
-Contributing (or Getting help?)
+data(parameter_diet)
+# unlist the elements into variables in the global environment
+list2env(setNames(parameter_diet, names(parameter_diet)), envir = globalenv()) 
+
+N <- 496
+seed_parameter = 1 # random seed to generate node parameters given the tree
+seed_response = 1 # random seed to generate multivariate binary observations from LCM
+
+# simulate data given the parameters
+sim_data <- simulate_lcm_given_tree(tree_phylo, N, 
+    class_probability, item_membership_list, Sigma_by_group, 
+    root_node_location = 0, seed_parameter = seed_parameter,
+    seed_response = seed_response)
+
+K <- 6 # number of latent classes, same as number of leaves on the tree
+result_diet <- ddtlcm_fit(K = K, data = sim_data$response_matrix, 
+  item_membership_list = item_membership_list, total_iters = 100)
+print(result_diet)
+```
+
+
+
+Contributing And Getting Help
 ---------
 Please report bugs by opening an [issue](https://github.com/limengbinggz/ddtlcm/issues/new). If you wish to contribute, please make a pull request. If you have questions, you can open a [discussion thread](https://github.com/limengbinggz/ddtlcm/discussions).
 
