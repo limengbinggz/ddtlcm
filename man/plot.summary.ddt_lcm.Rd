@@ -42,8 +42,8 @@ credible intervals and class probabilities) on the right. If plot_option is
 Plot the MAP tree and class profiles of summarized DDT-LCM results
 }
 \examples{
-data(result_diet)
-burnin <- 50
-summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
+data(result_diet_1000iters)
+burnin <- 500
+summarized_result <- summary(result_diet_1000iters, burnin, relabel = TRUE, be_quiet = TRUE)
 plot(x = summarized_result, item_name_list = NULL, plot_option = "all")
 }

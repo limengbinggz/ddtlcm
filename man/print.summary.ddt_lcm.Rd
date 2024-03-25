@@ -17,9 +17,9 @@
 Print out summary of a ddt_lcm model
 }
 \examples{
-data(result_diet)
-burnin <- 50
-summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
+data(result_diet_1000iters)
+burnin <- 500
+summarized_result <- summary(result_diet_1000iters, burnin, relabel = TRUE, be_quiet = TRUE)
 print(summarized_result)
 }
 \seealso{

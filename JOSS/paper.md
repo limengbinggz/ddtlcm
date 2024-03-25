@@ -145,11 +145,11 @@ items in 7 major groups. 100 iterations of posterior samples drawn.
 ---------------------------------------------
 ```
 
-To have a more comprehensive view of of the results obtained from 8000 posterior draws, we can load data named `result_diet_fullchain` to perform posterior summaries as described by the steps in the following sections.
+To have a more comprehensive view of of the results obtained from 1000 posterior draws, we can load data named `result_diet_1000iters` to perform posterior summaries as described by the steps in the following sections.
 ```r
-data(result_diet_fullchain)
+data(result_diet_1000iters)
 # let the variable names be consistent for posterior summaries in the subsequent sections
-result <- result_diet_fullchain
+result <- result_diet_1000iters
 ```
 
 

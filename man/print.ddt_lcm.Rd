@@ -15,8 +15,8 @@
 Print out setup of a ddt_lcm model
 }
 \examples{
-data(result_diet)
-print(result_diet)
+data(result_diet_1000iters)
+print(result_diet_1000iters)
 }
 \seealso{
 Other ddt_lcm results: 
