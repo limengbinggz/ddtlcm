@@ -1,7 +1,7 @@
 test_that("'plot' returns a valid plot object.", {
-  data(result_diet_shortchain)
+  data(result_diet_1000iters)
   burnin <- 50
-  summarized_result <- summary(result_diet_shortchain, burnin, relabel = TRUE, be_quiet = TRUE)
+  summarized_result <- summary(result_diet_1000iters, burnin, relabel = TRUE, be_quiet = TRUE)
   plot_out1 <- plot(x = summarized_result, item_name_list = NULL, plot_option = "all")
   expect_s3_class(plot_out1, c("gg", "ggplot", "ggarrange"))
 

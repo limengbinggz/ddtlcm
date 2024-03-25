@@ -10,7 +10,7 @@ logit(x)
 \item{x}{a value or a numeric vector between 0 and 1 (exclusive)}
 }
 \value{
-a number or rea-valued vector
+a number or real-valued vector
 }
 \description{
 The logit function: f(x) = log(x / (1/x)). Large absolute values of
