@@ -50,7 +50,7 @@ Estimate an initial binary tree on latent classes using hclust()
 }
 \seealso{
 Other initialization functions: 
-\code{\link{initialize_poLCA}()},
-\code{\link{initialize}()}
+\code{\link{initialize}()},
+\code{\link{initialize_poLCA}()}
 }
 \concept{initialization functions}
