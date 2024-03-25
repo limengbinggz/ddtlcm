@@ -34,11 +34,23 @@
 #'
 #' @docType data
 #' @keywords datasets
-#' @name result_diet
-#' @usage data(result_diet)
+#' @name result_diet_shortchain
+#' @usage data(result_diet_shortchain)
 #' @format A list with 8 elements
-"result_diet"
+"result_diet_shortchain"
 
+#' Result of fitting DDT-LCM to a semi-synthetic data example
+#'
+#' This is a "ddtlcm" object obtained from running `ddtlcm_fit` to a semi-synthetic dataset with
+#'  8000 posterior samples (for the sake of time). See \code{\link{ddtlcm_fit}} for description of 
+#'  the object.
+#'
+#' @docType data
+#' @keywords datasets
+#' @name result_diet_fullchain
+#' @usage data(result_diet_fullchain)
+#' @format A list with 8 elements
+"result_diet_fullchain"
 
 
 #' Synthetic data example

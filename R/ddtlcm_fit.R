@@ -230,15 +230,17 @@ ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000,
     
     ### Sample tree topology
     if (!fix_tree){
-      sampled_tree <- sample_tree_topology(tree_phylo4d_old, Sigma_by_group, item_membership_list, c = c, c_order,
-                                           tree_structure_old = tree_structure_old, dist_mat_old = dist_mat_old)#NULL
+      sampled_tree <- suppressWarnings({
+        sample_tree_topology(tree_phylo4d_old, Sigma_by_group, item_membership_list, c = c, c_order,
+                             tree_structure_old = tree_structure_old, dist_mat_old = dist_mat_old)#NULL
+      })
       accept[iter] <- sampled_tree$accept
       logllk_model[iter] <- sampled_tree$logllk_model
       tree_structure_old <- sampled_tree$tree_structure
       dist_mat_old <- sampled_tree$dist_mat
       # to save memory, we only update the tree list if the proposal is accepted; otherwise
       # create a pointer to the old object
-      if (sampled_tree$accept | iter == 1) {
+      if (sampled_tree$accept || iter == 1) {
         tree_list[[iter]] <- sampled_tree$tree_phylo4d
         dist_mat_list[[iter]] <- sampled_tree$dist_mat
         tree_phylo4d_old <- sampled_tree$tree_phylo4d

@@ -217,10 +217,10 @@ simulate_parameter_on_tree <- function(tree_phylo, Sigma_by_group, item_membersh
   
   while( length(start_node)!=0 ){
     next_from_nonTip <- numeric()
-    for (cur_from_idx in 1:length(start_node)){
+    for (cur_from_idx in seq_along(start_node)){
       from_node <- start_node[cur_from_idx]
       to_nodes <- descendants(tr_phylo4, node=names(from_node), type="children")
-      for (i in 1:length(to_nodes)) {
+      for (i in seq_along(to_nodes)) {
         to_node = to_nodes[i]
         edge_len <- edgeLength(tr_phylo4)[getEdge(tr_phylo4, node=names(to_node), type="descendant")]
         

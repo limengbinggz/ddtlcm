@@ -16,8 +16,8 @@ Compute loglikelihood of the tree topology
 }
 \seealso{
 Other likelihood functions: 
-\code{\link{logllk_ddt_lcm}()},
 \code{\link{logllk_ddt}()},
+\code{\link{logllk_ddt_lcm}()},
 \code{\link{logllk_div_time_one}()},
 \code{\link{logllk_div_time_two}()},
 \code{\link{logllk_lcm}()},

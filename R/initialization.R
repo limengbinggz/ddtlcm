@@ -14,7 +14,7 @@ initialize_poLCA <- function(K, data, ...){
   # model <- poLCA(fm, data.frame(data+1), nclass=K, maxiter=100,
   #                tol=1e-5, na.rm=FALSE, nrep=10, verbose=FALSE, calc.se=TRUE)
   response_prob_simple_lcm <- matrix(0, nrow = K, ncol = ncol(data))
-  for (j in 1:ncol(data)) {
+  for (j in seq_len(ncol(data))) {
     response_prob_simple_lcm[,j] <- model$probs[[variable_names[j]]][,2]
   }
   colnames(response_prob_simple_lcm) <- variable_names
@@ -220,7 +220,7 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
     # need to add rows corresponding to internal nodes
     tree_data <- rbind(tree_data, matrix(NA, nrow = K-1, ncol = ncol(tree_data)))
     rownames(tree_data) <- c(paste0("v", 1:K), paste0("u", 1:K))
-    colnames(tree_data) <- c(paste0("x", 1:ncol(tree_data)))
+    colnames(tree_data) <- c(paste0("x", seq_len(ncol(tree_data))))
     initial_tree_hclust <- addData(initial_tree_hclust, all.data = tree_data )
     init_info <- logllk_ddt(1, c_order, Sigma_by_group = rep(1, G), tree_phylo4d=initial_tree_hclust,
                             item_membership_list,
@@ -242,7 +242,7 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
     # need to add rows corresponding to internal nodes
     tree_data <- rbind(tree_data, matrix(NA, nrow = K-1, ncol = ncol(tree_data)))
     rownames(tree_data) <- c(paste0("v", 1:K), paste0("u", 1:K))
-    colnames(tree_data) <- c(paste0("x", 1:ncol(tree_data)))
+    colnames(tree_data) <- c(paste0("x", seq_len(ncol(tree_data))))
     tree_phylo4d <- addData(initial_tree_hclust, all.data = tree_data )
   }
   

@@ -17,7 +17,7 @@ please cite the following preprint:
 ## Table of content
 - [1. Installation](#id-section1)
 - [2. Overview](#id-section2)
-- [2. Example](#id-section3)
+- [3. Example](#id-section3)
 
 <div id='id-section1'/>
 
@@ -63,8 +63,55 @@ plot(dep)
 Examples 
 ---------
 
-* A simple workflow using semi-synthetic data is provided in ![](inst/ddtlcm_workflow_example.pdf)
+* A simple [workflow](inst/ddtlcm_workflow_example.pdf) using semi-synthetic data is provided.
 
 * *ddtlcm* estimates the tree over classes and class profiles simultaneously ![](inst/ddtlcm_output_example.png)
+
+
+A Quickstart
+---------
+```r
+library(ddtlcm)
+
+data(parameter_diet)
+# unlist the elements into variables in the global environment
+list2env(setNames(parameter_diet, names(parameter_diet)), envir = globalenv()) 
+
+N <- 496
+seed_parameter = 1 # random seed to generate node parameters given the tree
+seed_response = 1 # random seed to generate multivariate binary observations from LCM
+
+# simulate data given the parameters
+sim_data <- simulate_lcm_given_tree(tree_phylo, N, 
+    class_probability, item_membership_list, Sigma_by_group, 
+    root_node_location = 0, seed_parameter = seed_parameter,
+    seed_response = seed_response)
+
+K <- 6 # number of latent classes, same as number of leaves on the tree
+result_diet <- ddtlcm_fit(K = K, data = sim_data$response_matrix, 
+  item_membership_list = item_membership_list, total_iters = 100)
+print(result_diet)
+```
+
+
+
+Contributing And Getting Help
+---------
+Please report bugs by opening an [issue](https://github.com/limengbinggz/ddtlcm/issues/new). If you wish to contribute, please make a pull request. If you have questions, you can open a [discussion thread](https://github.com/limengbinggz/ddtlcm/discussions).
+
+
+
+Note
+---------
+
+* When running some functions in the package, such as ``ddtlcm_fit``, a warning that "Tree contains singleton nodes" may be displayed. This warning originates from the checkPhylo4 in the phylobase package to perform basic checks on the validity of S4 phylogenetic objects. We would like to point out that seeing such warnings shall not pose any concerns about the statistical validity of the implemented algorithm. This is because any tree generaetd from a DDT process contains a singleton node (having only one child node) as the root node. To avoid repeated appearances of this warning, we recommend either of the followings:
+
+    - Wrapping around the code via ``suppressWarnings({ code_that_will_generate_singleton_warning })``;
+
+    - Setting ``options(warn = -1)`` globally. This may be dangerous because other meaningful warnings may be ignored.
+
+
+
+
 
 

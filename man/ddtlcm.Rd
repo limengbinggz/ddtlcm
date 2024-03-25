@@ -2,6 +2,7 @@
 % Please edit documentation in R/ddtlcm-package.R
 \docType{package}
 \name{ddtlcm}
+\alias{-package}
 \alias{ddtlcm}
 \title{Dirichlet diffusion tree-latent class model (DDT-LCM)}
 \description{

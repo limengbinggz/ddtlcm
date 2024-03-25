@@ -23,7 +23,7 @@ Estimate an initial response profile from latent class model using poLCA()
 }
 \seealso{
 Other initialization functions: 
-\code{\link{initialize_hclust}()},
-\code{\link{initialize}()}
+\code{\link{initialize}()},
+\code{\link{initialize_hclust}()}
 }
 \concept{initialization functions}
