@@ -1,3 +1,105 @@
+#' Create trace plots of DDT-LCM parameters
+#' @param x a "ddt_lcm" object
+#' @param parameter_names a character vector to specify the parameters to be plotted. Each element can take the
+#'  be 1) of format "parameter_index" to plot specific parameters with specific indices, 2) of format "parameter"
+#'  to plot the parameters across all indices, or 3) equal to "all" to plot all parameters in the model. For 1),
+#'  the item response probabilities should be named "responseprob_class,group,item"; the class probabilities should be
+#'  named "classprob_class"; the divergence function parameter is "c"; the group-specific diffusion variances
+#'  should be named "diffusionvar_group". For 2), "responseprob" to plot all item response probabilities;
+#'  "classprob" to plot all class probabilities; "diffusionvar" to plot all diffusion variances.
+#' @param burnin the number of posterior samples as burn-in, which will not be plotted.
+#' @param \dots	Further arguments passed to each method
+#' @method plot ddt_lcm
+#' @return NULLs
+#' @export
+#' @examples
+#' data(result_diet_1000iters)
+#' # we will plot: "responseprob_1,1,1" for the class 1 response probability of item 3 in major group 2;
+#' #   "classprob_1" for the probability of being assigned to class 1; "c" for the divergence function parameter;
+#' #   and "diffusionvar_1" for the diffusion variance of group 1
+#' plot(x = result_diet_1000iters, c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 500)
+#' # plot all class probabilities
+#' plot(x = result_diet_1000iters, "classprob", burnin = 500)
+#' # plot all diffusion variances
+#' plot(x = result_diet_1000iters, "diffusionvar", burnin = 500)
+plot.ddt_lcm <- function(x, parameter_names = c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 50, ...){
+  # number of classes
+  K <- x$setting$K
+  # number of major item groups
+  G <- x$setting$G
+  # extract list of item indices according to groups
+  item_membership_list <- x$setting$item_membership_list
+  # # get the number of items each group
+  # num_items_per_group <- unlist(lapply(item_membership_list, length))
+  # # cumulative index
+  # cum_num_items_per_group <- c(0, cumsum(num_items_per_group))
+  # number of iterations in total
+  total_iters <- length(x$loglikelihood)
+
+  ## input checking
+  good_names <- grepl("^responseprob|^classprob|^c$|^diffusionvar", parameter_names)
+  bad_names <- which(!good_names)
+  if (length(bad_names) >= 1){
+    stop(paste0("parameter_names[", bad_names, "] invalid. Please check the appropriate format in the function description."))
+  }
+  if (as.integer(burnin) != burnin | burnin < 0 | burnin >= total_iters){
+    stop("The number of burn-in posterior samples, burnin, should be a positive integer smaller than the total number of samples.")
+  }
+
+  if (length(parameter_names) == 1 & parameter_names[1] == "all"){
+    parameter_names <- c("responseprob", "classprob", "c", "diffusionvar")
+  }
+  parameter_names_all <- c()
+  for (param in parameter_names) {
+    param_split <- strsplit(param, "_")[[1]]
+    # get which parameter of the model we are looking at
+    param_type <- param_split[1]
+    # if no indices are specified, then plot all parameters of that type
+    if (length(param_split) == 1 & param_type != "c"){
+      if (param_split == "responseprob") {
+        index_group_item <- unlist(lapply(1:length(item_membership_list), function(x) paste0(x, ",", 1:length(item_membership_list[[x]]))))
+        index_class_group_item <- as.vector(outer(1:K, index_group_item, paste, sep=","))
+        parameter_names_all <- c(parameter_names_all, paste0("responseprob_", index_class_group_item))
+      } else if (param_split == "classprob") {
+        parameter_names_all <- c(parameter_names_all, paste0("classprob_", 1:K))
+      } else if (param_split == "diffusionvar") {
+        parameter_names_all <- c(parameter_names_all, paste0("diffusionvar_", 1:G))
+      }
+    } else{ # otherwise just keep the original parameter name
+      parameter_names_all <- c(parameter_names_all, param)
+    }
+  }
+
+  # now start plotting
+  par(ask = TRUE)
+  for (param in parameter_names_all) {
+    if (param != "c"){
+      # get index of the parameter as a string
+      param_index <- param_split[2]
+      # get the index of the parameter as a numeric vector
+      param_index <- as.integer(strsplit(param_index, ",")[[1]])
+    }
+    if (param_type == "responseprob"){ # item response probability
+      # find out the item index in all columns
+      j <- item_membership_list[[param_index[2]]][param_index[3]]
+      samples <- x$response_probs_samples[(burnin + 1):total_iters, param_index[1], j]
+      plot(samples, type = 'l', xlab = 'Iteration',
+           ylab = paste0('Positive response probability in class ', K, ' of item ', param_index[3], ' in group ', param_index[2]))
+    } else if (param_type == "classprob"){ # item response probability
+      samples <- x$class_probs_samples[param_index, (burnin + 1):total_iters]
+      plot(samples, type = 'l', xlab = 'Iteration', ylab = paste0('Probability of class ', param_index))
+    } else if (param_type == "c"){ # divergence function parameter
+      samples <- x$c_samples[(burnin + 1):total_iters]
+      plot(samples, type = 'l', xlab = 'Iteration', ylab = paste0('Divergence function parameter c'))
+    } else if (param_type == "diffusionvar"){ # divergence function parameter
+      samples <- x$Sigma_by_group_samples[param_index, (burnin + 1):total_iters]
+      plot(samples, type = 'l', xlab = 'Iteration', ylab = paste0('Diffusion variance of group ', param_index))
+    }
+  }
+
+}
+
+
 #' Plot the MAP tree and class profiles of summarized DDT-LCM results
 #' @param x a "summary.ddt_lcm" object
 #' @param plot_option option to select which part of the plot to return. If "all", return
@@ -179,18 +281,12 @@ plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_memb
   } else{
     class_label <- paste0("Class ", 1:K)
   }
-<<<<<<< HEAD
-  if (!(is.null(class_probability_lower) && is.null(class_probability_higher))){
-    class_label <- paste0(class_label,
-                          " (", round(class_probability_lower, 2), ", ", round(class_probability_higher, 2), ")")
-=======
   if (!(is.null(class_probability_lower) && is.null(class_probability_higher))) {
     class_label <- paste0(
       class_label,
       " (", round(class_probability_lower * 100, 0), "%, ",
       round(class_probability_higher * 100, 0), "%)"
     )
->>>>>>> c4d5f1877f48f17676752f3a8330610bda47de53
   }
   response_prob_dat$Class <- factor(response_prob_dat$Class_index, levels = 1:K, labels = class_label)
 

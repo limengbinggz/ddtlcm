@@ -17,7 +17,7 @@
 #' data(result_diet_1000iters)
 #' burnin <- 500
 #' summarized_result <- summary(result_diet_1000iters, burnin, relabel = TRUE, be_quiet = TRUE)
-#' predicted <- predict(result_diet_1000iters, result_diet$data)
+#' predicted <- predict(summarized_result, result_diet_1000iters$data)
 predict.summary.ddt_lcm <- function(object, data, ...){
   class_probability <- object$class_probs_summary[,'Mean']
   K <- length(class_probability)

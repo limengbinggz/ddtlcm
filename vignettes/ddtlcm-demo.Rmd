@@ -161,6 +161,13 @@ print(result)
 # result$tree_samples$tree_list
 ```
 
+To assess parameter convergence, we can look at the trace plots of the posterior chain of selected variables: the class 1 response probability of item 3 in major group 2, the probability of being assigned to class 1, the divergence function parameter, and the diffusion variance of group 1. 
+
+```{r}
+plot(x = result, parameter_names = c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 50)
+```
+
+
 We next summarize the posterior chain by discarding the first 50 iterations as burn-ins (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR) method by specifying `relabel = T`. To save space in the document, we do not print the summary result here (`be_quiet = T`).
 ```{r}
 burnin <- 50
