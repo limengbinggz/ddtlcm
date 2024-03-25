@@ -136,8 +136,8 @@ add_root <- function(tree_old, root_edge_length, root_label, leaf_label){
 
 
 #' Compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
-#' @param x a number or rea-valued vector
-#' @return a number or rea-valued vector
+#' @param x a number or real-valued vector
+#' @return a number or real-valued vector
 exp_normalize <- function(x){
   return(exp(x - logSumExp(x)))
 }
@@ -186,7 +186,7 @@ expit <- function(x){
 #' @description The logit function: f(x) = log(x / (1/x)). Large absolute values of 
 #'  x will be truncated to +/- 5 after logit transformation according to its sign.
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
-#' @return a number or rea-valued vector
+#' @return a number or real-valued vector
 #' @export
 #' @examples
 #' logit(0.2)
@@ -203,7 +203,7 @@ logit <- function(x){
 
 #' Numerically accurately compute f(x) = log(x / (1/x)). 
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
-#' @return a number or rea-valued vector
+#' @return a number or real-valued vector
 log_expit <- function(x){
   out <- x
   idx <- which(x < -33.3)

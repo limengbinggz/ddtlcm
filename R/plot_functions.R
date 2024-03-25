@@ -175,13 +175,16 @@ plot_tree_with_barplot <- function(tree_with_parameter, response_prob, item_memb
  
   # add class prevalences
   if (!is.null(class_probability)) {
-    class_label <- paste0("Class ", 1:K, ": ", round(class_probability, 2))
+    class_label <- paste0("Class ", 1:K, ": ", round(class_probability * 100, 0), "%")
   } else{
     class_label <- paste0("Class ", 1:K)
   }
-  if (!(is.null(class_probability_lower) && is.null(class_probability_higher))){
-    class_label <- paste0(class_label, 
-                          " (", round(class_probability_lower, 2), ", ", round(class_probability_higher, 2), ")")
+  if (!(is.null(class_probability_lower) && is.null(class_probability_higher))) {
+    class_label <- paste0(
+      class_label,
+      " (", round(class_probability_lower * 100, 0), "%, ",
+      round(class_probability_higher * 100, 0), "%)"
+    )
   }
   response_prob_dat$Class <- factor(response_prob_dat$Class_index, levels = 1:K, labels = class_label)
   

@@ -219,9 +219,12 @@ ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000,
   
   # set.seed(2022)
   cat("\n## Start posterior sampling ##")
-  for(iter in 1:total_iters){
-    if (iter %% 500 == 0){
-      cat("\n## iteration ", iter, "completed.")
+  for (iter in 1:total_iters) {
+    # Printing at 10% iterations if total_iters > 10
+    if (total_iters > 10) {
+      if (iter %% (total_iters %/% 10) == 0) {
+        cat("\n## iteration ", iter, "completed.")
+      }
     }
     
     
