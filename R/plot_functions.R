@@ -10,6 +10,7 @@
 #' @param burnin the number of posterior samples as burn-in, which will not be plotted.
 #' @param \dots	Further arguments passed to each method
 #' @method plot ddt_lcm
+#' @importFrom graphics par
 #' @return NULLs
 #' @export
 #' @examples
@@ -17,9 +18,9 @@
 #' # we will plot: "responseprob_1,1,1" for the class 1 response probability of item 3 in major group 2;
 #' #   "classprob_1" for the probability of being assigned to class 1; "c" for the divergence function parameter;
 #' #   and "diffusionvar_1" for the diffusion variance of group 1
-#' plot(x = result_diet_1000iters, c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 500)
+#' plot(x = result_diet_1000iters, parameter_names = c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 500)
 #' # plot all class probabilities
-#' plot(x = result_diet_1000iters, "classprob", burnin = 500)
+#' plot(x = result_diet_1000iters, parameter_names = "classprob", burnin = 500)
 #' # plot all diffusion variances
 #' plot(x = result_diet_1000iters, "diffusionvar", burnin = 500)
 plot.ddt_lcm <- function(x, parameter_names = c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 50, ...){
@@ -71,8 +72,11 @@ plot.ddt_lcm <- function(x, parameter_names = c("responseprob_1,1,1", "classprob
   }
 
   # now start plotting
-  par(ask = TRUE)
+  # if (length(parameter_names_all) > 1) par(ask = TRUE)
   for (param in parameter_names_all) {
+    param_split <- strsplit(param, "_")[[1]]
+    # get which parameter of the model we are looking at
+    param_type <- param_split[1]
     if (param != "c"){
       # get index of the parameter as a string
       param_index <- param_split[2]

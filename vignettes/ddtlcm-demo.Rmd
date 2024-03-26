@@ -163,7 +163,8 @@ print(result)
 
 To assess parameter convergence, we can look at the trace plots of the posterior chain of selected variables: the class 1 response probability of item 3 in major group 2, the probability of being assigned to class 1, the divergence function parameter, and the diffusion variance of group 1. 
 
-```{r}
+```{r fig.width=6, fig.height=6}
+par(mfrow = c(2,2))
 plot(x = result, parameter_names = c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 50)
 ```
 
