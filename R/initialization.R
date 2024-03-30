@@ -48,7 +48,7 @@ initialize_randomLCM <- function(K, data){
 
 
 #' Estimate an initial binary tree on latent classes using hclust()
-#'@param leaf_data a K by J matrix of logit(theta_{kj})
+#'@param leaf_data a K by J matrix of \eqn{logit(theta_{kj})}
 #'@param c hyparameter of divergence function a(t)
 #'@param c_order equals 1 (default) or 2 to choose divergence function
 #'@param method_dist string specifying the distance measure to be used in dist().

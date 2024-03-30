@@ -20,7 +20,7 @@ N is the number of individuals, and J is the number of granular items}
 a list of the following named elements:
 \describe{
 \item{\code{class_assignments}}{an integer vector of individual predicted class memberships
-taking values in {1, ..., K}}
+taking values in 1, ..., K}
 \item{\code{predictive_probs}}{a N x K matrix of probabilities, where the (i,k)-th element
 is the probability that the i-th individual is predicted to belong to class k.}
 }

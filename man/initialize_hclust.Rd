@@ -17,7 +17,7 @@ initialize_hclust(
 )
 }
 \arguments{
-\item{leaf_data}{a K by J matrix of logit(theta_{kj})}
+\item{leaf_data}{a K by J matrix of \eqn{logit(theta_{kj})}}
 
 \item{c}{hyparameter of divergence function a(t)}
 

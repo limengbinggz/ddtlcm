@@ -12,7 +12,7 @@ reattach_point(tree_kept, c, c_order = 1, theta = 0, alpha = 0)
 \item{c}{hyparameter of divergence function a(t)}
 
 \item{c_order}{equals 1 (default) or 2 to choose divergence function
-a(t) = c/(1-t) or c/(1-t)^2.}
+\eqn{a(t) = c/(1-t) or c/(1-t)^2}.}
 
 \item{alpha, theta}{hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
@@ -25,7 +25,7 @@ a list of the following objects:
 \item{\code{div_time}}{a numeric value of newly sampled divergence time. Between 0 and 1.}
 \item{\code{root_node}}{a character. Label of the root node of \code{tree_kept}.}
 \item{\code{root_child}}{a character. Label of the child node of the root of \code{tree_kept}.}
-\item{\code{div_dist_to_root_child}}{a N-vector with integer entries from {1, ..., K}. The initial values for
+\item{\code{div_dist_to_root_child}}{a N-vector with integer entries from 1, ..., K. The initial values for
 individual class assignments.}
 }
 }

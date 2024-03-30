@@ -15,10 +15,12 @@
 #' @export
 #' @examples
 #' data(result_diet_1000iters)
-#' # we will plot: "responseprob_1,1,1" for the class 1 response probability of item 3 in major group 2;
-#' #   "classprob_1" for the probability of being assigned to class 1; "c" for the divergence function parameter;
-#' #   and "diffusionvar_1" for the diffusion variance of group 1
-#' plot(x = result_diet_1000iters, parameter_names = c("responseprob_1,1,1", "classprob_1", "c", "diffusionvar_1"), burnin = 500)
+#' # Plot "c" for the divergence function parameter; "diffusionvar_1" for diffusion variance of group 1
+#' plot(x = result_diet_1000iters, parameter_names = c("c", "diffusionvar_1"), burnin = 500)
+#' # Plot "responseprob_1,1,1" for the class 1 response probability of item 3 in major group 2
+#' plot(x = result_diet_1000iters, parameter_names = "responseprob_1,1,1", burnin = 500)
+#' # Plot "classprob_1" for the probability of being assigned to class 1
+#' plot(x = result_diet_1000iters, parameter_names = "classprob_1", burnin = 500)
 #' # plot all class probabilities
 #' plot(x = result_diet_1000iters, parameter_names = "classprob", burnin = 500)
 #' # plot all diffusion variances

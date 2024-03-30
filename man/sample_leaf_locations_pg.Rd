@@ -35,7 +35,7 @@ brownian motion}
 matrix of the lower/upper bounds of the truncated normal variables.}
 
 \item{class_assignments}{an integer vector of length N for the individual class assignments.
-Each element takes value in {1, ..., K}.}
+Each element takes value in 1, ..., K.}
 }
 \value{
 a named list of three matrices: the newly sampled leaf parameters, the Polya-gamma random variables,

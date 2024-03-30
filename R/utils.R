@@ -1,5 +1,5 @@
 #' Compute divergence function
-#' @description Compute value, cumulative hazard, and inverse for divergence function a(t) = c / (1-t)
+#' @description Compute value, cumulative hazard, and inverse for divergence function \eqn{a(t) = c / (1-t)}
 #' @describeIn a_t_one value of the divergence function
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
@@ -25,7 +25,7 @@ a_t_one_cum <- function(c, t) -c * log(1-t)
 A_t_inv_one <- function(c, y) 1.0 - exp(- y/c)
 
 #' Compute divergence function
-#' @description Compute value, cumulative hazard, and inverse for divergence function a(t) = c / (1-t)^2
+#' @description Compute value, cumulative hazard, and inverse for divergence function \eqn{a(t) = c / (1-t)^2}
 #' @describeIn a_t_two value of the divergence function
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
@@ -55,7 +55,7 @@ A_t_inv_two <- function(c, y) y / (c+y)
 #' @param m_v an integer for the number of data points traversed through node v
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
-#' @param c_order equals 1 if using divergence function a(t) = c / (1-t), or 2 if
+#' @param c_order equals 1 if using divergence function \eqn{a(t) = c / (1-t)}, or 2 if
 #'  a(t) = c / (1-t)^2. Default is 1
 #' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
@@ -144,10 +144,10 @@ exp_normalize <- function(x){
 
 
 #' Efficiently sample multivariate normal using precision matrix
-#'  from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix
+#'  from \eqn{x ~ N(Q^{-1}a, Q^{-1})}, where \eqn{Q^{-1}} is the precision matrix
 #' @param precision_mat precision matrix Q of the multivariate normal distribution
 #' @param precision_a_vec a vector a such that the mean of the multivariate normal distribution is
-#'  Q^{-1}a
+#'  \eqn{Q^{-1}a}
 draw_mnorm <- function(precision_mat, precision_a_vec){
   U <- chol(precision_mat)
   b <- rnorm(nrow(precision_mat))
@@ -319,7 +319,7 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
 #' @export
 #' @examples
 #' data(result_diet_1000iters)
-#' IC_result <- compute_IC(result = result_diet_1000iters, burnin = 500, ncores = 1L)
+#' IC_result <- compute_IC(result = result_diet_1000iters, burnin = 800, ncores = 1L)
 compute_IC <- function(result, burnin = 5000, ncores = 1L){
   # require(parallel)
   num_samples <- length(result$loglikelihood[-(1:burnin)]) - 1

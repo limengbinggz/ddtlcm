@@ -16,7 +16,7 @@ sample_class_assignment(
 \item{data}{a N by J binary matrix, where the i,j-th element is the response
 of item j for individual i}
 
-\item{leaf_data}{a K by J matrix of logit(theta_{kj})}
+\item{leaf_data}{a K by J matrix of \eqn{logit(theta_{kj})}}
 
 \item{a_pg}{a N by J matrix of hyperparameters of the generalized logistic distribution}
 

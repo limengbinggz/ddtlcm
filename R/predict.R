@@ -9,7 +9,7 @@
 #' @return a list of the following named elements:
 #' \describe{
 #' \item{`class_assignments`}{an integer vector of individual predicted class memberships
-#'  taking values in {1, ..., K}}
+#'  taking values in 1, ..., K}
 #' \item{`predictive_probs`}{a N x K matrix of probabilities, where the (i,k)-th element
 #'  is the probability that the i-th individual is predicted to belong to class k.}
 #' }
@@ -50,7 +50,7 @@ predict.summary.ddt_lcm <- function(object, data, ...){
 #' @return a list of the following named elements:
 #' \describe{
 #' \item{`class_assignments`}{an integer vector of individual predicted class memberships
-#'  taking values in {1, ..., K}}
+#'  taking values in 1, ..., K}
 #' \item{`predictive_probs`}{a N x K matrix of probabilities, where the (i,k)-th element
 #'  is the probability that the i-th individual is predicted to belong to class k.}
 #' }

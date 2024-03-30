@@ -15,15 +15,15 @@
 #' @param initials a named list of initial values of the following parameters:
 #' \describe{
 #' \item{`tree_phylo4d`}{a phylo4d object. The initial tree have K leaves (labeled as "v1" through "vK"),
-#'  1 singleton root node (labeled as "u1"), and K-1 internal nodes (labeled as "u1" through "u{K-1}"). 
+#'  1 singleton root node (labeled as "u1"), and K-1 internal nodes (labeled as "u1" through \eqn{u_{K-1}}). 
 #'  The tree also contains parameters for the leaf nodes and the root node (which 
 #'  equals 0). The parameters for the internal nodes can be NAs because they will not be used in the
 #'  algorithm.}
-#' \item{`response_prob`}{a K by J matrix with entries between `0` and `1`. The initial values for the 
+#' \item{`response_prob`}{a K by J matrix with entries between 0 and 1. The initial values for the 
 #'  item response probabilities. They should equal to the expit-transformed leaf parameters of `tree_phylo4d`.}
 #' \item{`class_probability`}{a K-vector with entries between 0 and 1. The initial values for the class 
 #'  probabilities. Entries should be nonzero and sum up to 1, or otherwise will be normalized}
-#' \item{`class_assignments`}{a N-vector with integer entries from {1, ..., K}. The initial values for
+#' \item{`class_assignments`}{a N-vector with integer entries from 1, ..., K. The initial values for
 #'  individual class assignments.}
 #' \item{`Sigma_by_group`}{a G-vector greater than 0. The initial values for the group-specific diffusion
 #'  variances.}
@@ -53,8 +53,8 @@
 #' \describe{
 #' \item{`fix_tree`}{a logical. If `TRUE` (default), the tree structure will be sampled in the algorithm. If `FALSE`,
 #'  the tree structure will be fixed at the initial input.}
-#' \item{`c_order`}{a numeric value. If `1`, the divergence function is a(t) = c/(1-t). If `2`, the divergence 
-#' function is a(t) = c/(1-t)^2.}
+#' \item{`c_order`}{a numeric value. If `1`, the divergence function is \eqn{a(t) = c/(1-t)}. If `2`, the divergence 
+#' function is \eqn{a(t) = c/(1-t)^2}.}
 #' }
 #' 
 #'@param initialize_args a named list of initialization arguments. See the function 

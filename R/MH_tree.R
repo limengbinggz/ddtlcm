@@ -83,7 +83,7 @@ random_detach_subtree <- function(tree_phylo4){
 #' @param tree_kept the tree to be attached to
 #' @param c hyparameter of divergence function a(t)
 #' @param c_order equals 1 (default) or 2 to choose divergence function
-#'  a(t) = c/(1-t) or c/(1-t)^2.
+#'  \eqn{a(t) = c/(1-t) or c/(1-t)^2}.
 #' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
 #'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
@@ -93,7 +93,7 @@ random_detach_subtree <- function(tree_phylo4){
 #' \item{`div_time`}{a numeric value of newly sampled divergence time. Between 0 and 1.}
 #' \item{`root_node`}{a character. Label of the root node of `tree_kept`.}
 #' \item{`root_child`}{a character. Label of the child node of the root of `tree_kept`.}
-#' \item{`div_dist_to_root_child`}{a N-vector with integer entries from {1, ..., K}. The initial values for
+#' \item{`div_dist_to_root_child`}{a N-vector with integer entries from 1, ..., K. The initial values for
 #'  individual class assignments.}
 #' }
 #' @family sample trees

@@ -1,8 +1,8 @@
 Package: ddtlcm
 Type: Package
 Title: Latent Class Analysis with Dirichlet Diffusion Tree Process Prior
-Version: 0.1.2
-Date: 2023-09-17
+Version: 0.2.1
+Date: 2024-03-26
 Authors@R: c(
      person("Mengbing", "Li", 
             email="mengbing@umich.edu",
@@ -20,7 +20,7 @@ Maintainer: Mengbing Li <mengbing@umich.edu>
 Description: Implements a Bayesian algorithm for overcoming weak separation in Bayesian latent class analysis. 
     Reference: Li et al. (2023) <arXiv:2306.04700>.
 Depends:
-    R(>= 4.0.0)
+    R(>= 4.3)
 biocViews:
 Imports:
     ape (>= 5.6-2),

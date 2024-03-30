@@ -30,5 +30,5 @@ means and the other based on (2) posterior variances.
 }
 \examples{
 data(result_diet_1000iters)
-IC_result <- compute_IC(result = result_diet_1000iters, burnin = 500, ncores = 1L)
+IC_result <- compute_IC(result = result_diet_1000iters, burnin = 800, ncores = 1L)
 }
