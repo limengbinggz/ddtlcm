@@ -6,3 +6,4 @@ JOSS/
 JOSS/*
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+^Meta$
