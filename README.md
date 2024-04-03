@@ -63,7 +63,7 @@ plot(dep)
 Examples 
 ---------
 
-* A simple [workflow](doc/ddtlcm-demo.html) using semi-synthetic data is provided.
+* A simple [workflow](vignettes/ddtlcm-demo.html) using semi-synthetic data is provided.
 
 * *ddtlcm* estimates the tree over classes and class profiles simultaneously ![](inst/ddtlcm_output_example.png)
 
