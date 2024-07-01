@@ -145,7 +145,7 @@ items in 7 major groups. 100 iterations of posterior samples drawn.
 ---------------------------------------------
 ```
 
-To have a more comprehensive view of of the results obtained from 1000 posterior draws, we can load data named `result_diet_1000iters` to perform posterior summaries as described by the steps in the following sections.
+To have a more comprehensive view of the results obtained from 1000 posterior draws, we can load data named `result_diet_1000iters` to perform posterior summaries as described by the steps in the following sections.
 ```r
 data(result_diet_1000iters)
 # let the variable names be consistent for posterior summaries in the subsequent sections
@@ -155,7 +155,7 @@ result <- result_diet_1000iters
 
 #### Model Summary
 
-We next summarize the posterior samples using the generic function ``summary()``. We discard the first 50 iterations as burn-in's (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR, @papastamoulis2014HandlingLabel) method by specifying `relabel = TRUE`. To save space in the document, we do not print the summary result (`be_quiet = TRUE`).
+We next summarize the posterior samples using the generic function ``summary()``. We discard the first 50 iterations as burn-ins (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR, @papastamoulis2014HandlingLabel) method by specifying `relabel = TRUE`. To save space in the document, we do not print the summary result (`be_quiet = TRUE`).
 ```r
 burnin <- 50
 summarized_result <- summary(result, burnin, relabel = TRUE, be_quiet = TRUE)

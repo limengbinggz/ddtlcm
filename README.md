@@ -14,6 +14,13 @@ please cite the following preprint:
 | -------------  | -------------  | -------------  |
 | Bayesian tree-regularized LCM    | Li M, Stephenson B, Wu Z (2023). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *ArXiv:2306.04700*.   |[Link](https://arxiv.org/abs/2306.04700)| 
 
+
+Gallery
+-------------
+![](inst/ddtlcm_output_example.png)
+
+
+
 ## Table of content
 - [1. Installation](#id-section1)
 - [2. Overview](#id-section2)
@@ -43,12 +50,7 @@ Overview
 `ddtlcm` is designed for analyzing multivariate binary observations over grouped items in a tree-regularized Bayesian LCM framework. Between-class similarities are guided by an unknown tree, where classes positioned closer on the tree are more similar _a priori_. This framework facilitates the sharing of information between classes to make better estimates of parameters using less data. The model is built upon equipping LCMs with a DDT process prior on the class profiles, with varying degrees of shrinkage across major item groups. The model is particularly promising for addressing weak separation of latent classes when sample sizes are small. The posterior inferential algorithm is based on a hybrid Metropolis-Hastings-within-Gibbs algorithm and can provide posterior uncertainty quantifications.
 
 
-**ddtlcm** works for 
-
-* multivariate binary responses over pre-specified grouping of items
-
-
-* The functions' relations in the package `ddtlcm` can be visualized by
+**ddtlcm** works for multivariate binary responses over pre-specified grouping of items. The functions' relations in the package `ddtlcm` can be visualized by
 
 ```r
 library(DependenciesGraphs) # if not installed, try this-- devtools::install_github("datastorm-open/DependenciesGraphs")
@@ -59,13 +61,6 @@ plot(dep)
 
 
 <div id='id-section3'/>
-
-Examples 
----------
-
-* A simple [workflow](vignettes/ddtlcm-demo.Rmd) using semi-synthetic data is provided.
-
-* *ddtlcm* estimates the tree over classes and class profiles simultaneously ![](inst/ddtlcm_output_example.png)
 
 
 A Quickstart
@@ -93,6 +88,16 @@ result_diet <- ddtlcm_fit(K = K, data = sim_data$response_matrix,
 print(result_diet)
 ```
 
+
+Examples 
+---------
+
+A simple [workflow](https://cran.r-project.org/web/packages/ddtlcm/vignettes/ddtlcm-demo.html) using semi-synthetic data is provided.
+
+
+Reference Manual
+---------
+See the [manual](https://cran.r-project.org/web/packages/ddtlcm/ddtlcm.pdf) on CRAN.
 
 
 Contributing And Getting Help
