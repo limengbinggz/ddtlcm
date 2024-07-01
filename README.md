@@ -95,6 +95,17 @@ Examples
 A simple [workflow](https://cran.r-project.org/web/packages/ddtlcm/vignettes/ddtlcm-demo.html) using semi-synthetic data is provided.
 
 
+Tests
+---------
+Unit tests are in place to ensure correct implementation of certain utility functions, and ensure the functions accept and return the correct classes of input and output. To run the unit [tests](/tests) in the repository, the R package `testthat` is required. After incorporating your changes to the package code, run the following line in a terminal for unit tests:
+
+`R CMD check --as-cran ddtlcm_0.2.1.tar.gz`
+
+
+In addition, automated tests are implemented in major functions to inform the user about any false input.
+
+
+
 Reference Manual
 ---------
 See the [manual](https://cran.r-project.org/web/packages/ddtlcm/ddtlcm.pdf) on CRAN.
@@ -104,6 +115,7 @@ Contributing And Getting Help
 ---------
 Please report bugs by opening an [issue](https://github.com/limengbinggz/ddtlcm/issues/new). If you wish to contribute, please make a pull request. If you have questions, you can open a [discussion thread](https://github.com/limengbinggz/ddtlcm/discussions).
 
+If you are in need of support, please contact the maintainer at limengbinggz@gmail.com.
 
 
 Note
