@@ -1,0 +1,50 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Li
+  given-names: Mengbing
+  orcid: "https://orcid.org/0000-0002-2264-8006"
+- family-names: Wu
+  given-names: Bolin
+- family-names: Stephenson
+  given-names: Briana
+- family-names: Wu
+  given-names: Zhenke
+  orcid: "https://orcid.org/0000-0001-7582-669X"
+contact:
+- family-names: Li
+  given-names: Mengbing
+  orcid: "https://orcid.org/0000-0002-2264-8006"
+- family-names: Wu
+  given-names: Zhenke
+  orcid: "https://orcid.org/0000-0001-7582-669X"
+doi: 10.5281/zenodo.12711232
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Li
+    given-names: Mengbing
+    orcid: "https://orcid.org/0000-0002-2264-8006"
+  - family-names: Wu
+    given-names: Bolin
+  - family-names: Stephenson
+    given-names: Briana
+  - family-names: Wu
+    given-names: Zhenke
+    orcid: "https://orcid.org/0000-0001-7582-669X"
+  date-published: 2024-07-15
+  doi: 10.21105/joss.06220
+  issn: 2475-9066
+  issue: 99
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 6220
+  title: "ddtlcm: An R package for overcoming weak separation in
+    Bayesian latent class analysis via tree-regularization"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.06220"
+  volume: 9
+title: "ddtlcm: An R package for overcoming weak separation in Bayesian
+  latent class analysis via tree-regularization"
+

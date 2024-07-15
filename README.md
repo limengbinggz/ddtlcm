@@ -1,6 +1,8 @@
 **ddtlcm**: Dirichlet diffusion tree-latent class model (DDT-LCM)
 
 An R package for Tree-regularized latent class mModels with a DDT process prior on class profiles
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.06220/status.svg)](https://doi.org/10.21105/joss.06220)
+
 
 **Maintainer**: Mengbing Li (mengbing@umich.edu)
 
