@@ -1,10 +1,8 @@
 **ddtlcm**: Dirichlet diffusion tree-latent class model (DDT-LCM)
 
-An R package for Tree-regularized latent class models with a DDT process prior on class profiles
-[![DOI](https://joss.theoj.org/papers/10.21105/joss.06220/status.svg)](https://doi.org/10.21105/joss.06220)
-
 An R package for tree-regularized latent class models with a DDT process prior on class profiles to overcome weak separation issues
 
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.06220/status.svg)](https://doi.org/10.21105/joss.06220)
 [![](https://www.r-pkg.org/badges/version/ddtlcm?color=green)](https://cran.r-project.org/package=ddtlcm)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ddtlcm?color=green)](https://cran.r-project.org/package=ddtlcm)
 [![](http://cranlogs.r-pkg.org/badges/last-month/ddtlcm?color=green)](https://cran.r-project.org/package=ddtlcm)
@@ -21,7 +19,8 @@ please cite the following preprint:
 
 |       | Citation     | Paper Link
 | -------------  | -------------  | -------------  |
-| Bayesian tree-regularized LCM    | Li M, Stephenson B, Wu Z (2023). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *ArXiv:2306.04700*.   |[Link](https://arxiv.org/abs/2306.04700)| 
+| Method    | Li M, Stephenson B, Wu Z (2023). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *ArXiv:2306.04700*.   |[Link](https://arxiv.org/abs/2306.04700)| 
+| Software    | Li M, Wu B, Stephenson B, Wu Z (2024). ddtlcm: An R package for overcoming weak separation in Bayesian latent class analysis via tree-regularization. *Journal of Open Source Software*, 9(99), 6220, https://doi.org/10.21105/joss.06220.   |[Link](https://doi.org/10.21105/joss.06220)| 
 
 
 Gallery
