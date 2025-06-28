@@ -18,7 +18,7 @@ please cite the following preprint:
 
 |       | Citation     | Paper Link
 | -------------  | -------------  | -------------  |
-| Bayesian tree-regularized LCM    | Li M, Stephenson B, Wu Z (2023). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *ArXiv:2306.04700*.   |[Link](https://arxiv.org/abs/2306.04700)| 
+| Bayesian tree-regularized LCM    | Li M, Stephenson B, Wu Z (2025). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *Annals of Applied Statistics*. In press.   |[Link](https://arxiv.org/abs/2306.04700)| 
 
 ## Table of content
 - [1. Installation](#id-section1)
