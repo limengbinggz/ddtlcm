@@ -20,7 +20,6 @@ please cite the following preprint:
 |       | Citation     | Paper Link
 | -------------  | -------------  | -------------  |
 | Bayesian tree-regularized LCM    | Li M, Stephenson B, Wu Z (2025). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *Annals of Applied Statistics*. In press.   |[Link](https://arxiv.org/abs/2306.04700)| 
-=======
 | Method    | Li M, Stephenson B, Wu Z (2023). Tree-Regularized Bayesian Latent Class Analysis for Improving Weakly Separated Dietary Pattern Subtyping in Small-Sized Subpopulations. *ArXiv:2306.04700*.   |[Link](https://arxiv.org/abs/2306.04700)| 
 | Software    | Li M, Wu B, Stephenson B, Wu Z (2024). ddtlcm: An R package for overcoming weak separation in Bayesian latent class analysis via tree-regularization. *Journal of Open Source Software*, 9(99), 6220, https://doi.org/10.21105/joss.06220.   |[Link](https://doi.org/10.21105/joss.06220)| 
 
