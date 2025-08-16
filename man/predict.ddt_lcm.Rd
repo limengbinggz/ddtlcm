@@ -20,7 +20,7 @@ N is the number of individuals, and J is the number of granular items}
 a list of the following named elements:
 \describe{
 \item{\code{class_assignments}}{an integer vector of individual predicted class memberships
-taking values in {1, ..., K}}
+taking values in 1, ..., K}
 \item{\code{predictive_probs}}{a N x K matrix of probabilities, where the (i,k)-th element
 is the probability that the i-th individual is predicted to belong to class k.}
 }
@@ -31,7 +31,7 @@ For each posterior sample, let the class memberships be modal assignments. Then 
 all posterior samples to obtain the most likely assigned classes.
 }
 \examples{
-data(result_diet)
-burnin <- 50
-predicted <- predict(result_diet, result_diet$data, burnin)
+data(result_diet_1000iters)
+burnin <- 500
+predicted <- predict(result_diet_1000iters, result_diet_1000iters$data, burnin)
 }

@@ -18,7 +18,7 @@ N is the number of individuals, and J is the number of granular items}
 a list of the following named elements:
 \describe{
 \item{\code{class_assignments}}{an integer vector of individual predicted class memberships
-taking values in {1, ..., K}}
+taking values in 1, ..., K}
 \item{\code{predictive_probs}}{a N x K matrix of probabilities, where the (i,k)-th element
 is the probability that the i-th individual is predicted to belong to class k.}
 }
@@ -28,8 +28,8 @@ Predict individual class memberships based on posterior summary (point estimates
 of model parameters). The predicted class memberships are modal assignments.
 }
 \examples{
-data(result_diet)
-burnin <- 50
-summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
-predicted <- predict(summarized_result, result_diet$data)
+data(result_diet_1000iters)
+burnin <- 500
+summarized_result <- summary(result_diet_1000iters, burnin, relabel = TRUE, be_quiet = TRUE)
+predicted <- predict(summarized_result, result_diet_1000iters$data)
 }

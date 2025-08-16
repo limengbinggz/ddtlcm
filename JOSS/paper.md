@@ -55,12 +55,12 @@ preamble: >
 Latent class model (LCM) is a model-based clustering tool frequently used by social, behavioral, and medical researchers to cluster sampled individuals based on categorical responses. Traditional applications of LCMs often focus on scenarios where a set of unobserved classes are well-defined and easily distinguishable. However, in numerous real-world applications, these classes are weakly separated and difficult to distinguish. For example, nutritional epidemiologists often encounter weak class separation when deriving dietary patterns from dietary intake assessment [@li2023tree]. Based on the number of diet components queried and the heterogeneity of the study population, LCM-derived dietary patterns can exhibit strong similarities, or weak separation, resulting in numerical and inferential instabilities that challenge scientific interpretation. This issue is exacerbated in small-sized study populations. 
 
 To address these issues, we have developed an R package \texttt{ddtlcm} that empowers LCMs to account for weak class separation.
-This package implements a tree-regularized Bayesian LCM that leverages statistical strength between latent classes to make better estimates using limited data. With a tree-structured prior distribution over class profiles, classes that share proximity to one another in the tree are shrunk towards ancestral classes \textit{a priori}, with the degree of shrinkage varying across pre-specified item groups defined thematically with clinical significance. The \texttt{ddtlcm} package takes data on multivariate binary responses over items in pre-specified major groups, and generates statistics and visualizations based on the inferred tree structures and LCM parameters. Overall, ``ddtlcm`` provides tools designed to enhance the robustness and interpretability of LCMs in the presence of weak class separation, particularly useful for small sample sizes.
+This package implements a tree-regularized Bayesian LCM that leverages statistical strength between latent classes to make better estimates using limited data. With a tree-structured prior distribution over class profiles, classes that are closer to one another in the binary tree are encouraged to share more similar profiles, and their profiles are shrunk towards their common ancestral classes \textit{a priori}, with the degree of shrinkage varying across pre-specified item groups defined thematically with clinical significance. The \texttt{ddtlcm} package takes data on multivariate binary responses over items in pre-specified major groups, and generates statistics and visualizations based on the inferred tree structures and LCM parameters. Overall, ``ddtlcm`` provides tools designed to enhance the robustness and interpretability of LCMs in the presence of weak class separation, particularly useful for small sample sizes.
 
 
 # Statement of Need
 
-A number of packages are capable of fitting LCMs in R. For example, ``poLCA`` [@linzer2011PoLCAPackage] is a fully featured package that fits LCMs and latent class regression on polytomous outcomes. ``BayesLCA`` [@whiteBayesLCAPackageBayesian2014] is designed for Bayesian LCMs for binary outcomes. ``randomLCA`` [@beath2017randomlca] provides tools to perform LCMs with individual-specific random effects. These packages focus on LCMs where the class profiles are well-separated. Directly applying these packages to data that suffer from weak separation may result in large standard deviations of the class profiles, tendency to merge similar classes, and inaccurate individual class membership assignments, phenomena highly prevalent in small-sized study populations.
+A number of packages are capable of fitting LCMs in R. For example, ``poLCA`` [@linzer2011PoLCAPackage] is a fully featured package that fits LCMs and latent class regression on polytomous outcomes. ``BayesLCA`` [@whiteBayesLCAPackageBayesian2014] is designed for Bayesian LCMs for binary outcomes. ``randomLCA`` [@beath2017randomlca] provides tools to perform LCMs with individual-specific random effects. These packages focus on LCMs where the class profiles are well-separated. Directly applying these packages to data that suffer from weak separation may result in large standard deviations of the class profiles, tendency to merge similar classes, and inaccurate individual class membership assignments, phenomena highly prevalent in small-sized study populations. These phenomena have been demonstrated using ``poLCA`` and ``BayesLCA``, which are more relevant to our stated problem of weak class separation, in Figures 2 and 3 of @li2023tree.
 
 The package ``ddtlcm`` implements the tree-regularized LCM proposed in @li2023tree, a general framework to facilitate the sharing of information between classes to make better estimates of parameters using limited data. The model addresses weak separation for small sample sizes by (1) sharing statistical strength between classes guided by an unknown tree, and (2) accounting for varying degrees of shrinkage across major item groups. The proposed model uses a Dirichlet diffusion tree (DDT) process [@neal2003density] as a fully probabilistic device to specify a prior distribution for the class profiles on the leaves of an unknown tree (hence termed “DDT-LCM”). Classes positioned closer on the tree exhibit more profile similarities. The degrees of separation by major item groups are modeled by item-group-specific diffusion variances.
 
@@ -120,21 +120,22 @@ seed_response = 1
 # simulate data given the parameters
 sim_data <- simulate_lcm_given_tree(tree_phylo, N, 
     class_probability, item_membership_list, Sigma_by_group, 
-    root_node_location = 0, seed_parameter = 1, seed_response = 1)
+    root_node_location = 0, seed_parameter = seed_parameter,
+    seed_response = seed_response)
 ```
 
 
 #### Model Fitting
 
-The primary model fitting function，``ddtlcm_fit()``, implements a hybrid Metropolis-Hastings-within-Gibbs algorithm to sample from the posterior distribution of model parameters. We assume that the number of latent classes $K = 6$ is known. To use `ddtlcm_fit()`, we need to specify the number of classes (`K`), a matrix of multivariate binary observations (`data`), a list of item group memberships (`item_membership_list`), and the number of posterior samples to collect (`total_iters`). For a quick illustration, here we specify a small number `total_iters = 100`.
+The primary model fitting function, ``ddtlcm_fit()``, implements a hybrid Metropolis-Hastings-within-Gibbs algorithm to sample from the posterior distribution of model parameters. We assume that the number of latent classes $K = 6$ is known. To use `ddtlcm_fit()`, we need to specify the number of classes (`K`), a matrix of multivariate binary observations (`data`), a list of item group memberships (`item_membership_list`), and the number of posterior samples to collect (`total_iters`). For a quick illustration, here we specify a small number `total_iters = 100`. 
 
 ```r
 set.seed(999)
 # number of latent classes, same as number of leaves on the tree
 K <- 6
-result_diet <- ddtlcm_fit(K = K, data = sim_data$response_matrix, 
+result <- ddtlcm_fit(K = K, data = sim_data$response_matrix, 
   item_membership_list = item_membership_list, total_iters = 100)
-print(result_diet)
+print(result)
 ```
 
 ```
@@ -144,12 +145,20 @@ items in 7 major groups. 100 iterations of posterior samples drawn.
 ---------------------------------------------
 ```
 
+To have a more comprehensive view of the results obtained from 1000 posterior draws, we can load data named `result_diet_1000iters` to perform posterior summaries as described by the steps in the following sections.
+```r
+data(result_diet_1000iters)
+# let the variable names be consistent for posterior summaries in the subsequent sections
+result <- result_diet_1000iters
+```
+
+
 #### Model Summary
 
-We next summarize the posterior samples using the generic function ``summary()``. We discard the first 50 iterations as burn-in's (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR, @papastamoulis2014HandlingLabel) method by specifying `relabel = TRUE`. To save space in the document, we do not print the summary result (`be_quiet = TRUE`).
+We next summarize the posterior samples using the generic function ``summary()``. We discard the first 50 iterations as burn-ins (`burnin = 50`). To deal with identifiability of finite mixture models, we perform post-hoc label switching using the Equivalence Classes Representatives (ECR, @papastamoulis2014HandlingLabel) method by specifying `relabel = TRUE`. To save space in the document, we do not print the summary result (`be_quiet = TRUE`).
 ```r
 burnin <- 50
-summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
+summarized_result <- summary(result, burnin, relabel = TRUE, be_quiet = TRUE)
 ```
 
 

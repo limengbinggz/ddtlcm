@@ -47,7 +47,7 @@ sample_sigmasq <- function(shape0, rate0, dist_mat, item_membership_list, locati
 #'@param auxiliary_mat_range a list of two named elements: lb and ub. Each is an N by J 
 #'  matrix of the lower/upper bounds of the truncated normal variables.
 #'@param class_assignments an integer vector of length N for the individual class assignments.
-#'  Each element takes value in {1, ..., K}.
+#'  Each element takes value in 1, ..., K.
 #'@return a named list of three matrices: the newly sampled leaf parameters, the Polya-gamma random variables,
 #'  and the auxiliary truncated normal variables
 sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
@@ -60,7 +60,7 @@ sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
   J <- length(unlist(item_membership_list))
   # cumulative index of item groups
   new_leaf_data <- matrix(NA, nrow = K, ncol = J)
-  for (g in 1:length(item_membership_list)) {
+  for (g in seq_along(item_membership_list)) {
     J_g <- length(item_membership_list[[g]])
     precision_mat <- crossprod(dist_mat_old$Dhalf_Ut) / Sigma_by_group[g]
     # extract indices
@@ -101,7 +101,7 @@ sample_leaf_locations_pg <- function(item_membership_list, dist_mat_old,
 #' Sample individual class assignments Z_i, i = 1, ..., N
 #'@param data a N by J binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
-#'@param leaf_data a K by J matrix of logit(theta_{kj})
+#'@param leaf_data a K by J matrix of \eqn{logit(theta_{kj})}
 #'@param a_pg a N by J matrix of hyperparameters of the generalized logistic distribution
 #'@param auxiliary_mat a N by J matrix of truncated normal variables from previous iteration
 #'@param class_probability a length K vector, where the k-th element is the

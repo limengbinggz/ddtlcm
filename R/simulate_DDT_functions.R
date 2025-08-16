@@ -195,6 +195,9 @@ simulate_parameter_on_tree <- function(tree_phylo, Sigma_by_group, item_membersh
   if (length(Sigma_by_group) != G){
     stop("Sigma_by_group must be a length G vector, where G is the number of major item groups.")
   }
+  if (any(Sigma_by_group <= 0)){
+    stop("Sigma_by_group must contain positive values.")
+  }
   
   # add labels to all nodes in the tree
   tree_phylo$tip.label <- paste("v", 1:ape::Ntip(tree_phylo), sep="")
@@ -214,10 +217,10 @@ simulate_parameter_on_tree <- function(tree_phylo, Sigma_by_group, item_membersh
   
   while( length(start_node)!=0 ){
     next_from_nonTip <- numeric()
-    for (cur_from_idx in 1:length(start_node)){
+    for (cur_from_idx in seq_along(start_node)){
       from_node <- start_node[cur_from_idx]
       to_nodes <- descendants(tr_phylo4, node=names(from_node), type="children")
-      for (i in 1:length(to_nodes)) {
+      for (i in seq_along(to_nodes)) {
         to_node = to_nodes[i]
         edge_len <- edgeLength(tr_phylo4)[getEdge(tr_phylo4, node=names(to_node), type="descendant")]
         
@@ -245,10 +248,8 @@ simulate_parameter_on_tree <- function(tree_phylo, Sigma_by_group, item_membersh
 
 #' Simulate multivariate binary responses from a latent class model
 #'@description Generate multivariate binary responses from the following process:
-#'    For individual i = 1, ..., N,
-#'        Z_i ~ Categorical_K(prior_class_probability)
-#'        For item j = 1, ..., J,
-#'            Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})
+#'    For individual i = 1, ..., N, draw \eqn{Z_i} from Categorical distribution with prior class probability (length K).
+#'    For item j = 1, ..., J, given \eqn{Z_i = k}, draw \eqn{Y_{ij}} from Binomial with class-item probability
 #'@param N number of individuals
 #'@param response_prob a K by J matrix, where the k,j-th element is the response
 #'    probability of item j for individuals in class k
@@ -298,9 +299,9 @@ simulate_lcm_response <- function(N, response_prob, class_probability){
 #' Simulate multivariate binary responses from a latent class model given a tree
 #'@description Generate multivariate binary responses from the following process:
 #'    For individual i = 1, ..., N,
-#'        Z_i ~ Categorical_K(prior_class_probability)
+#'        \eqn{Z_i ~ Categorical_K(prior_class_probability)}
 #'        For item j = 1, ..., J,
-#'            Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})
+#'            \eqn{Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})}
 #'@param tree_phylo a "phylo" tree with K leaves
 #'@param N number of individuals
 #'@param class_probability a length K vector, where the k-th element is the
@@ -318,11 +319,11 @@ simulate_lcm_response <- function(N, response_prob, class_probability){
 #' \item{`tree_with_parameter`}{a "phylo4d" tree with K leaves.}
 #' \item{`response_prob`}{a K by J matrix, where the k,j-th element is the response
 #'  probability of item j for individuals in class k}
-#' \item{`response_matrix`}{a K by J matrix with entries between `0` and `1` for the item 
+#' \item{`response_matrix`}{a K by J matrix with entries between 0 and 1 for the item 
 #'  response probabilities.}
 #' \item{`class_probability`}{a K-vector with entries between 0 and 1 for the class 
 #'  probabilities. Entries should be nonzero and sum up to 1, or otherwise will be normalized}
-#' \item{`class_assignments`}{a N-vector with integer entries from {1, ..., K}. The initial values for
+#' \item{`class_assignments`}{a N-vector with integer entries from 1, ..., K. The initial values for
 #'  individual class assignments.}
 #' \item{`Sigma_by_group`}{a G-vector greater than 0. The initial values for the group-specific diffusion
 #'  variances.}
@@ -387,7 +388,6 @@ simulate_lcm_given_tree <- function(tree_phylo, N,
   sim_data[["response_matrix"]] <- response_matrix
   sim_data[["class_assignment"]] <- class_assignment_true
   sim_data[["Sigma_by_group"]] <- Sigma_by_group
-  sim_data[["c"]] <- c
   sim_data[["item_membership_list"]] <- item_membership_list
  
   return(sim_data) 

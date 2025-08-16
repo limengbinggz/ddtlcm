@@ -26,10 +26,8 @@ probabilities. Entries should be nonzero and sum up to 1, or otherwise will be n
 }
 \description{
 Generate multivariate binary responses from the following process:
-For individual i = 1, ..., N,
-Z_i ~ Categorical_K(prior_class_probability)
-For item j = 1, ..., J,
-Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})
+For individual i = 1, ..., N, draw \eqn{Z_i} from Categorical distribution with prior class probability (length K).
+For item j = 1, ..., J, given \eqn{Z_i = k}, draw \eqn{Y_{ij}} from Binomial with class-item probability
 }
 \examples{
 # number of latent classes

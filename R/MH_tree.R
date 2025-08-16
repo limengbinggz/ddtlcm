@@ -83,7 +83,7 @@ random_detach_subtree <- function(tree_phylo4){
 #' @param tree_kept the tree to be attached to
 #' @param c hyparameter of divergence function a(t)
 #' @param c_order equals 1 (default) or 2 to choose divergence function
-#'  a(t) = c/(1-t) or c/(1-t)^2.
+#'  \eqn{a(t) = c/(1-t) or c/(1-t)^2}.
 #' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
 #'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
@@ -93,7 +93,7 @@ random_detach_subtree <- function(tree_phylo4){
 #' \item{`div_time`}{a numeric value of newly sampled divergence time. Between 0 and 1.}
 #' \item{`root_node`}{a character. Label of the root node of `tree_kept`.}
 #' \item{`root_child`}{a character. Label of the child node of the root of `tree_kept`.}
-#' \item{`div_dist_to_root_child`}{a N-vector with integer entries from {1, ..., K}. The initial values for
+#' \item{`div_dist_to_root_child`}{a N-vector with integer entries from 1, ..., K. The initial values for
 #'  individual class assignments.}
 #' }
 #' @family sample trees
@@ -410,35 +410,51 @@ sample_tree_topology <- function(tree_phylo4d_old, Sigma_by_group, item_membersh
   # randomly detach a subtree
   random_detach <- random_detach_subtree(tree_phylo4 = old_tree)
   # randomly attach the detached subtree
-  proposal_newtree <- attach_subtree(subtree = random_detach$tree_detached, tree_kept = random_detach$tree_kept,
-                                     detach_div_time = random_detach$detach_div_time,
-                                     pa_detach_node_label = random_detach$pa_detach_node_label,
-                                     c_order = c_order, c = c, theta=0, alpha = 0)
+  proposal_newtree <- suppressWarnings({
+    attach_subtree(subtree = random_detach$tree_detached, tree_kept = random_detach$tree_kept,
+                   detach_div_time = random_detach$detach_div_time,
+                   pa_detach_node_label = random_detach$pa_detach_node_label,
+                   c_order = c_order, c = c, theta=0, alpha = 0)
+  })
   # while(nTips(proposal_newtree$new_phylo4) != K){
   # need to avoid extremely short branch in the new proposal tree to avoid degeneracy
   # in the covariance matrix
   while(proposal_newtree$new_div_time > 0.95){
-    proposal_newtree <- attach_subtree(subtree = random_detach$tree_detached, tree_kept = random_detach$tree_kept,
+    proposal_newtree <- suppressWarnings({attach_subtree(subtree = random_detach$tree_detached, tree_kept = random_detach$tree_kept,
                                        detach_div_time = random_detach$detach_div_time,
                                        pa_detach_node_label = random_detach$pa_detach_node_label,
-                                       c_order = c_order, c = c, theta=0, alpha = 0)
+                                       c_order = c_order, c = c, theta=0, alpha = 0)})
   }
   # compute log likelihood of the old and proposal tree divergence times
-  q_prob <- proposal_log_prob(old_tree_phylo4 = old_tree, tree_kept = random_detach$tree_kept,
+  q_prob <- suppressWarnings({proposal_log_prob(old_tree_phylo4 = old_tree, tree_kept = random_detach$tree_kept,
                               old_detach_pa_div_time = random_detach$pa_div_time,
                               old_pa_detach_node_label = random_detach$pa_detach_node_label,
                               old_detach_node_label = random_detach$detach_node_label,
                               new_div_time = proposal_newtree$new_div_time,
                               new_attach_root = proposal_newtree$attach_root,
                               new_attach_to = proposal_newtree$attach_to,
-                              c = c, c_order = c_order)
+                              c = c, c_order = c_order)})
   # convert to phylo4d object
   new_node_order <- match(proposal_newtree$new_phylo4@label, tree_phylo4d_old@label) # c(paste0("v", 1:K), paste0("u", 1:K))
   # reorder rows of data to from leaf to internal nodes
+  #tree_phylo4d_old@data drops all NA rows automatically
+  tdata(tree_phylo4d_old)[is.na(tdata(tree_phylo4d_old))] <- 0
   tree_phylo4d_old@data <- tree_phylo4d_old@data[as.character(1:(2*K)),]
   data_new_order <- tree_phylo4d_old@data[as.character(new_node_order),]
   rownames(data_new_order) <- 1:(2*K)
-  new_phylo4d <- phylo4d(proposal_newtree$new_phylo4, all.data=data_new_order)#tree_phylo4d_old@data
+  
+  # if (nrow(tree_phylo4d_old@data) == (2*K)){ # all internal node parameters are not NA
+  #   tree_phylo4d_old@data <- tree_phylo4d_old@data[as.character(1:(2*K)),]
+  #   data_new_order <- tree_phylo4d_old@data[as.character(new_node_order),]
+  #   rownames(data_new_order) <- 1:(2*K)
+  # } else{ #tree_phylo4d_old@data drops all NA rows automatically
+  #   # J <- ncol(tree_phylo4d_old@data)
+  #   tdata(tree_phylo4d_old)[is.na(tdata(tree_phylo4d_old))] <- 0
+  #   # tr_phylo4d <- phylo4d(tree_phylo4d_old, node.data = matrix(0, nrow = K, ncol = J), merge.data = TRUE)
+  #   # tree_phylo4d_old@data <- tree_phylo4d_old@data[as.character(1:(1+K)),]
+  #   
+  # }
+  new_phylo4d <- suppressWarnings({phylo4d(proposal_newtree$new_phylo4, all.data=data_new_order)})
 
   # compute log likelihood of the old and proposal tree locatioins
   old_tree_info <- logllk_ddt(c = c, c_order, Sigma_by_group = Sigma_by_group, tree_phylo4d = tree_phylo4d_old,

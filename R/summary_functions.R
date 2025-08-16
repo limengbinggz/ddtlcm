@@ -1,23 +1,23 @@
 #' Summarize the output of a ddt_lcm model
 #' @param object a "ddt_lcm" object
 #' @param burnin number of samples to discard from the posterior chain as burn-ins. Default is 3000.
-#' @param relabel If TRUE, perform post-hoc label switching using the Equivalence Classes 
+#' @param relabel If TRUE, perform post-hoc label switching using the Equivalence Classes
 #'  Representatives (ECR) method to solve non-identifiability issue in mixture models. If FALSE,
-#'  no label switching algorithm will be performed. 
-#' @param be_quiet If TRUE, do not print information during summarization. If FALSE, print label 
+#'  no label switching algorithm will be performed.
+#' @param be_quiet If TRUE, do not print information during summarization. If FALSE, print label
 #'  switching information and model summary.
 #' @param \dots	Further arguments passed to each method
 #' @rdname summary.ddt_lcm
 #' @method summary ddt_lcm
 #' @importFrom label.switching label.switching
 #' @family ddt_lcm results
-#' @return an object of class "ddt_lcm"; a list containing the following elements:
+#' @return an object of class "summary.ddt_lcm"; a list containing the following elements:
 #' \describe{
 #' \item{`tree_map`}{the MAP tree of "phylo4d" class}
 #' \item{`tree_Sigma`}{the tree-structured covariance matrix associated with `tree_map`}
 #' \item{`response_probs_summary`, `class_probs_summary`, `Sigma_summary`, `c_summary`}{
 #'  each is a matrix with 7 columns of summary statistics of posterior chains, including means, standard
-#'  deviation, and five quantiles. In particular, for the summary of item response probabilities, 
+#'  deviation, and five quantiles. In particular, for the summary of item response probabilities,
 #'  each row name theta_k,g,j represents the response probability of a person in class k to consume item j in group g}
 #' \item{`max_llk_full`}{a numeric value of the maximum log-likelihood of the full model (tree and LCM)}
 #' \item{`max_llk_lcm`}{a numeric value of the maximum log-likelihood of the LCM only}
@@ -31,9 +31,9 @@
 #' \item{`data`}{the input data matrix}
 #' }
 #'@examples
-#'# load the result of fitting semi-synthetic data with 100 (for the sake of time) posterior samples
-#'data(result_diet)
-#'summarized_result <- summary(result_diet, burnin = 50, relabel = TRUE, be_quiet = TRUE)
+#'# load the result of fitting semi-synthetic data with 1000 (for the sake of time) posterior samples
+#'data(result_diet_1000iters)
+#'summarized_result <- summary(result_diet_1000iters, burnin = 500, relabel = TRUE, be_quiet = TRUE)
 #' @export
 summary.ddt_lcm <- function(object, burnin = 3000, relabel = TRUE, be_quiet = FALSE, ...){
   if (!inherits(object, "ddt_lcm")){
@@ -49,7 +49,7 @@ summary.ddt_lcm <- function(object, burnin = 3000, relabel = TRUE, be_quiet = FA
   K <- object$setting$K
   # num_items_per_group <- unlist(lapply(1:G, function(x) rep(x, length(item_membership_list[[x]]))))
   num_items_per_group <- unlist(lapply(item_membership_list, length))
-  
+
   ## get the MAP tree estimate
   map_index <- which.max(object$loglikelihood[-(1:burnin)])
   if (length(object$tree_samples$tree_list) > 1){
@@ -62,8 +62,8 @@ summary.ddt_lcm <- function(object, burnin = 3000, relabel = TRUE, be_quiet = FA
     tree_map <- NULL
     tree_Sigma <- NULL
   }
-  
-  
+
+
   ## get posterior summary of Sigma and c
   posterior_summary <- function(x, var_names){
     tryCatch({
@@ -90,16 +90,16 @@ summary.ddt_lcm <- function(object, burnin = 3000, relabel = TRUE, be_quiet = FA
   Sigma_summary <- posterior_summary(x=t(object$Sigma_by_group_samples[,(burnin+1):total_iters,drop=F]), var_names)
   # divergence parameter
   c_summary <- posterior_summary(object$c_samples[(burnin+1):total_iters,drop=F], "c")
-  
+
   response_probs_samples <- object$response_probs_samples[(burnin+1):total_iters,,]
   # response_probs_samples <- array(t(object$response_probs_samples[,(burnin+1):total_iters]),
   #                                 dim = c(total_iters-burnin, K, J))
   class_probs_samples <- t(object$class_probs_samples)[(burnin+1):total_iters,,drop=F]
-  
+
   ### if we need to relabel
   if (relabel) {
     map_index <- which.max(object$loglikelihood_lcm[(burnin+1):total_iters]) + burnin
-    
+
     # require(label.switching)
     # switch labels. m = # of iterations
     # sink("NUL")
@@ -136,10 +136,10 @@ summary.ddt_lcm <- function(object, burnin = 3000, relabel = TRUE, be_quiet = FA
   out <- list(tree_map = tree_map, tree_Sigma = tree_Sigma, response_probs_summary = response_probs_summary,
               class_probs_summary = class_probs_summary,
               Sigma_summary = Sigma_summary, c_summary = c_summary,
-              max_llk_full = max_llk_full, max_llk_lcm = max_llk_lcm, 
+              max_llk_full = max_llk_full, max_llk_lcm = max_llk_lcm,
               setting = object$setting, data = object$data)
   class(out) <- "summary.ddt_lcm"
-  
+
   if (!be_quiet){
     print(out)
   }

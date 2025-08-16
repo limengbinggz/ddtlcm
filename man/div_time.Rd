@@ -14,7 +14,7 @@ div_time(t_u, m_v, c, c_order = 1, alpha = 0, theta = 0)
 \item{c}{a positive number for the divergence hyperparameter. A larger value implies
 earlier divergence on the tree}
 
-\item{c_order}{equals 1 if using divergence function a(t) = c / (1-t), or 2 if
+\item{c_order}{equals 1 if using divergence function \eqn{a(t) = c / (1-t)}, or 2 if
 a(t) = c / (1-t)^2. Default is 1}
 
 \item{alpha, theta}{hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)

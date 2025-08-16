@@ -1,0 +1,4 @@
+This directory contains all code to reproduce the simulation results in the method paper Li et al., 2025.
+
+Note that these simulations were implemented using unpackaged functions, which were written before publishing the R package ``ddtlcm''. To reproduce the results only, use the unpackaged functions. To implement the proposed method, use the package ``ddtlcm'' following the vignette. 
+

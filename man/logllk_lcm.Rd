@@ -17,7 +17,7 @@ logllk_lcm(
 \item{response_matrix}{a N by J binary matrix, where the i,j-th element is the response
 of item j for individual i}
 
-\item{leaf_data}{a K by J matrix of logit(theta_{kj})}
+\item{leaf_data}{a K by J matrix of \eqn{logit(theta_{kj})}}
 
 \item{prior_class_probability}{a length K vector, where the k-th element is the
 probability of assigning an individual to class k. It does not have to sum up to 1}
@@ -38,8 +38,8 @@ Calculate loglikelihood of the latent class model, conditional on tree structure
 }
 \seealso{
 Other likelihood functions: 
-\code{\link{logllk_ddt_lcm}()},
 \code{\link{logllk_ddt}()},
+\code{\link{logllk_ddt_lcm}()},
 \code{\link{logllk_div_time_one}()},
 \code{\link{logllk_div_time_two}()},
 \code{\link{logllk_location}()},

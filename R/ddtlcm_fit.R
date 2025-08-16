@@ -15,15 +15,15 @@
 #' @param initials a named list of initial values of the following parameters:
 #' \describe{
 #' \item{`tree_phylo4d`}{a phylo4d object. The initial tree have K leaves (labeled as "v1" through "vK"),
-#'  1 singleton root node (labeled as "u1"), and K-1 internal nodes (labeled as "u1" through "u{K-1}"). 
+#'  1 singleton root node (labeled as "u1"), and K-1 internal nodes (labeled as "u1" through \eqn{u_{K-1}}). 
 #'  The tree also contains parameters for the leaf nodes and the root node (which 
 #'  equals 0). The parameters for the internal nodes can be NAs because they will not be used in the
 #'  algorithm.}
-#' \item{`response_prob`}{a K by J matrix with entries between `0` and `1`. The initial values for the 
+#' \item{`response_prob`}{a K by J matrix with entries between 0 and 1. The initial values for the 
 #'  item response probabilities. They should equal to the expit-transformed leaf parameters of `tree_phylo4d`.}
 #' \item{`class_probability`}{a K-vector with entries between 0 and 1. The initial values for the class 
 #'  probabilities. Entries should be nonzero and sum up to 1, or otherwise will be normalized}
-#' \item{`class_assignments`}{a N-vector with integer entries from {1, ..., K}. The initial values for
+#' \item{`class_assignments`}{a N-vector with integer entries from 1, ..., K. The initial values for
 #'  individual class assignments.}
 #' \item{`Sigma_by_group`}{a G-vector greater than 0. The initial values for the group-specific diffusion
 #'  variances.}
@@ -53,8 +53,8 @@
 #' \describe{
 #' \item{`fix_tree`}{a logical. If `TRUE` (default), the tree structure will be sampled in the algorithm. If `FALSE`,
 #'  the tree structure will be fixed at the initial input.}
-#' \item{`c_order`}{a numeric value. If `1`, the divergence function is a(t) = c/(1-t). If `2`, the divergence 
-#' function is a(t) = c/(1-t)^2.}
+#' \item{`c_order`}{a numeric value. If `1`, the divergence function is \eqn{a(t) = c/(1-t)}. If `2`, the divergence 
+#' function is \eqn{a(t) = c/(1-t)^2}.}
 #' }
 #' 
 #'@param initialize_args a named list of initialization arguments. See the function 
@@ -219,23 +219,28 @@ ddtlcm_fit <- function(K, data, item_membership_list, total_iters = 5000,
   
   # set.seed(2022)
   cat("\n## Start posterior sampling ##")
-  for(iter in 1:total_iters){
-    if (iter %% 500 == 0){
-      cat("\n## iteration ", iter, "completed.")
+  for (iter in 1:total_iters) {
+    # Printing at 10% iterations if total_iters > 10
+    if (total_iters > 10) {
+      if (iter %% (total_iters %/% 10) == 0) {
+        cat("\n## iteration ", iter, "completed.")
+      }
     }
     
     
     ### Sample tree topology
     if (!fix_tree){
-      sampled_tree <- sample_tree_topology(tree_phylo4d_old, Sigma_by_group, item_membership_list, c = c, c_order,
-                                           tree_structure_old = tree_structure_old, dist_mat_old = dist_mat_old)#NULL
+      sampled_tree <- suppressWarnings({
+        sample_tree_topology(tree_phylo4d_old, Sigma_by_group, item_membership_list, c = c, c_order,
+                             tree_structure_old = tree_structure_old, dist_mat_old = dist_mat_old)#NULL
+      })
       accept[iter] <- sampled_tree$accept
       logllk_model[iter] <- sampled_tree$logllk_model
       tree_structure_old <- sampled_tree$tree_structure
       dist_mat_old <- sampled_tree$dist_mat
       # to save memory, we only update the tree list if the proposal is accepted; otherwise
       # create a pointer to the old object
-      if (sampled_tree$accept | iter == 1) {
+      if (sampled_tree$accept || iter == 1) {
         tree_list[[iter]] <- sampled_tree$tree_phylo4d
         dist_mat_list[[iter]] <- sampled_tree$dist_mat
         tree_phylo4d_old <- sampled_tree$tree_phylo4d

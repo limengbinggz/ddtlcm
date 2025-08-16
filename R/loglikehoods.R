@@ -55,7 +55,7 @@ logllk_location <- function(tree_phylo4d, Sigma_by_group, item_membership_list, 
       names(branch_lengths) <- ancestors_internal
 
       # compute row variance of the matrix normal distribution of leaf nodes
-      row_var_by_group <- unlist(t(sapply(1:length(pa_ancestors_internal),
+      row_var_by_group <- unlist(t(sapply(seq_along(pa_ancestors_internal),
                                           function(x) branch_lengths[x])))
       # row_var_by_group <- colSums(matrix(row_var_by_group, ncol = G))
       row_var_by_group <- sum(row_var_by_group)
@@ -178,7 +178,7 @@ logllk_tree_topology <- function(l, r){
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
 #' @param c_order equals 1 if using divergence function a(t) = c / (1-t), or 2 if 
-#'  a(t) = c / (1-t)^2. Default is 1
+#'  \eqn{a(t) = c / (1-t)^2}. Default is 1
 #' @param Sigma_by_group a vector of diffusion variances of G groups from the previous iteration
 #' @param tree_phylo4d a "phylo4d" object
 #' @param item_membership_list a list of G elements, where the g-th element contains the column
@@ -254,7 +254,7 @@ logllk_ddt <- function(c, c_order, Sigma_by_group, tree_phylo4d, item_membership
 #' Calculate loglikelihood of the latent class model, conditional on tree structure
 #'@param response_matrix a N by J binary matrix, where the i,j-th element is the response
 #'    of item j for individual i
-#'@param leaf_data a K by J matrix of logit(theta_{kj})
+#'@param leaf_data a K by J matrix of \eqn{logit(theta_{kj})}
 #'@param prior_class_probability a length K vector, where the k-th element is the
 #'    probability of assigning an individual to class k. It does not have to sum up to 1
 #'@param prior_dirichlet a vector of length K. The Dirichlet prior of class probabilities
@@ -276,7 +276,7 @@ logllk_lcm <- function(response_matrix, leaf_data, prior_class_probability,
 
 
 #' Calculate loglikelihood of the DDT-LCM
-#' @param leaf_data a K by J matrix of logit(theta_{kj})
+#' @param leaf_data a K by J matrix of \eqn{logit(theta_kj)}
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
 #' @param Sigma_by_group a vector of diffusion variances of G groups 

@@ -19,7 +19,7 @@ logllk_ddt(
 earlier divergence on the tree}
 
 \item{c_order}{equals 1 if using divergence function a(t) = c / (1-t), or 2 if
-a(t) = c / (1-t)^2. Default is 1}
+\eqn{a(t) = c / (1-t)^2}. Default is 1}
 
 \item{Sigma_by_group}{a vector of diffusion variances of G groups from the previous iteration}
 

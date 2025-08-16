@@ -1,5 +1,5 @@
 #' Compute divergence function
-#' @description Compute value, cumulative hazard, and inverse for divergence function a(t) = c / (1-t)
+#' @description Compute value, cumulative hazard, and inverse for divergence function \eqn{a(t) = c / (1-t)}
 #' @describeIn a_t_one value of the divergence function
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
@@ -17,7 +17,7 @@ a_t_one <- function(c, t) c/(1-t)
 #' @export
 a_t_one_cum <- function(c, t) -c * log(1-t)
 
-#' @param y a positive number to take inverse 
+#' @param y a positive number to take inverse
 #' @describeIn a_t_one inverse function
 #' @examples
 #' A_t_inv_one(1, 2)
@@ -25,7 +25,7 @@ a_t_one_cum <- function(c, t) -c * log(1-t)
 A_t_inv_one <- function(c, y) 1.0 - exp(- y/c)
 
 #' Compute divergence function
-#' @description Compute value, cumulative hazard, and inverse for divergence function a(t) = c / (1-t)^2
+#' @description Compute value, cumulative hazard, and inverse for divergence function \eqn{a(t) = c / (1-t)^2}
 #' @describeIn a_t_two value of the divergence function
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
@@ -43,7 +43,7 @@ a_t_two <- function(c, t) c/(1-t)^2
 #' @export
 a_t_two_cum <- function(c, t) -c + c / (1.0-t)
 
-#' @param y a positive number to take inverse 
+#' @param y a positive number to take inverse
 #' @describeIn a_t_two inverse function
 #' @examples
 #' A_t_inv_two(1, 2)
@@ -55,11 +55,11 @@ A_t_inv_two <- function(c, y) y / (c+y)
 #' @param m_v an integer for the number of data points traversed through node v
 #' @param c a positive number for the divergence hyperparameter. A larger value implies
 #'  earlier divergence on the tree
-#' @param c_order equals 1 if using divergence function a(t) = c / (1-t), or 2 if 
+#' @param c_order equals 1 if using divergence function \eqn{a(t) = c / (1-t)}, or 2 if
 #'  a(t) = c / (1-t)^2. Default is 1
 #' @param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0. For general multifurcating tree from a Pitman-Yor process,
-#'    specify positive values to alpha and theta. It is, however, recommended using alpha = 
+#'    specify positive values to alpha and theta. It is, however, recommended using alpha =
 #'    theta = 0 in inference because multifurcating trees have not been tested rigorously.
 #' @return a number in the interval (0, 1)
 div_time <- function(t_u, m_v, c, c_order = 1, alpha = 0, theta = 0){
@@ -107,7 +107,7 @@ add_multichotomous_tip <- function(tree_old, div_t, new_leaf_label, where){
                  edge.length = 1 - div_t,
                  Nnode = 1)
   class(branch) <- "phylo"
-  tree_new <- bind.tree(tree_old, branch, 
+  tree_new <- bind.tree(tree_old, branch,
                         where = where
                         # where = as.numeric(substr(names(where), 2, nchar(names(where))))
                         )
@@ -116,13 +116,13 @@ add_multichotomous_tip <- function(tree_old, div_t, new_leaf_label, where){
 
 
 
-#' Add a singular root node to an existing nonsingular tree 
+#' Add a singular root node to an existing nonsingular tree
 #' @param tree_old the original nonsingular "phylo" tree
-#' @param root_edge_length a number in (0, 1) representing the distance 
+#' @param root_edge_length a number in (0, 1) representing the distance
 #'  between the new and the original root nodes
-#' @param root_label a character label of the new root node 
-#' @param leaf_label a character label of the leaf node 
-#' @return a singular "phylo" tree 
+#' @param root_label a character label of the new root node
+#' @param leaf_label a character label of the leaf node
+#' @return a singular "phylo" tree
 add_root <- function(tree_old, root_edge_length, root_label, leaf_label){
   leaf_branch <- list(edge = matrix(c(2,1), nrow = 1),
                       node.label = root_label,
@@ -136,18 +136,18 @@ add_root <- function(tree_old, root_edge_length, root_label, leaf_label){
 
 
 #' Compute normalized probabilities: exp(x_i) / sum_j exp(x_j)
-#' @param x a number or rea-valued vector
-#' @return a number or rea-valued vector
+#' @param x a number or real-valued vector
+#' @return a number or real-valued vector
 exp_normalize <- function(x){
   return(exp(x - logSumExp(x)))
 }
 
 
 #' Efficiently sample multivariate normal using precision matrix
-#'  from x ~ N(Q^{-1}a, Q^{-1}), where Q^{-1} is the precision matrix
+#'  from \eqn{x ~ N(Q^{-1}a, Q^{-1})}, where \eqn{Q^{-1}} is the precision matrix
 #' @param precision_mat precision matrix Q of the multivariate normal distribution
 #' @param precision_a_vec a vector a such that the mean of the multivariate normal distribution is
-#'  Q^{-1}a
+#'  \eqn{Q^{-1}a}
 draw_mnorm <- function(precision_mat, precision_a_vec){
   U <- chol(precision_mat)
   b <- rnorm(nrow(precision_mat))
@@ -155,7 +155,7 @@ draw_mnorm <- function(precision_mat, precision_a_vec){
 }
 
 
-#' The expit function 
+#' The expit function
 #' @description The expit function: f(x) = exp(x) / (1+exp(x)), computed
 #'  in a way to avoid numerical underflow.
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
@@ -183,10 +183,10 @@ expit <- function(x){
 
 
 #' The logistic function
-#' @description The logit function: f(x) = log(x / (1/x)). Large absolute values of 
+#' @description The logit function: f(x) = log(x / (1/x)). Large absolute values of
 #'  x will be truncated to +/- 5 after logit transformation according to its sign.
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
-#' @return a number or rea-valued vector
+#' @return a number or real-valued vector
 #' @export
 #' @examples
 #' logit(0.2)
@@ -201,9 +201,9 @@ logit <- function(x){
 }
 
 
-#' Numerically accurately compute f(x) = log(x / (1/x)). 
+#' Numerically accurately compute f(x) = log(x / (1/x)).
 #' @param x a value or a numeric vector between 0 and 1 (exclusive)
-#' @return a number or rea-valued vector
+#' @return a number or real-valued vector
 log_expit <- function(x){
   out <- x
   idx <- which(x < -33.3)
@@ -225,15 +225,15 @@ log_expit <- function(x){
 #' Suppress print from cat()
 #' @param x evaluation of a statement that may explicitly or implicitly involve cat()
 #' @param be_quiet logical. TRUE to suppress print from cat(); FALSE to continue printing
-quiet <- function(x, be_quiet=TRUE) { 
+quiet <- function(x, be_quiet=TRUE) {
   if (be_quiet){
-    sink(tempfile()) 
-    on.exit(sink()) 
-    invisible(force(x)) 
+    sink(tempfile())
+    on.exit(sink())
+    invisible(force(x))
   }else{
     x
   }
-} 
+}
 
 
 
@@ -242,17 +242,17 @@ quiet <- function(x, be_quiet=TRUE) {
 #' @param tree_phylo4d a "phylo4d" object
 #' @return a K by K covariance matrix
 #' @export
-#'@examples
+#' @examples
 #'# load the MAP tree structure obtained from the real HCHS/SOL data
 #'data(data_synthetic)
 #'# extract elements into the global environment
-#'list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+#'list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv())
 #'create_leaf_cor_matrix(tree_with_parameter)
 create_leaf_cor_matrix <- function(tree_phylo4d){
   K <- nTips(tree_phylo4d)
   # K <- nNodes(tree_phylo4d)
   root_node <- names(rootNode(tree_phylo4d))
-  
+
   # create combinations of two leaf nodes including identical combinations
   # leaf_grid <- expand.grid(leaf_nodes, leaf_nodes)
   leaf_grid <- expand.grid(1:K, 1:K)
@@ -263,7 +263,7 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
   # get the MRCA of each pair of leaf nodes
   mrca_nodes <- tree_phylo4d@label[
     as.character(apply(leaf_grid, 1, function(x) phylobase::MRCA(tree_phylo4d, x))) ]
-  
+
   calculate_row_var_by_group <- function(node){
     # internal ancestors of the MRCA
     ancestors_internal <- c(names(shortestPath(tree_phylo4d, root_node, node)), node)
@@ -274,7 +274,7 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
     # branch_lengths <- diff(c(0, branch_lengths))
     branch_lengths <- diff(branch_lengths)
     names(branch_lengths) <- ancestors_internal
-    
+
     # compute row variance of the matrix normal distribution of leaf nodes
     row_var_by_group <- sum(branch_lengths)
     return(row_var_by_group)
@@ -284,23 +284,25 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
   # mrca_var_by_group <- matrix(unlist(mrca_var_by_group), ncol = G, nrow = 2*K-1, byrow = TRUE)
   names(mrca_var_by_group) <- tree_phylo4d@label
   row_var_by_group <- mrca_var_by_group[mrca_nodes]
-  
+
   ## now construct a pairwise distance matrix between leaf nodes
   tree_Sigma_hclust <- matrix(NA, nrow = K, ncol = K)
   # create distance matrix, equivalently, row covariance matrix
   tree_Sigma_hclust[lower.tri(tree_Sigma_hclust,diag = TRUE)] <- row_var_by_group
   tree_Sigma_hclust[upper.tri(tree_Sigma_hclust)] <- t(tree_Sigma_hclust)[upper.tri(tree_Sigma_hclust)]
   rownames(tree_Sigma_hclust) <- colnames(tree_Sigma_hclust) <- paste0("v", 1:K)
-  
+
   return(tree_Sigma_hclust)
 }
 
 
 
 
+
+
 #' Compute information criteria for the DDT-LCM model
-#' @description Compute information criteria for the DDT-LCM model, including the Widely Applicable 
-#'  Information Criterion (WAIC), and Deviance Information Criterion (DIC). WAIC and DIC are computed 
+#' @description Compute information criteria for the DDT-LCM model, including the Widely Applicable
+#'  Information Criterion (WAIC), and Deviance Information Criterion (DIC). WAIC and DIC are computed
 #'  using two different methods described in Gelman, Hwang, and Vehtari (2013), one based on (1) posterior
 #'  means and the other based on (2) posterior variances.
 #' @param result a "ddt_lcm" object
@@ -316,15 +318,15 @@ create_leaf_cor_matrix <- function(tree_phylo4d){
 #' }
 #' @export
 #' @examples
-#' data(result_diet)
-#' IC_result <- compute_IC(result = result_diet, burnin = 50, ncores = 1L)
+#' data(result_diet_1000iters)
+#' IC_result <- compute_IC(result = result_diet_1000iters, burnin = 800, ncores = 1L)
 compute_IC <- function(result, burnin = 5000, ncores = 1L){
   # require(parallel)
   num_samples <- length(result$loglikelihood[-(1:burnin)]) - 1
   dat <- result$data
   N <- nrow(result$data)
   K <- result$setting$K
-  
+
   ### calculate WAIC
   compute_posteriorllk_matrix <- function(iter){
     # print(iter)
@@ -341,8 +343,8 @@ compute_IC <- function(result, burnin = 5000, ncores = 1L){
   llk_matrix <- mclapply(1:num_samples+burnin, function(x) compute_posteriorllk_matrix(x), mc.cores = ncores) #num_samples
   llk_matrix <- matrix(unlist(llk_matrix), nrow = N, ncol = num_samples, byrow = TRUE)
   WAIC_result <- WAIC(llk_matrix)
-  
-  
+
+
   ### calculate DIC
   s <- summary(result, burnin)
   leaf_data <- t(matrix(s$response_probs_summary[,'Mean'], nrow = K))
@@ -355,10 +357,10 @@ compute_IC <- function(result, burnin = 5000, ncores = 1L){
   logllk_allindividuals <- colSums(llk_matrix) #apply(llk_matrix, 2, logSumExp)
   p_DIC_1 <- 2 * (logllk_lcm_sample_thetahat - mean(logllk_allindividuals))
   p_DIC_2 <- 2 * var(logllk_allindividuals)
-  
+
   DIC1 <- -2 * (logllk_lcm_sample_thetahat + p_DIC_1)
   DIC2 <- -2 * (logllk_lcm_sample_thetahat + p_DIC_2)
-  
+
   return(list(WAIC_result = WAIC_result, DIC1 = DIC1, DIC2 = DIC2))
 }
 

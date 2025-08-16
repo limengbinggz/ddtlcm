@@ -21,7 +21,7 @@ switching information and model summary.}
 \item{\dots}{Further arguments passed to each method}
 }
 \value{
-an object of class "ddt_lcm"; a list containing the following elements:
+an object of class "summary.ddt_lcm"; a list containing the following elements:
 \describe{
 \item{\code{tree_map}}{the MAP tree of "phylo4d" class}
 \item{\code{tree_Sigma}}{the tree-structured covariance matrix associated with \code{tree_map}}
@@ -45,9 +45,9 @@ each row name theta_k,g,j represents the response probability of a person in cla
 Summarize the output of a ddt_lcm model
 }
 \examples{
-# load the result of fitting semi-synthetic data with 100 (for the sake of time) posterior samples
-data(result_diet)
-summarized_result <- summary(result_diet, burnin = 50, relabel = TRUE, be_quiet = TRUE)
+# load the result of fitting semi-synthetic data with 1000 (for the sake of time) posterior samples
+data(result_diet_1000iters)
+summarized_result <- summary(result_diet_1000iters, burnin = 500, relabel = TRUE, be_quiet = TRUE)
 }
 \seealso{
 Other ddt_lcm results: 

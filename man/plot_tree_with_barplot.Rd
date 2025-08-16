@@ -55,6 +55,6 @@ Plot the MAP tree and class profiles (bar plot) of summarized DDT-LCM results
 # load the MAP tree structure obtained from the real HCHS/SOL data
 data(data_synthetic)
 # extract elements into the global environment
-list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv())
 plot_tree_with_barplot(tree_with_parameter, response_prob, item_membership_list)
 }

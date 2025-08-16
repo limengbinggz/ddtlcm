@@ -42,11 +42,11 @@ a named list of the following elements:
 \item{\code{tree_with_parameter}}{a "phylo4d" tree with K leaves.}
 \item{\code{response_prob}}{a K by J matrix, where the k,j-th element is the response
 probability of item j for individuals in class k}
-\item{\code{response_matrix}}{a K by J matrix with entries between \code{0} and \code{1} for the item
+\item{\code{response_matrix}}{a K by J matrix with entries between 0 and 1 for the item
 response probabilities.}
 \item{\code{class_probability}}{a K-vector with entries between 0 and 1 for the class
 probabilities. Entries should be nonzero and sum up to 1, or otherwise will be normalized}
-\item{\code{class_assignments}}{a N-vector with integer entries from {1, ..., K}. The initial values for
+\item{\code{class_assignments}}{a N-vector with integer entries from 1, ..., K. The initial values for
 individual class assignments.}
 \item{\code{Sigma_by_group}}{a G-vector greater than 0. The initial values for the group-specific diffusion
 variances.}
@@ -58,9 +58,9 @@ variances.}
 \description{
 Generate multivariate binary responses from the following process:
 For individual i = 1, ..., N,
-Z_i ~ Categorical_K(prior_class_probability)
+\eqn{Z_i ~ Categorical_K(prior_class_probability)}
 For item j = 1, ..., J,
-Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})
+\eqn{Y_{ij} | Z_i = k ~ Binomial(class_item_probability_{kj})}
 }
 \examples{
 # load the MAP tree structure obtained from the real HCHS/SOL data

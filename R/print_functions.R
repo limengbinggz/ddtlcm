@@ -7,8 +7,8 @@
 #' @export
 #' @return NULL
 #' @examples
-#' data(result_diet)
-#' print(result_diet)
+#' data(result_diet_1000iters)
+#' print(result_diet_1000iters)
 print.ddt_lcm <- function(x, ...){
   # total number of items
   J <- length(unlist(x$setting$item_membership_list))
@@ -34,9 +34,9 @@ print.ddt_lcm <- function(x, ...){
 #' @export
 #' @return NULL
 #' @examples
-#' data(result_diet)
-#' burnin <- 50
-#' summarized_result <- summary(result_diet, burnin, relabel = TRUE, be_quiet = TRUE)
+#' data(result_diet_1000iters)
+#' burnin <- 500
+#' summarized_result <- summary(result_diet_1000iters, burnin, relabel = TRUE, be_quiet = TRUE)
 #' print(summarized_result)
 print.summary.ddt_lcm <- function(x, digits = 3L, ...){
   # total number of items
@@ -46,7 +46,7 @@ print.summary.ddt_lcm <- function(x, digits = 3L, ...){
   N <- nrow(x$data)
   K <- x$setting$K
   total_iters <- length(x$loglikelihood)
-  
+
   cat("Conditional item response (column) probabilities of positive responses, by outcome variable, for each class (row):\n\n")
   item_names <- colnames(x$data)
   response_probs_mean <- matrix(x$response_probs_summary[,"Mean"], nrow = K)
@@ -54,9 +54,9 @@ print.summary.ddt_lcm <- function(x, digits = 3L, ...){
   colnames(response_probs_mean) <- item_names
   print(round(response_probs_mean, digits))
   cat("\n\n")
-  
+
   cat("Estimated class probabilities: \n", round(x$class_probs_summary[,"Mean"], digits), "\n\n")
-  
+
   cat("Maximum log-likelihood of full model:", round(x$max_llk_full, digits), "\n \n")
   cat("Maximum log-likelihood of LCM only:", round(x$max_llk_lcm, digits), "\n \n")
 }

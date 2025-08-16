@@ -14,7 +14,7 @@ initialize_poLCA <- function(K, data, ...){
   # model <- poLCA(fm, data.frame(data+1), nclass=K, maxiter=100,
   #                tol=1e-5, na.rm=FALSE, nrep=10, verbose=FALSE, calc.se=TRUE)
   response_prob_simple_lcm <- matrix(0, nrow = K, ncol = ncol(data))
-  for (j in 1:ncol(data)) {
+  for (j in seq_len(ncol(data))) {
     response_prob_simple_lcm[,j] <- model$probs[[variable_names[j]]][,2]
   }
   colnames(response_prob_simple_lcm) <- variable_names
@@ -48,7 +48,7 @@ initialize_randomLCM <- function(K, data){
 
 
 #' Estimate an initial binary tree on latent classes using hclust()
-#'@param leaf_data a K by J matrix of logit(theta_{kj})
+#'@param leaf_data a K by J matrix of \eqn{logit(theta_{kj})}
 #'@param c hyparameter of divergence function a(t)
 #'@param c_order equals 1 (default) or 2 to choose divergence function
 #'@param method_dist string specifying the distance measure to be used in dist().
@@ -95,7 +95,7 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
   # add root node
   hclust_phylo <- add_root(hclust_phylo, root_edge_length = root_edge_length,
            root_label = "u1", leaf_label = "u2")
-  hclust_phylo <- phylo4d(hclust_phylo)
+  hclust_phylo <- suppressWarnings({ phylo4d(hclust_phylo) })
   # add node labels
   tipLabels(hclust_phylo) <- paste0("v", 1:K)
   nodeLabels(hclust_phylo) <- paste0("u", 1:K)
@@ -116,7 +116,7 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
 #'@param c hyparameter of divergence function a(t)
 #'@param c_order equals 1 (default) or 2 to choose divergence function
 #'  a(t) = c/(1-t) or c/(1-t)^2.
-#'@param method_lcm a character. If `random` (default), the initial LCM parameters will be random values. 
+#'@param method_lcm a character. If `random` (default), the initial LCM parameters will be random values.
 #'  If `poLCA`, the initial LCM parameters will be EM algorithm estimates from the \code{poLCA} function.
 #'@param method_dist string specifying the distance measure to be used in dist().
 #'    This must be one of "euclidean" (defaults), "maximum", "manhattan", "canberra", "binary" or "minkowski".
@@ -131,16 +131,16 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
 #'    the DDT process with c = 100)
 #'@param fixed_initials a named list of fixed initial values, including
 #' the initial values for tree ("phylo4d"), response_prob, class_probability, class_assignments,
-#' Sigma_by_group, and c. Default is NULL. See 
-#'@param fixed_priors a named list of fixed prior hyperparameters, including the 
+#' Sigma_by_group, and c. Default is NULL. See
+#'@param fixed_priors a named list of fixed prior hyperparameters, including the
 #' the Gamma prior for `c`, inverse-Gamma prior for `sigma_g^2`, and Dirichlet prior
-#' for `pi`. Moreover, we allow for a type III generalized logistic distribution such 
+#' for `pi`. Moreover, we allow for a type III generalized logistic distribution such
 #' that f(`eta`; a_pg) = `theta`. This becomes a standard logistic distribution when a_pg = 1. See
-#' Dalla Valle, L., Leisen, F., Rossini, L., & Zhu, W. (2021). A Pólya–Gamma sampler for a 
+#' Dalla Valle, L., Leisen, F., Rossini, L., & Zhu, W. (2021). A Pólya–Gamma sampler for a
 #' generalized logistic regression. Journal of Statistical Computation and Simulation, 91(14), 2899-2916.
-#' An example input list is 
+#' An example input list is
 #' `list("shape_c" = 1, "rate_c" = 1, "shape_sigma" = rep(2, G), "rate_sigma" = rep(2, G), "a_pg" = 1.0)`, where
-#' `G` is the number of major item groups. Default is NULL. 
+#' `G` is the number of major item groups. Default is NULL.
 #'@param alpha,theta hyparameter of branching probability a(t) Gamma(m-alpha) / Gamma(m+1+theta)
 #'    For DDT, alpha = theta = 0
 #'@param ... optional arguments for the poLCA function
@@ -152,17 +152,17 @@ initialize_hclust <- function(leaf_data, c, c_order=1, method_dist = "euclidean"
 #' # load the MAP tree structure obtained from the real HCHS/SOL data
 #' data(data_synthetic)
 #' # extract elements into the global environment
-#' list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv()) 
+#' list2env(setNames(data_synthetic, names(data_synthetic)), envir = globalenv())
 #' K <- 3
 #' G <- length(item_membership_list)
-#' fixed_initials <- list("shape_c" = 2, "rate_c" = 2)
-#' fixed_priors <- list("rate_sigma" = rep(3, G))
-#' initials <- initialize(K, data = response_matrix, item_membership_list, 
+#' fixed_initials <- list("c" = 5)
+#' fixed_priors <- list("rate_sigma" = rep(3, G), "shape_c" = 2, "rate_c" = 2)
+#' initials <- initialize(K, data = response_matrix, item_membership_list,
 #'   c=1, c_order=1, fixed_initials = fixed_initials, fixed_priors = fixed_priors)
 initialize <- function(K, data, item_membership_list, c=1, c_order=1,
                        method_lcm = "random", #c("poLCA", "random"),
                        method_dist = "euclidean", method_hclust = "ward.D",
-                       method_add_root = "min_cor", 
+                       method_add_root = "min_cor",
                        fixed_initials = list(), fixed_priors = list(),
                        alpha=0, theta=0, ...){
   # phylobase::phylobase.options(singleton="ok")
@@ -220,7 +220,7 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
     # need to add rows corresponding to internal nodes
     tree_data <- rbind(tree_data, matrix(NA, nrow = K-1, ncol = ncol(tree_data)))
     rownames(tree_data) <- c(paste0("v", 1:K), paste0("u", 1:K))
-    colnames(tree_data) <- c(paste0("x", 1:ncol(tree_data)))
+    colnames(tree_data) <- c(paste0("x", seq_len(ncol(tree_data))))
     initial_tree_hclust <- addData(initial_tree_hclust, all.data = tree_data )
     init_info <- logllk_ddt(1, c_order, Sigma_by_group = rep(1, G), tree_phylo4d=initial_tree_hclust,
                             item_membership_list,
@@ -228,12 +228,12 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
     c_part <- log( 1 - init_info$tree_structure$div_times) *
       exp(init_info$tree_structure$logllk_tree_topology)
     c_hclust <- -(K-1) / sum(c_part)
-    
+
     ### step 3: run hierarchical clustering on logit response profiles
     # options(warn = -1)
     initial_tree_hclust <- initialize_hclust(leaf_data, c_hclust, c_order, method_dist,
                                              method_hclust, method_add_root, alpha=0, theta=0)
-    
+
     # step 4: add leaf and root data to the tree
     # let the root location be the population logit mean
     root_location <- rep(0, J)
@@ -242,14 +242,14 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
     # need to add rows corresponding to internal nodes
     tree_data <- rbind(tree_data, matrix(NA, nrow = K-1, ncol = ncol(tree_data)))
     rownames(tree_data) <- c(paste0("v", 1:K), paste0("u", 1:K))
-    colnames(tree_data) <- c(paste0("x", 1:ncol(tree_data)))
+    colnames(tree_data) <- c(paste0("x", seq_len(ncol(tree_data))))
     tree_phylo4d <- addData(initial_tree_hclust, all.data = tree_data )
   }
-  
+
   if (!is.null(fixed_initials$c)){
     c_hclust <- fixed_initials$c
   }
-  
+
 
   ### step 5: estimate Sigma_by_group
   if (!is.null(fixed_initials$Sigma_by_group)){
@@ -259,8 +259,8 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
     for (g in 1:G) {
       Sigma_by_group[g] <- (sd(leaf_data[, item_membership_list[[g]] ]))^2
     }
-  }  
-  
+  }
+
   ### return initial values
   initials = list(
     tree_phylo4d = tree_phylo4d,
@@ -297,7 +297,7 @@ initialize <- function(K, data, item_membership_list, c=1, c_order=1,
   if (!is.null(fixed_priors$a_pg)){
     priors$a_pg <- fixed_priors$a_pg
   }
-  
+
   if ("simple_lcm" %in% ls()) {
     return(list(initials = initials, priors = priors, model_lcm = simple_lcm))
   } else{

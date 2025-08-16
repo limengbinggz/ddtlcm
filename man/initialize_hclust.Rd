@@ -17,7 +17,7 @@ initialize_hclust(
 )
 }
 \arguments{
-\item{leaf_data}{a K by J matrix of logit(theta_{kj})}
+\item{leaf_data}{a K by J matrix of \eqn{logit(theta_{kj})}}
 
 \item{c}{hyparameter of divergence function a(t)}
 
@@ -50,7 +50,7 @@ Estimate an initial binary tree on latent classes using hclust()
 }
 \seealso{
 Other initialization functions: 
-\code{\link{initialize_poLCA}()},
-\code{\link{initialize}()}
+\code{\link{initialize}()},
+\code{\link{initialize_poLCA}()}
 }
 \concept{initialization functions}

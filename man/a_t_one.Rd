@@ -24,7 +24,7 @@ earlier divergence on the tree}
 The value and cumulative hazard return a positive number. The inverse function returns a number in the interval (0, 1).
 }
 \description{
-Compute value, cumulative hazard, and inverse for divergence function a(t) = c / (1-t)
+Compute value, cumulative hazard, and inverse for divergence function \eqn{a(t) = c / (1-t)}
 }
 \section{Functions}{
 \itemize{
